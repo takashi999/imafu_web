@@ -1,0 +1,20 @@
+<div class="mat-elevation-z8">
+  <mat-table mat-table [dataSource]="staffs$">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell mat-header-cell *matHeaderCellDef> ID</mat-header-cell>
+      <mat-cell mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="login_id">
+      <mat-header-cell mat-header-cell *matHeaderCellDef> ログインID</mat-header-cell>
+      <mat-cell mat-cell *matCellDef="let element"> {{element.login_id}} </mat-cell>
+    </ng-container>
+
+
+    <mat-header-row mat-header-row *matHeaderRowDef="['id','login_id']; sticky: true"></mat-header-row>
+    <mat-row matRipple [routerLink]="'/operation/users/' + row.id" *matRowDef="let row; columns: ['id','login_id'];"></mat-row>
+  </mat-table>
+</div>

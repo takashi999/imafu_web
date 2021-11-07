@@ -1,0 +1,20 @@
+.container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card-title {
+  text-align: center;
+  padding: 10px 0 30px;
+}
+
+mat-form-field {
+  width: 300px;
+  max-width: 100%;
+}
+
+.sign-in-button {
+  width: 100%;
+}

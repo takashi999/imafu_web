@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/ito-imafuu-front'),
+      dir: require('path').join(__dirname, './coverage/imafuu-front'),
       subdir: '.',
       reporters: [
         { type: 'html' },

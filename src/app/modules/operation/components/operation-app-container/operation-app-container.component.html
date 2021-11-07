@@ -1,0 +1,34 @@
+<mat-drawer-container class="container">
+  <mat-drawer #drawer mode="over">
+    <mat-action-list (click)="drawer.close()">
+      <mat-list-item routerLink="/sample-admin">ホーム</mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-action-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="content">
+
+      <div class="toolbar">
+        <mat-toolbar color="primary">
+<!--          <button (click)="drawer.toggle()" *ngIf="authService.isAuthenticated$ | async"-->
+<!--                  class="example-icon"-->
+<!--                  mat-icon-button>-->
+<!--            <mat-icon>menu</mat-icon>-->
+<!--          </button>-->
+<!--          <button *ngIf="authService.isGuest$ | async" class="example-icon"-->
+<!--                  mat-icon-button-->
+<!--                  routerLink="/">-->
+<!--            <mat-icon>home</mat-icon>-->
+<!--          </button>-->
+          <span matRipple routerLink="/sample-admin">管理画面</span>
+        </mat-toolbar>
+      </div>
+      <div class="router-container">
+        <router-outlet></router-outlet>
+      </div>
+
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+

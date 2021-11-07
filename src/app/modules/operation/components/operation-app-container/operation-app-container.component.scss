@@ -1,0 +1,23 @@
+.container, {
+  height: 100%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.toolbar {
+  flex: 0 0 auto;
+}
+
+.router-container {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+mat-drawer {
+  width: 300px;
+  max-width: 100%;
+}
