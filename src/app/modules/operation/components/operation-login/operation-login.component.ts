@@ -33,9 +33,14 @@ export class OperationLoginComponent implements OnInit {
       this.operationAuthService.login(this.fg.value)
         .subscribe({
           next: () => {
-            this.router.navigate([ '../' ], {
-              relativeTo: this.activatedRoute,
-            });
+            const redirect = this.activatedRoute.snapshot.queryParamMap.get('redirectTo');
+            if (redirect) {
+              this.router.navigateByUrl(redirect);
+            } else {
+              this.router.navigate([ '../' ], {
+                relativeTo: this.activatedRoute,
+              });
+            }
           },
           error: () => {
             this.failed = true;

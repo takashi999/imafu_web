@@ -5,17 +5,22 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './components/app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { APIInterceptor } from 'src/app/interceptors/api.interceptor';
+import { APIInterceptor, LoadingSpinnerComponent } from 'src/app/interceptors/api.interceptor';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatProgressSpinnerModule,
+    OverlayModule,
   ],
   providers: [
     {

@@ -21,6 +21,14 @@ import { OperationUsersComponent } from './components/operation-users/operation-
 import { MatTableModule } from '@angular/material/table';
 import { OperationUserDetailComponent } from './components/operation-user-detail/operation-user-detail.component';
 import { OperationTenantGroupsComponent } from './components/operation-tenant-groups/operation-tenant-groups.component';
+import { OperationUserCreateComponent } from './components/operation-user-create/operation-user-create.component';
+import { OperationConfirmDialogComponent } from './components/operation-confirm-dialog/operation-confirm-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { OperationTenantCreateComponent } from './components/operation-tenant-create/operation-tenant-create.component';
+import { OperationTenantDetailComponent } from './components/operation-tenant-detail/operation-tenant-detail.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatRadioModule } from '@angular/material/radio';
 
 
 @NgModule({
@@ -31,7 +39,11 @@ import { OperationTenantGroupsComponent } from './components/operation-tenant-gr
     OperationDashboardContainerComponent,
     OperationUsersComponent,
     OperationUserDetailComponent,
-    OperationTenantGroupsComponent
+    OperationTenantGroupsComponent,
+    OperationUserCreateComponent,
+    OperationConfirmDialogComponent,
+    OperationTenantCreateComponent,
+    OperationTenantDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +60,11 @@ import { OperationTenantGroupsComponent } from './components/operation-tenant-gr
     ReactiveFormsModule,
     MatInputModule,
     MatTableModule,
+    MatDialogModule,
+    MatSelectModule,
+    MatGridListModule,
+    MatRadioModule,
   ],
 })
-export class OperationModule { }
+export class OperationModule {
+}

@@ -10,17 +10,12 @@
 
       <div class="toolbar">
         <mat-toolbar color="primary">
-<!--          <button (click)="drawer.toggle()" *ngIf="authService.isAuthenticated$ | async"-->
-<!--                  class="example-icon"-->
-<!--                  mat-icon-button>-->
-<!--            <mat-icon>menu</mat-icon>-->
-<!--          </button>-->
-<!--          <button *ngIf="authService.isGuest$ | async" class="example-icon"-->
-<!--                  mat-icon-button-->
-<!--                  routerLink="/">-->
-<!--            <mat-icon>home</mat-icon>-->
-<!--          </button>-->
-          <span matRipple routerLink="/sample-admin">管理画面</span>
+          <button (click)="drawer.toggle()" *ngIf="operationAuthService.loggIn$() | async"
+                  class="example-icon"
+                  mat-icon-button>
+            <mat-icon>menu</mat-icon>
+          </button>
+          <span matRipple routerLink="/operation">管理画面</span>
         </mat-toolbar>
       </div>
       <div class="router-container">

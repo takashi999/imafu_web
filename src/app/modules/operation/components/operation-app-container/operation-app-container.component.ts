@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { OperationAuthService } from 'src/app/services/operation/api/operation-auth.service';
 
 @Component({
   selector: 'app-operation-app-container',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OperationAppContainerComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public operationAuthService:OperationAuthService
+  ) { }
 
   ngOnInit(): void {
   }

@@ -9,6 +9,9 @@ import { OperationDashboardContainerComponent } from 'src/app/modules/operation/
 import { OperationUsersComponent } from 'src/app/modules/operation/components/operation-users/operation-users.component';
 import { OperationUserDetailComponent } from 'src/app/modules/operation/components/operation-user-detail/operation-user-detail.component';
 import { OperationTenantGroupsComponent } from 'src/app/modules/operation/components/operation-tenant-groups/operation-tenant-groups.component';
+import { OperationUserCreateComponent } from 'src/app/modules/operation/components/operation-user-create/operation-user-create.component';
+import { OperationTenantDetailComponent } from 'src/app/modules/operation/components/operation-tenant-detail/operation-tenant-detail.component';
+import { OperationTenantCreateComponent } from 'src/app/modules/operation/components/operation-tenant-create/operation-tenant-create.component';
 
 const routes: Routes = [
   {
@@ -35,12 +38,25 @@ const routes: Routes = [
             component: OperationUsersComponent,
           },
           {
+            path: 'users/create',
+            component: OperationUserCreateComponent,
+            pathMatch: 'full',
+          },
+          {
             path: 'users/:user_id',
             component: OperationUserDetailComponent,
           },
           {
             path: 'tenants',
             component: OperationTenantsComponent,
+          },
+          {
+            path: 'tenants/create',
+            component: OperationTenantCreateComponent,
+          },
+          {
+            path: 'tenants/:tenant_id',
+            component: OperationTenantDetailComponent,
           },
           {
             path: 'tenant-groups',

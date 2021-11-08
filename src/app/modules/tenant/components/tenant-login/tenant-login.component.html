@@ -1,0 +1,29 @@
+<div class="container">
+  <form [formGroup]="fg" (ngSubmit)="onSub()">
+    <mat-card>
+      <mat-card-title>ログイン</mat-card-title>
+      <mat-card-content>
+        <p>
+          <mat-form-field appearance="fill">
+            <mat-label>ID</mat-label>
+            <input matInput name="login_id" type="text" formControlName="login_id">
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill">
+            <mat-label>パスワード</mat-label>
+            <input [type]="hide ? 'password' : 'text'" matInput name="password" formControlName="password">
+            <button (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" mat-icon-button
+                    matSuffix>
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+        </p>
+        <p *ngIf="failed">ログインに失敗しました</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button class="sign-in-button" color="primary" mat-flat-button>ログイン</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

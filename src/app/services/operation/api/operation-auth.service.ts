@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { TokenService } from 'src/app/services/token.service';
 import { Observable, Subject } from 'rxjs';
 
@@ -28,6 +28,10 @@ export class OperationAuthService {
           }),
       );
     });
+  }
+
+  guest$(){
+    return this.loggIn$().pipe(map(v => !v));
   }
 
   login(body: { login_id: string; password: string; }) {

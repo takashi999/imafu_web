@@ -1,0 +1,236 @@
+<h2>
+  <button mat-icon-button mat-flat-button color="accent" routerLink="../">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  店舗作成
+</h2>
+<mat-card>
+  <form [formGroup]="fg" (ngSubmit)="onSub()">
+    <mat-card-content>
+      <p>
+        <mat-form-field appearance="fill" hintLabel="1 - 100文字">
+          <mat-label>店舗名</mat-label>
+          <input type="text" name="name" min="1" max="100" matInput formControlName="name">
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill" hintLabel="1 - 16文字">
+          <mat-label>ログインID</mat-label>
+          <input type="text" name="login_id" min="1" max="16" matInput formControlName="login_id">
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill" hintLabel="8 - 100文字">
+          <mat-label>パスワード</mat-label>
+          <input matInput min="8" max="100" [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+                 autocomplete="new-password">
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field appearance="fill" hintLabel="30文字">
+          <mat-label>キャッチフレーズ</mat-label>
+          <input type="text" name="catch" max="30" formControlName="catch" matInput>
+        </mat-form-field>
+      </p>
+      <ng-container formArrayName="tel">
+        <p>
+          <mat-form-field appearance="fill" hintLabel="15文字">
+            <mat-label>電話番号1</mat-label>
+            <input type="tel" name="tel1" max="15" formControlName="0" matInput>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill" hintLabel="15文字">
+            <mat-label>電話番号2</mat-label>
+            <input type="tel" name="tel2" max="15" formControlName="1" matInput>
+          </mat-form-field>
+        </p>
+      </ng-container>
+      <p>
+        <mat-form-field appearance="fill" hintLabel="">
+          <mat-label>LINE ID</mat-label>
+          <input type="text" name="line_id" formControlName="line_id" matInput>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill" hintLabel="">
+          <mat-label>LINE URL</mat-label>
+          <input type="text" name="line_url" formControlName="line_url" matInput>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill" hintLabel="30文字">
+          <mat-label>住所・地域（東部・中部・西部・全域）</mat-label>
+          <input type="text" name="region" formControlName="region" matInput>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-checkbox [formControl]="open24h">24時間営業</mat-checkbox>
+      </p>
+      <mat-grid-list [cols]="2" [rowHeight]="80">
+        <mat-grid-tile>
+          <mat-form-field appearance="fill" hintLabel="">
+            <mat-label>営業開始時間</mat-label>
+            <mat-select [formControl]="openTime">
+              <mat-option *ngFor="let hour of startTimeOptions" [value]="hour | number">{{ hour }}:00</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill" hintLabel="">
+            <mat-label>営業終了時間</mat-label>
+            <mat-select [formControl]="closeTime">
+              <mat-option *ngFor="let hour of getEndTimeOptions(openTime.value)" [value]="hour | number">{{ hour }}:00
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+
+      <p>
+        <mat-checkbox [formControl]="reception24h">24時間受付</mat-checkbox>
+      </p>
+      <mat-grid-list [cols]="2" [rowHeight]="80">
+        <mat-grid-tile>
+          <mat-form-field appearance="fill" hintLabel="">
+            <mat-label>受付開始時間</mat-label>
+            <mat-select [formControl]="receptionOpenTime">
+              <mat-option *ngFor="let hour of startTimeOptions" [value]="hour | number">{{ hour }}:00</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill" hintLabel="">
+            <mat-label>受付終了時間</mat-label>
+            <mat-select [formControl]="receptionCloseTime">
+              <mat-option *ngFor="let hour of getEndTimeOptions(receptionOpenTime.value)"
+                          [value]="hour | number">{{ hour }}:00
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <p>
+        <mat-form-field appearance="fill" hintLabel="60文字">
+          <mat-label>定休日</mat-label>
+          <input type="text" max="60" name="close_date" formControlName="close_date" matInput>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label>最低価格帯</mat-label>
+          <mat-select formControlName="lowest_cost">
+            <mat-option *ngFor="let item of costSelections" [value]="item.value">{{ item.label }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-label>お問い合わせフォーム</mat-label>
+      </p>
+      <p>
+        <mat-radio-group aria-label="Select an option" [formControl]="useForm">
+          <mat-radio-button value="0">未使用</mat-radio-button>
+          <mat-radio-button value="1">使用</mat-radio-button>
+        </mat-radio-group>
+      </p>
+
+      <ng-container *ngIf="useForm.value === '1'">
+        <p>
+          <mat-form-field appearance="fill">
+            <mat-label>書き込み通知先メールアドレス</mat-label>
+            <input type="email" max="256" name="form_email" formControlName="form_email" matInput>
+          </mat-form-field>
+        </p>
+      </ng-container>
+      <p>
+        <mat-form-field appearance="fill" hintLabel="180文字">
+          <mat-label>基本サービス</mat-label>
+          <input type="text" max="180" name="regular_services" formControlName="regular_services" matInput>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label>基本サービス価格</mat-label>
+          <input type="number" min="0" name="regular_service_price" formControlName="regular_service_price" matInput>
+        </mat-form-field>
+      </p>
+
+      <mat-grid-list [cols]="5" [rowHeight]="80" formArrayName="services">
+        <ng-container *ngFor="let item of serviceControls; let index = index" [formGroupName]="index">
+          <mat-grid-tile [colspan]="1"></mat-grid-tile>
+          <mat-grid-tile [colspan]="2">
+            <mat-form-field appearance="fill">
+              <mat-label>フリー{{ index + 1 }}</mat-label>
+              <input type="text" [name]="'service-' + (index + 1)" formControlName="name" matInput>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2">
+            <mat-form-field appearance="fill">
+              <mat-label>価格</mat-label>
+              <input type="number" [name]="'price-' + (index + 1)" formControlName="price" matInput>
+            </mat-form-field>
+          </mat-grid-tile>
+        </ng-container>
+      </mat-grid-list>
+
+
+      <p>
+        <mat-label>領収書発行</mat-label>
+      </p>
+      <p>
+        <mat-radio-group aria-label="Select an option" [formControl]="useForm">
+          <mat-radio-button value="1">OK</mat-radio-button>
+          <mat-radio-button value="0">NG</mat-radio-button>
+        </mat-radio-group>
+      </p>
+
+      <p>
+        <mat-label>クレジットカード</mat-label>
+      </p>
+      <p>
+        <mat-checkbox [formControl]="creditCardFormControlArray[index]" *ngFor="let item of brands; let index = index"
+        >{{ item.name }}</mat-checkbox>
+      </p>
+
+      <p>
+        <mat-form-field appearance="fill" hintLabel="200文字">
+          <mat-label>備考欄</mat-label>
+          <textarea rows="3" type="text" name="note" formControlName="note" matInput
+                    [cdkTextareaAutosize]="true"></textarea>
+        </mat-form-field>
+      </p>
+
+
+      <p>
+        <mat-label>出勤表使用選択</mat-label>
+      </p>
+      <p>
+        <mat-radio-group aria-label="Select an option" formControlName="use_timetable">
+          <mat-radio-button value="0">未使用</mat-radio-button>
+          <mat-radio-button value="1">使用</mat-radio-button>
+        </mat-radio-group>
+      </p>
+      <p>
+        <mat-label>女の子管理画面での出勤表の使用選択</mat-label>
+      </p>
+      <p>
+        <mat-radio-group aria-label="Select an option" formControlName="enable_edit_timetable_on_cast">
+          <mat-radio-button value="0">未使用</mat-radio-button>
+          <mat-radio-button value="1">使用</mat-radio-button>
+        </mat-radio-group>
+      </p>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary" [disabled]="fg.invalid">作成</button>
+    </mat-card-actions>
+  </form>
+</mat-card>
