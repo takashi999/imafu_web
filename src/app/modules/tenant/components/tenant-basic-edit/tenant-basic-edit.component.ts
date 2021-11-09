@@ -133,85 +133,7 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
     this.s.add(
       this.tenantBasicService.get()
         .subscribe(res => {
-          this.detail = res;
-          this.fg.patchValue({
-            ...this.detail,
-            tel: this.detail.tels?.map(t => t.tel),
-            line_id: this.detail.line?.line_id,
-            line_url: this.detail.line?.line_id,
-            form_email: this.detail.form?.email,
-            open_time: this.detail.open_time.substr(0, 5),
-            open_time_duration: this.detail.open_time_duration.substr(0, 5),
-            reception_time: this.detail.reception_time.substr(0, 5),
-            reception_time_duration: this.detail.reception_time_duration.substr(0, 5),
-            services: this.detail.services?.map(s => ({
-              name: s.name,
-              price: s.price,
-            })),
-            credit_cards: this.detail.credit_cards?.map(c => c.id),
-            use_timetable: this.detail ? '1' : '0',
-            enable_edit_timetable_on_cast: this.detail ? '1' : '0',
-          }, { emitEvent: false });
-
-          const isOpen24h = this.detail.open_time === '00:00:00' && this.detail.open_time_duration === '24:00:00';
-          this.open24h.setValue(isOpen24h, { emitEvent: false });
-          if (!isOpen24h) {
-            this.openTime.setValue(parseInt(this.detail.open_time.substr(0, 2), 10).toString(10), { emitEvent: false });
-            this.closeTime.setValue(
-              (
-                parseInt(this.detail.open_time, 10) +
-                parseInt(this.detail.open_time_duration.substr(0, 2), 10)
-              ).toString(10),
-              { emitEvent: false },
-            );
-          } else {
-            this.openTime.disable({ emitEvent: false });
-            this.closeTime.disable({ emitEvent: false });
-          }
-
-          const isReception24h = this.detail.reception_time === '00:00:00' && this.detail.reception_time_duration === '24:00:00';
-          this.reception24h.setValue(isReception24h, { emitEvent: false });
-          if (!isReception24h) {
-            this.receptionOpenTime.setValue(parseInt(this.detail.reception_time.substr(0, 2), 10).toString(10), { emitEvent: false });
-            this.receptionCloseTime.setValue(
-              (
-                parseInt(this.detail.reception_time, 10) +
-                parseInt(this.detail.reception_time_duration.substr(0, 2), 10)
-              ).toString(10),
-              { emitEvent: false },
-            );
-          } else {
-            this.receptionOpenTime.disable({ emitEvent: false });
-            this.receptionCloseTime.disable({ emitEvent: false });
-          }
-
-          this.useForm.setValue(typeof this.detail.form?.email === 'undefined' ? '0' : '1', { emitEvent: false });
-
-          this.s.add(
-            this.tenantCreditCardBrandService.list()
-              .subscribe(res2 => {
-                this.creditCardFormControlArray = [];
-                res2.forEach((v, i) => {
-                  const control = new FormControl(this.detail?.credit_cards?.some(c => c.id === v.id));
-                  this.creditCardFormControlArray.push(control);
-
-                  this.s.add(
-                    control.valueChanges.subscribe(() => {
-                      (this.fg.get('credit_cards') as FormControl | null)
-                        ?.setValue(
-                          res2
-                            .filter((r, i) => this.creditCardFormControlArray[i].value)
-                            .map(r => r.id),
-                          { emitEvent: false },
-                        );
-                    }),
-                  );
-                });
-
-                this.brands = res2;
-                console.log(this.fg.value);
-              }),
-          );
+          this.updateByResponse(res);
         }),
     );
   }
@@ -239,7 +161,7 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
         password: this.fg.get('password')?.value ? this.fg.get('password')?.value : null,
       })
         .subscribe((res) => {
-          this.router.navigateByUrl('/tenant/basic');
+          this.updateByResponse(res);
         }),
     );
   }
@@ -266,6 +188,88 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
         [durationKey]: `${ `0${ parseInt(endControl.value, 10) - parseInt(startControl.value, 10) }`.substr(-2, 2) }:00`,
       }, { emitEvent: false });
     }
+  }
+
+  private updateByResponse(res: Tenant) {
+    this.detail = res;
+    this.fg.reset();
+    this.fg.patchValue({
+      ...this.detail,
+      tel: this.detail.tels?.map(t => t.tel),
+      line_id: this.detail.line?.line_id,
+      line_url: this.detail.line?.line_id,
+      form_email: this.detail.form?.email,
+      open_time: this.detail.open_time.substr(0, 5),
+      open_time_duration: this.detail.open_time_duration.substr(0, 5),
+      reception_time: this.detail.reception_time.substr(0, 5),
+      reception_time_duration: this.detail.reception_time_duration.substr(0, 5),
+      services: this.detail.services?.map(s => ({
+        name: s.name,
+        price: s.price,
+      })),
+      credit_cards: this.detail.credit_cards?.map(c => c.id),
+      use_timetable: this.detail ? '1' : '0',
+      enable_edit_timetable_on_cast: this.detail ? '1' : '0',
+    }, { emitEvent: false });
+
+    const isOpen24h = this.detail.open_time === '00:00:00' && this.detail.open_time_duration === '24:00:00';
+    this.open24h.setValue(isOpen24h, { emitEvent: false });
+    if (!isOpen24h) {
+      this.openTime.setValue(parseInt(this.detail.open_time.substr(0, 2), 10).toString(10), { emitEvent: false });
+      this.closeTime.setValue(
+        (
+          parseInt(this.detail.open_time, 10) +
+          parseInt(this.detail.open_time_duration.substr(0, 2), 10)
+        ).toString(10),
+        { emitEvent: false },
+      );
+    } else {
+      this.openTime.disable({ emitEvent: false });
+      this.closeTime.disable({ emitEvent: false });
+    }
+
+    const isReception24h = this.detail.reception_time === '00:00:00' && this.detail.reception_time_duration === '24:00:00';
+    this.reception24h.setValue(isReception24h, { emitEvent: false });
+    if (!isReception24h) {
+      this.receptionOpenTime.setValue(parseInt(this.detail.reception_time.substr(0, 2), 10).toString(10), { emitEvent: false });
+      this.receptionCloseTime.setValue(
+        (
+          parseInt(this.detail.reception_time, 10) +
+          parseInt(this.detail.reception_time_duration.substr(0, 2), 10)
+        ).toString(10),
+        { emitEvent: false },
+      );
+    } else {
+      this.receptionOpenTime.disable({ emitEvent: false });
+      this.receptionCloseTime.disable({ emitEvent: false });
+    }
+
+    this.useForm.setValue(typeof this.detail.form?.email === 'undefined' ? '0' : '1', { emitEvent: false });
+
+    this.s.add(
+      this.tenantCreditCardBrandService.list()
+        .subscribe(res2 => {
+          this.creditCardFormControlArray = [];
+          res2.forEach((v, i) => {
+            const control = new FormControl(this.detail?.credit_cards?.some(c => c.id === v.id));
+            this.creditCardFormControlArray.push(control);
+
+            this.s.add(
+              control.valueChanges.subscribe(() => {
+                (this.fg.get('credit_cards') as FormControl | null)
+                  ?.setValue(
+                    res2
+                      .filter((r, i) => this.creditCardFormControlArray[i].value)
+                      .map(r => r.id),
+                    { emitEvent: false },
+                  );
+              }),
+            );
+          });
+
+          this.brands = res2;
+        }),
+    );
   }
 
 }
