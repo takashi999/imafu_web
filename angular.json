@@ -34,7 +34,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/imafuu-front",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -70,7 +69,23 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "outputPath": "dist/prod/imafuu-front"
+            },
+            "stage": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.stage.ts"
+                }
+              ],
+              "outputPath": "dist/stage/imafuu-front"
             },
             "development": {
               "buildOptimizer": false,
@@ -78,7 +93,8 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "outputPath": "dist/dev/imafuu-front"
             }
           },
           "defaultConfiguration": "production"
@@ -88,6 +104,9 @@
           "configurations": {
             "production": {
               "browserTarget": "imafuu-front:build:production"
+            },
+            "stage": {
+              "browserTarget": "imafuu-front:build:stage"
             },
             "development": {
               "browserTarget": "imafuu-front:build:development"

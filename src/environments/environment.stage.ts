@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  serverUrl: 'https://ito-imafuu-ap.test',
+  serverUrl: 'https://stage.imafuu.jp',
 };

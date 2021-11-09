@@ -5,6 +5,7 @@ import { TokenService } from 'src/app/services/token.service';
 import { tap } from 'rxjs/operators';
 import { Overlay } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class APIInterceptor implements HttpInterceptor {
@@ -16,12 +17,12 @@ export class APIInterceptor implements HttpInterceptor {
     replacement: string,
   }[] = [
     {
-      endpoint: 'https://ito-imafuu-ap.test/api/v1/operation',
+      endpoint: environment.serverUrl + '/api/v1/operation',
       replacement: '@op',
       tokenKey: 'operationToken',
     },
     {
-      endpoint: 'https://ito-imafuu-ap.test/api/v1/tenant',
+      endpoint: environment.serverUrl + '/api/v1/tenant',
       replacement: '@te',
       tokenKey: 'tenantToken',
     },
