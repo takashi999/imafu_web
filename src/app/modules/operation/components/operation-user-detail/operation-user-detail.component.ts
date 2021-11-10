@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OperationStaffService } from 'src/app/services/operation/api/operation-staff.service';
@@ -10,6 +10,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   selector: 'app-operation-user-detail',
   templateUrl: './operation-user-detail.component.html',
   styleUrls: [ './operation-user-detail.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OperationUserDetailComponent implements OnInit, OnDestroy {
 
@@ -30,6 +31,7 @@ export class OperationUserDetailComponent implements OnInit, OnDestroy {
     private router: Router,
     private operationStaffService: OperationStaffService,
     private operationUserRoleService: OperationUserRoleService,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {
     this.s.add(
       this.activatedRoute.paramMap
@@ -71,6 +73,7 @@ export class OperationUserDetailComponent implements OnInit, OnDestroy {
         .subscribe(res => {
           this.detail = res;
           this.fg.patchValue(res);
+          this.changeDetectorRef.markForCheck();
         }),
     );
   }

@@ -20,6 +20,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
+import { CommonComponentsModule } from 'src/app/components/common-components.module';
 
 
 @NgModule({
@@ -29,23 +30,24 @@ import { MatSelectModule } from '@angular/material/select';
     TenantLoginComponent,
     TenantBasicEditComponent
   ],
-  imports: [
-    CommonModule,
-    TenantRoutingModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatRippleModule,
-    MatCardModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatGridListModule,
-    MatRadioModule,
-    MatCheckboxModule,
-    MatSelectModule,
-  ],
+    imports: [
+        CommonModule,
+        TenantRoutingModule,
+        MatSidenavModule,
+        MatListModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatRippleModule,
+        MatCardModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatGridListModule,
+        MatRadioModule,
+        MatCheckboxModule,
+        MatSelectModule,
+        CommonComponentsModule,
+    ],
 })
 export class TenantModule { }

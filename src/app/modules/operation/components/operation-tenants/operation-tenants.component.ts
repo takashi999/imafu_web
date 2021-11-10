@@ -1,61 +1,57 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { OperationTenantService } from 'src/app/services/operation/api/operation-tenant.service';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { OperationTenant } from 'src/app/services/operation/api/responses';
-import { mergeMap } from 'rxjs/operators';
 import { OperationConfirmService } from 'src/app/services/operation/operation-confirm.service';
+import { TableListColumnType } from 'src/app/components/table-list/table-list.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-operation-tenants',
   templateUrl: './operation-tenants.component.html',
   styleUrls: [ './operation-tenants.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OperationTenantsComponent implements OnInit, OnDestroy {
 
-  list$ = this.operationTenantService.list();
-  rippleDisable = false;
+  list$ = new Subject<OperationTenant[]>();
   s = new Subscription();
-  displayedColumns = [
-    'id',
-    'name',
-    'delete',
+  displayedColumns: TableListColumnType<OperationTenant>[] = [
+    { key: 'id', label: 'ID' },
+    { key: 'name', label: '店舗名' },
+    { key: 'delete' },
   ];
+
 
   constructor(
     private operationTenantService: OperationTenantService,
     private operationConfirmService: OperationConfirmService,
+    private router: Router,
   ) {
   }
 
+  getNameFn = (v: OperationTenant) => v.name;
 
   ngOnInit(): void {
+    this.s.add(
+      this.operationTenantService.list().subscribe(res => this.list$.next(res)),
+    );
   }
 
   ngOnDestroy() {
     this.s.unsubscribe();
   }
 
-  onClickDelete(e: Event, data: OperationTenant) {
-    e.stopPropagation();
-    this.onDelete(data.id, data.name);
+
+  onClickRow(data: OperationTenant) {
+    this.router.navigateByUrl(`/operation/tenants/${ data.id }`);
   }
 
-  onMouseEnter(e: MouseEvent) {
-    this.rippleDisable = true;
-  }
-
-  onMouseLeave(e: MouseEvent) {
-    this.rippleDisable = false;
-  }
-
-  onDelete(id: number, name: string) {
+  onDelete(data: OperationTenant) {
     this.s.add(
-      this.operationConfirmService.open(`${ name }を削除しますか？`)
-        .pipe(
-          mergeMap(() => this.operationTenantService.delete(id)),
-        )
-        .subscribe(() => {
-          this.list$ = this.operationTenantService.list();
+      this.operationTenantService.delete(data.id)
+        .subscribe((res) => {
+          this.list$.next(res);
         }),
     );
   }

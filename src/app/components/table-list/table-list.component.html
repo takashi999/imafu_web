@@ -1,0 +1,33 @@
+<div class="mat-elevation-z8">
+  <mat-table mat-table [dataSource]="dataSource">
+
+    <ng-container *ngFor="let col of displayedColumnsExcludedDelete" [matColumnDef]="'' + col.key">
+      <mat-header-cell mat-header-cell *matHeaderCellDef>{{ col.label }}</mat-header-cell>
+      <mat-cell mat-cell *matCellDef="let element"> {{ getDataByKeyName(element, col.key) }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <mat-header-cell mat-header-cell *matHeaderCellDef>削除</mat-header-cell>
+      <mat-cell mat-cell *matCellDef="let element">
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="onClickDelete($event, element)"
+          (mouseenter)="onMouseEnter($event)"
+          (mouseleave)="onMouseLeave($event)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+
+    <mat-header-row mat-header-row *matHeaderRowDef="displayedColumnKeys; sticky: true"></mat-header-row>
+    <mat-row
+      matRipple
+      [matRippleDisabled]="rippleDisable"
+      (click)="onClickRow(row)"
+      *matRowDef="let row; columns: displayedColumnKeys;"
+    ></mat-row>
+  </mat-table>
+</div>

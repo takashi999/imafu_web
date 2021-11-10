@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { OperationAuthService } from 'src/app/services/operation/api/operation-auth.service';
 import { Subscription } from 'rxjs';
@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   selector: 'app-operation-login',
   templateUrl: './operation-login.component.html',
   styleUrls: [ './operation-login.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OperationLoginComponent implements OnInit {
   hide = true;

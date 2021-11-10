@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { merge, Subscription } from 'rxjs';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { OperationTenant } from 'src/app/services/operation/api/responses';
   selector: 'app-operation-tenant-detail',
   templateUrl: './operation-tenant-detail.component.html',
   styleUrls: [ './operation-tenant-detail.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OperationTenantDetailComponent implements OnInit, OnDestroy {
   s = new Subscription();
@@ -80,6 +81,7 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
     private router: Router,
     private operationTenantService: OperationTenantService,
     private operationCreditCardBrandService: OperationCreditCardBrandService,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {
   }
 
@@ -162,8 +164,9 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
                   price: s.price,
                 })),
                 credit_cards: this.detail.credit_cards?.map(c => c.id),
-                use_timetable: this.detail ? '1' : '0',
-                enable_edit_timetable_on_cast: this.detail ? '1' : '0',
+                enable_receipt: this.detail.enable_receipt ? '1' : '0',
+                use_timetable: this.detail.use_timetable ? '1' : '0',
+                enable_edit_timetable_on_cast: this.detail.enable_edit_timetable_on_cast ? '1' : '0',
                 login_id: this.detail.users?.[0]?.login_id,
               }, { emitEvent: false });
 
@@ -223,9 +226,11 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
                     });
 
                     this.brands = res2;
-                    console.log(this.fg.value);
+                    this.changeDetectorRef.markForCheck();
                   }),
               );
+
+              this.changeDetectorRef.markForCheck();
             }),
         );
       }),
@@ -249,9 +254,9 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
       this.s.add(
         this.operationTenantService.modify(this.id, {
           ...this.fg.value,
-          enable_receipt: this.fg.value === '1',
-          use_timetable: this.fg.value === '1',
-          enable_edit_timetable_on_cast: this.fg.value === '1',
+          enable_receipt: this.fg.get('enable_receipt')?.value === '1',
+          use_timetable: this.fg.get('use_timetable')?.value === '1',
+          enable_edit_timetable_on_cast: this.fg.get('enable_edit_timetable_on_cast')?.value === '1',
           form_email: this.useForm.value === '1' ? this.fg.get('form_email')?.value ?? '' : undefined,
           password: this.fg.get('password')?.value ? this.fg.get('password')?.value : null,
         })

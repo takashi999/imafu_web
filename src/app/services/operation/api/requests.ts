@@ -49,3 +49,6 @@ export interface ModifyTenantRequest {
   login_id: string;
   password: string | null;
 }
+export interface CreateTenantGroupRequest {
+  name: string;
+}

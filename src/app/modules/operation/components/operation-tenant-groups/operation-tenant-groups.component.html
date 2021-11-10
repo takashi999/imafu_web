@@ -1,49 +1,8 @@
-<header>
-  <h2 class="headline">店舗グループ一覧</h2>
-  <div class="spacer"></div>
-<!--  <div class="actions">-->
-<!--    <div class="button">-->
-<!--      <a routerLink="/operation/tenants/create">-->
-<!--        <button mat-flat-button color="primary">新規</button>-->
-<!--      </a>-->
-<!--    </div>-->
-<!--  </div>-->
-</header>
-<div class="mat-elevation-z8">
-  <mat-table mat-table [dataSource]="list$">
-
-    <ng-container matColumnDef="id">
-      <mat-header-cell mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-      <mat-cell mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="name">
-      <mat-header-cell mat-header-cell *matHeaderCellDef>店舗グループ名</mat-header-cell>
-      <mat-cell mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="delete">
-      <mat-header-cell mat-header-cell *matHeaderCellDef>削除</mat-header-cell>
-      <mat-cell mat-cell *matCellDef="let element">
-        <button
-          mat-icon-button
-          color="warn"
-          (click)="onClickDelete($event, element)"
-          (mouseenter)="onMouseEnter($event)"
-          (mouseleave)="onMouseLeave($event)"
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
-      </mat-cell>
-    </ng-container>
-
-
-    <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-    <mat-row
-      matRipple
-      [matRippleDisabled]="rippleDisable"
-      [routerLink]="'/operation/tenant-groups/' + row.id"
-      *matRowDef="let row; columns: displayedColumns;"
-    ></mat-row>
-  </mat-table>
-</div>
+<app-dashboard-header routerLink="/operation/tenant-groups/create">店舗グループ一覧</app-dashboard-header>
+<app-table-list
+  [dataSource]="list$"
+  [displayedColumns]="displayedColumns"
+  [getNameFn]="getNameFn"
+  (delete)="onDelete($event)"
+  (clickRow)="onClickRow($event)"
+></app-table-list>

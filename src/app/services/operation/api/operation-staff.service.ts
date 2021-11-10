@@ -25,7 +25,7 @@ export class OperationStaffService {
     password: string;
     role_id: number;
   }) {
-    return this.httpClient.post<OperationUser>('@op/staffs', body);
+    return this.httpClient.post<OperationUser[]>('@op/staffs', body);
   }
 
   modify(id: number, body: {
@@ -33,10 +33,10 @@ export class OperationStaffService {
     password?: string;
     role_id: number;
   }) {
-    return this.httpClient.patch<OperationUser>('@op/staffs/' + id, body);
+    return this.httpClient.patch<OperationUser[]>('@op/staffs/' + id, body);
   }
 
   delete(id: number) {
-    return this.httpClient.delete<OperationUser>('@op/staffs/' + id);
+    return this.httpClient.delete<OperationUser[]>('@op/staffs/' + id);
   }
 }

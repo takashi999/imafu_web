@@ -1,10 +1,5 @@
 <ng-container *ngIf="detail">
-  <h2>
-    <button mat-icon-button mat-flat-button color="accent" routerLink="../">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    店舗編集: {{ detail.name }}
-  </h2>
+  <app-dashboard-header prevRouterLink="../">店舗編集: {{ detail.name }}</app-dashboard-header>
   <mat-card>
     <form [formGroup]="fg" (ngSubmit)="onSub()">
       <mat-card-content>
@@ -188,7 +183,7 @@
           <mat-label>領収書発行</mat-label>
         </p>
         <p>
-          <mat-radio-group aria-label="Select an option" [formControl]="useForm">
+          <mat-radio-group aria-label="Select an option" formControlName="enable_receipt">
             <mat-radio-button value="1">OK</mat-radio-button>
             <mat-radio-button value="0">NG</mat-radio-button>
           </mat-radio-group>

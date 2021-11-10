@@ -8,10 +8,10 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { APIInterceptor, LoadingSpinnerComponent } from 'src/app/interceptors/api.interceptor';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { CommonComponentsModule } from 'src/app/components/common-components.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
     LoadingSpinnerComponent,
   ],
   imports: [
@@ -21,6 +21,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
     HttpClientModule,
     MatProgressSpinnerModule,
     OverlayModule,
+    CommonComponentsModule,
   ],
   providers: [
     {

@@ -29,6 +29,9 @@ import { OperationTenantCreateComponent } from './components/operation-tenant-cr
 import { OperationTenantDetailComponent } from './components/operation-tenant-detail/operation-tenant-detail.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatRadioModule } from '@angular/material/radio';
+import { OperationTenantGroupDetailComponent } from './components/operation-tenant-group-detail/operation-tenant-group-detail.component';
+import { OperationTenantGroupCreateComponent } from './components/operation-tenant-group-create/operation-tenant-group-create.component';
+import { CommonComponentsModule } from 'src/app/components/common-components.module';
 
 
 @NgModule({
@@ -44,6 +47,8 @@ import { MatRadioModule } from '@angular/material/radio';
     OperationConfirmDialogComponent,
     OperationTenantCreateComponent,
     OperationTenantDetailComponent,
+    OperationTenantGroupDetailComponent,
+    OperationTenantGroupCreateComponent,
   ],
   imports: [
     CommonModule,
@@ -64,6 +69,7 @@ import { MatRadioModule } from '@angular/material/radio';
     MatSelectModule,
     MatGridListModule,
     MatRadioModule,
+    CommonComponentsModule,
   ],
 })
 export class OperationModule {

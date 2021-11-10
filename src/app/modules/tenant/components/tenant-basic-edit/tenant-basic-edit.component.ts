@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { merge, Subscription } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { merge, Subject, Subscription } from 'rxjs';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Tenant } from 'src/app/services/tenant/api/responses';
@@ -10,11 +10,12 @@ import { TenantCreditCardBrandService } from 'src/app/services/tenant/api/tenant
   selector: 'app-tenant-basic-edit',
   templateUrl: './tenant-basic-edit.component.html',
   styleUrls: [ './tenant-basic-edit.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TenantBasicEditComponent implements OnInit, OnDestroy {
   s = new Subscription();
-  brands: { id: number; name: string; }[] = [];
-  detail: Tenant | null = null;
+  brands$ = new Subject<{ id: number; name: string; }[]>();
+  detail$ = new Subject<Tenant>();
 
   fg = new FormGroup({
     catch: new FormControl('', [ Validators.maxLength(30) ]),
@@ -154,9 +155,9 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
     this.s.add(
       this.tenantBasicService.modify({
         ...this.fg.value,
-        enable_receipt: this.fg.value === '1',
-        use_timetable: this.fg.value === '1',
-        enable_edit_timetable_on_cast: this.fg.value === '1',
+        enable_receipt: this.fg.get('enable_receipt')?.value === '1',
+        use_timetable: this.fg.get('use_timetable')?.value === '1',
+        enable_edit_timetable_on_cast: this.fg.get('enable_edit_timetable_on_cast')?.value === '1',
         form_email: this.useForm.value === '1' ? this.fg.get('form_email')?.value ?? '' : undefined,
         password: this.fg.get('password')?.value ? this.fg.get('password')?.value : null,
       })
@@ -191,35 +192,36 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
   }
 
   private updateByResponse(res: Tenant) {
-    this.detail = res;
+    this.detail$.next(res);
     this.fg.reset();
     this.fg.patchValue({
-      ...this.detail,
-      tel: this.detail.tels?.map(t => t.tel),
-      line_id: this.detail.line?.line_id,
-      line_url: this.detail.line?.line_id,
-      form_email: this.detail.form?.email,
-      open_time: this.detail.open_time.substr(0, 5),
-      open_time_duration: this.detail.open_time_duration.substr(0, 5),
-      reception_time: this.detail.reception_time.substr(0, 5),
-      reception_time_duration: this.detail.reception_time_duration.substr(0, 5),
-      services: this.detail.services?.map(s => ({
+      ...res,
+      tel: res.tels?.map(t => t.tel),
+      line_id: res.line?.line_id,
+      line_url: res.line?.line_id,
+      form_email: res.form?.email,
+      open_time: res.open_time.substr(0, 5),
+      open_time_duration: res.open_time_duration.substr(0, 5),
+      reception_time: res.reception_time.substr(0, 5),
+      reception_time_duration: res.reception_time_duration.substr(0, 5),
+      services: res.services?.map(s => ({
         name: s.name,
         price: s.price,
       })),
-      credit_cards: this.detail.credit_cards?.map(c => c.id),
-      use_timetable: this.detail ? '1' : '0',
-      enable_edit_timetable_on_cast: this.detail ? '1' : '0',
+      credit_cards: res.credit_cards?.map(c => c.id),
+      enable_receipt: res.enable_receipt ? '1' : '0',
+      use_timetable: res.use_timetable ? '1' : '0',
+      enable_edit_timetable_on_cast: res.enable_edit_timetable_on_cast ? '1' : '0',
     }, { emitEvent: false });
 
-    const isOpen24h = this.detail.open_time === '00:00:00' && this.detail.open_time_duration === '24:00:00';
+    const isOpen24h = res.open_time === '00:00:00' && res.open_time_duration === '24:00:00';
     this.open24h.setValue(isOpen24h, { emitEvent: false });
     if (!isOpen24h) {
-      this.openTime.setValue(parseInt(this.detail.open_time.substr(0, 2), 10).toString(10), { emitEvent: false });
+      this.openTime.setValue(parseInt(res.open_time.substr(0, 2), 10).toString(10), { emitEvent: false });
       this.closeTime.setValue(
         (
-          parseInt(this.detail.open_time, 10) +
-          parseInt(this.detail.open_time_duration.substr(0, 2), 10)
+          parseInt(res.open_time, 10) +
+          parseInt(res.open_time_duration.substr(0, 2), 10)
         ).toString(10),
         { emitEvent: false },
       );
@@ -228,14 +230,14 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
       this.closeTime.disable({ emitEvent: false });
     }
 
-    const isReception24h = this.detail.reception_time === '00:00:00' && this.detail.reception_time_duration === '24:00:00';
+    const isReception24h = res.reception_time === '00:00:00' && res.reception_time_duration === '24:00:00';
     this.reception24h.setValue(isReception24h, { emitEvent: false });
     if (!isReception24h) {
-      this.receptionOpenTime.setValue(parseInt(this.detail.reception_time.substr(0, 2), 10).toString(10), { emitEvent: false });
+      this.receptionOpenTime.setValue(parseInt(res.reception_time.substr(0, 2), 10).toString(10), { emitEvent: false });
       this.receptionCloseTime.setValue(
         (
-          parseInt(this.detail.reception_time, 10) +
-          parseInt(this.detail.reception_time_duration.substr(0, 2), 10)
+          parseInt(res.reception_time, 10) +
+          parseInt(res.reception_time_duration.substr(0, 2), 10)
         ).toString(10),
         { emitEvent: false },
       );
@@ -244,14 +246,14 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
       this.receptionCloseTime.disable({ emitEvent: false });
     }
 
-    this.useForm.setValue(typeof this.detail.form?.email === 'undefined' ? '0' : '1', { emitEvent: false });
+    this.useForm.setValue(typeof res.form?.email === 'undefined' ? '0' : '1', { emitEvent: false });
 
     this.s.add(
       this.tenantCreditCardBrandService.list()
         .subscribe(res2 => {
           this.creditCardFormControlArray = [];
           res2.forEach((v, i) => {
-            const control = new FormControl(this.detail?.credit_cards?.some(c => c.id === v.id));
+            const control = new FormControl(res.credit_cards?.some(c => c.id === v.id));
             this.creditCardFormControlArray.push(control);
 
             this.s.add(
@@ -267,7 +269,7 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
             );
           });
 
-          this.brands = res2;
+          this.brands$.next(res2);
         }),
     );
   }

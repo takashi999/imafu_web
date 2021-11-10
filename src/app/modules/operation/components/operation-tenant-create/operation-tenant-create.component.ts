@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { merge, Subscription } from 'rxjs';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { OperationCreditCardBrandService } from 'src/app/services/operation/api/
   selector: 'app-operation-tenant-create',
   templateUrl: './operation-tenant-create.component.html',
   styleUrls: [ './operation-tenant-create.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OperationTenantCreateComponent implements OnInit, OnDestroy {
   s = new Subscription();
@@ -77,6 +78,7 @@ export class OperationTenantCreateComponent implements OnInit, OnDestroy {
     private router: Router,
     private operationTenantService: OperationTenantService,
     private operationCreditCardBrandService: OperationCreditCardBrandService,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {
   }
 
@@ -154,6 +156,8 @@ export class OperationTenantCreateComponent implements OnInit, OnDestroy {
           });
 
           this.brands = res;
+
+          this.changeDetectorRef.markForCheck();
         }),
     );
   }

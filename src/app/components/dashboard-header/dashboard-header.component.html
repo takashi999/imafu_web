@@ -1,0 +1,16 @@
+<header>
+  <h2 class="headline">
+    <button *ngIf="prevRouterLink" mat-icon-button mat-flat-button color="accent" [routerLink]="prevRouterLink">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span><ng-content></ng-content></span>
+  </h2>
+  <div class="spacer"></div>
+  <div class="actions" *ngIf="routerLink">
+    <div class="button">
+      <a [routerLink]="routerLink">
+        <button mat-flat-button color="primary">新規</button>
+      </a>
+    </div>
+  </div>
+</header>

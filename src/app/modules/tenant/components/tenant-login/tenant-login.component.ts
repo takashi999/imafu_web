@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { OperationAuthService } from 'src/app/services/operation/api/operation-auth.service';
@@ -8,7 +8,8 @@ import { TenantAuthService } from 'src/app/services/tenant/api/tenant-auth.servi
 @Component({
   selector: 'app-tenant-login',
   templateUrl: './tenant-login.component.html',
-  styleUrls: ['./tenant-login.component.scss']
+  styleUrls: ['./tenant-login.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TenantLoginComponent implements OnInit {
   hide = true;

@@ -1,8 +1,6 @@
 <mat-drawer-container class="container">
   <mat-drawer #drawer mode="over">
     <mat-action-list (click)="drawer.close()">
-      <mat-list-item routerLink="/sample-admin">ホーム</mat-list-item>
-      <mat-divider></mat-divider>
     </mat-action-list>
   </mat-drawer>
   <mat-drawer-content>
@@ -10,12 +8,9 @@
 
       <div class="toolbar">
         <mat-toolbar color="primary">
-          <button (click)="drawer.toggle()" *ngIf="operationAuthService.loggIn$() | async"
-                  class="example-icon"
-                  mat-icon-button>
-            <mat-icon>menu</mat-icon>
-          </button>
-          <span matRipple routerLink="/operation">管理画面</span>
+          <span matRipple routerLink="/operation">運営管理画面</span>
+          <div class="spacer"></div>
+          <button mat-raised-button color="accent" routerLink="/tenant">店舗管理画面へ</button>
         </mat-toolbar>
       </div>
       <div class="router-container">

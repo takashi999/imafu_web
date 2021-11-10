@@ -1,58 +1,65 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { OperationTenantGroupService } from 'src/app/services/operation/api/operation-tenant-group.service';
-import { Subscription } from 'rxjs';
-import { OperationTenant } from 'src/app/services/operation/api/responses';
-import { mergeMap } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
+import { OperationTenantGroup } from 'src/app/services/operation/api/responses';
+import { OperationConfirmService } from 'src/app/services/operation/operation-confirm.service';
+import { Router } from '@angular/router';
+import { TableListColumnType } from 'src/app/components/table-list/table-list.component';
 
 @Component({
   selector: 'app-operation-tenant-groups',
   templateUrl: './operation-tenant-groups.component.html',
   styleUrls: [ './operation-tenant-groups.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OperationTenantGroupsComponent implements OnInit, OnDestroy {
 
-  list$ = this.operationTenantGroupService.list();
-  rippleDisable = false;
+  list$ = new Subject<OperationTenantGroup[]>();
   s = new Subscription();
-  displayedColumns = [
-    'id',
-    'name',
+  displayedColumns: TableListColumnType<OperationTenantGroup>[] = [
+    {
+      key: 'id',
+      label: 'ID',
+    },
+    {
+      key: 'name',
+      label: '店舗グループ名',
+    },
+    {
+      key: 'delete',
+    },
   ];
 
   constructor(
     private operationTenantGroupService: OperationTenantGroupService,
+    private operationConfirmService: OperationConfirmService,
+    private router: Router,
   ) {
   }
 
+  getNameFn = (v: OperationTenantGroup) => v.name;
+
   ngOnInit(): void {
+    this.s.add(
+      this.operationTenantGroupService.list()
+        .subscribe(res => this.list$.next(res)),
+    );
   }
 
   ngOnDestroy() {
     this.s.unsubscribe();
   }
 
-  onClickDelete(e: Event, data: OperationTenant) {
-    e.stopPropagation();
-    // this.onDelete(data.id, data.name);
+  onDelete(data: OperationTenantGroup) {
+    this.s.add(
+      this.operationTenantGroupService.delete(data.id)
+        .subscribe((res) => {
+          this.list$.next(res);
+        }),
+    );
   }
 
-  onMouseEnter(e: MouseEvent) {
-    this.rippleDisable = true;
+  onClickRow(data: OperationTenantGroup) {
+    this.router.navigateByUrl(`/operation/tenant-groups/${ data.id }`);
   }
-
-  onMouseLeave(e: MouseEvent) {
-    this.rippleDisable = false;
-  }
-
-  // onDelete(id: number, name: string) {
-  //   this.s.add(
-  //     this.operationConfirmService.open(`${ name }を削除しますか？`)
-  //       .pipe(
-  //         mergeMap(() => this.operationTenantService.delete(id)),
-  //       )
-  //       .subscribe(() => {
-  //         this.list$ = this.operationTenantService.list();
-  //       }),
-  //   );
-  // }
 }

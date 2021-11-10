@@ -1,10 +1,5 @@
 <ng-container *ngIf="detail">
-  <h2>
-    <button mat-icon-button mat-flat-button color="accent" routerLink="../">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    ユーザ編集: #{{ detail.id }}[ {{ detail.login_id }} ]
-  </h2>
+  <app-dashboard-header prevRouterLink="../">ユーザ編集: #{{ detail.id }}[ {{ detail.login_id }} ]</app-dashboard-header>
   <mat-card>
     <form [formGroup]="fg" (ngSubmit)="onSub()">
       <mat-card-content>

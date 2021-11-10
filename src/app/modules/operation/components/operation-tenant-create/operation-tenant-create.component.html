@@ -1,9 +1,4 @@
-<h2>
-  <button mat-icon-button mat-flat-button color="accent" routerLink="../">
-    <mat-icon>arrow_back</mat-icon>
-  </button>
-  店舗作成
-</h2>
+<app-dashboard-header prevRouterLink="../">店舗作成</app-dashboard-header>
 <mat-card>
   <form [formGroup]="fg" (ngSubmit)="onSub()">
     <mat-card-content>

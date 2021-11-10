@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit , ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { OperationUserRoleService } from 'src/app/services/operation/api/operati
   selector: 'app-operation-user-create',
   templateUrl: './operation-user-create.component.html',
   styleUrls: [ './operation-user-create.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OperationUserCreateComponent implements OnInit, OnDestroy {
   s = new Subscription();
