@@ -14,6 +14,8 @@ import { OperationTenantDetailComponent } from 'src/app/modules/operation/compon
 import { OperationTenantCreateComponent } from 'src/app/modules/operation/components/operation-tenant-create/operation-tenant-create.component';
 import { OperationTenantGroupDetailComponent } from 'src/app/modules/operation/components/operation-tenant-group-detail/operation-tenant-group-detail.component';
 import { OperationTenantGroupCreateComponent } from 'src/app/modules/operation/components/operation-tenant-group-create/operation-tenant-group-create.component';
+import { OperationTenantUserDetailComponent } from 'src/app/modules/operation/components/operation-tenant-user-detail/operation-tenant-user-detail.component';
+import { OperationTenantUserCreateComponent } from 'src/app/modules/operation/components/operation-tenant-user-create/operation-tenant-user-create.component';
 
 const routes: Routes = [
   {
@@ -59,6 +61,14 @@ const routes: Routes = [
           {
             path: 'tenants/:tenant_id',
             component: OperationTenantDetailComponent,
+          },
+          {
+            path: 'tenants/:tenant_id/users/create',
+            component: OperationTenantUserCreateComponent,
+          },
+          {
+            path: 'tenants/:tenant_id/users/:tenant_user_id',
+            component: OperationTenantUserDetailComponent,
           },
           {
             path: 'tenant-groups',

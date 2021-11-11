@@ -8,6 +8,12 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { DashboardHeaderComponent } from './dashboard-header/dashboard-header.component';
+import { DashboardTimeRangeFormComponent } from './dashboard-time-range-form/dashboard-time-range-form.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,6 +21,7 @@ import { DashboardHeaderComponent } from './dashboard-header/dashboard-header.co
     AppComponent,
     TableListComponent,
     DashboardHeaderComponent,
+    DashboardTimeRangeFormComponent,
   ],
   imports: [
     CommonModule,
@@ -29,11 +36,17 @@ import { DashboardHeaderComponent } from './dashboard-header/dashboard-header.co
     MatRippleModule,
     MatButtonModule,
     RouterModule,
+    MatCheckboxModule,
+    MatGridListModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    ReactiveFormsModule,
   ],
   exports: [
     AppComponent,
     TableListComponent,
     DashboardHeaderComponent,
+    DashboardTimeRangeFormComponent,
   ],
 })
 export class CommonComponentsModule {

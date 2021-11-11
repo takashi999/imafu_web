@@ -7,7 +7,6 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardHeaderComponent implements OnInit {
-  @Input() head = '';
   @Input() routerLink: any[] | string | null | undefined = null;
   @Input() prevRouterLink: any[] | string | null | undefined = null;
 

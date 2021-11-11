@@ -1,10 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { merge, Subscription } from 'rxjs';
-import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject, Subscription } from 'rxjs';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OperationTenantService } from 'src/app/services/operation/api/operation-tenant.service';
 import { OperationCreditCardBrandService } from 'src/app/services/operation/api/operation-credit-card-brand.service';
 import { OperationTenant } from 'src/app/services/operation/api/responses';
+import { OperationTenantUserService } from 'src/app/services/operation/api/operation-tenant-user.service';
+import { TenantUser } from 'src/app/services/tenant/api/responses';
+import { TableListColumnType } from 'src/app/components/table-list/table-list.component';
 
 @Component({
   selector: 'app-operation-tenant-detail',
@@ -15,9 +18,9 @@ import { OperationTenant } from 'src/app/services/operation/api/responses';
 export class OperationTenantDetailComponent implements OnInit, OnDestroy {
   s = new Subscription();
   brands: { id: number; name: string; }[] = [];
-  hidePassword = true;
   id: number | null = null;
   detail: OperationTenant | null = null;
+  users$: Subject<TenantUser[]> = new Subject();
 
   fg = new FormGroup({
     name: new FormControl('', [ Validators.required, Validators.maxLength(100) ]),
@@ -46,22 +49,12 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
     note: new FormControl('', [ Validators.maxLength(200) ]),
     use_timetable: new FormControl('0', [ Validators.required ]),
     enable_edit_timetable_on_cast: new FormControl('1', [ Validators.required ]),
-    login_id: new FormControl('', [ Validators.required, Validators.minLength(1), Validators.maxLength(16) ]),
-    password: new FormControl('', [ Validators.minLength(8), Validators.maxLength(100) ]),
   });
-  openTime = new FormControl('');
-  closeTime = new FormControl('');
-  open24h = new FormControl(false);
-  receptionOpenTime = new FormControl('');
-  receptionCloseTime = new FormControl('');
-  reception24h = new FormControl(false);
+  openTimeCombined = new FormControl([ '', '' ]);
+  receptionTimeCombined = new FormControl([ '', '' ]);
   useForm = new FormControl('0');
 
   creditCardFormControlArray: FormControl[] = [];
-
-  startTimeOptions = new Array(23)
-    .fill(0)
-    .map((v, i) => `0${ i + 1 }`.substr(-2, 2));
 
   costSelections = [
     { value: 0, label: '4,999円以下' },
@@ -76,11 +69,26 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
     { value: 30000, label: '30,000円以上' },
   ];
 
+  displayUserColumns: TableListColumnType<TenantUser>[] = [
+    {
+      key: 'id',
+      label: 'ID',
+    },
+    {
+      key: 'login_id',
+      label: 'ログインID',
+    },
+    {
+      key: 'delete',
+    },
+  ];
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private operationTenantService: OperationTenantService,
     private operationCreditCardBrandService: OperationCreditCardBrandService,
+    private operationTenantUserService: OperationTenantUserService,
     private changeDetectorRef: ChangeDetectorRef,
   ) {
   }
@@ -89,53 +97,25 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
     return (this.fg.get('services') as FormArray).controls as FormControl[];
   }
 
+  getUserNameFn = (v: TenantUser) => v.login_id;
+
   ngOnInit(): void {
     this.s.add(
-      this.open24h.valueChanges
-        .subscribe(res => {
-          if (res) {
-            this.openTime.disable({ emitEvent: false });
-            this.closeTime.disable({ emitEvent: false });
-            this.set24Hour('open_time', 'open_time_duration');
-          } else {
-            this.openTime.enable({ emitEvent: false });
-            this.closeTime.enable({ emitEvent: false });
-            this.setFromOpenAndClose('open_time', 'open_time_duration', this.openTime, this.closeTime);
-          }
-        }),
-    );
-    this.s.add(
-      this.reception24h.valueChanges
-        .subscribe(res => {
-          if (res) {
-            this.receptionOpenTime.disable({ emitEvent: false });
-            this.receptionCloseTime.disable({ emitEvent: false });
-            this.set24Hour('reception_time', 'reception_time_duration');
-          } else {
-            this.receptionOpenTime.enable({ emitEvent: false });
-            this.receptionCloseTime.enable({ emitEvent: false });
-            this.setFromOpenAndClose('reception_time', 'reception_time_duration', this.receptionOpenTime, this.receptionCloseTime);
-          }
-        }),
-    );
-
-    this.s.add(
-      merge(
-        this.openTime.valueChanges,
-        this.closeTime.valueChanges,
-      ).subscribe(() => {
-        this.setFromOpenAndClose('open_time', 'open_time_duration', this.openTime, this.closeTime);
+      this.openTimeCombined.valueChanges.subscribe(([ open_time, open_time_duration ]) => {
+        this.fg.patchValue({
+          open_time: open_time,
+          open_time_duration: open_time_duration,
+        }, { emitEvent: false });
       }),
     );
     this.s.add(
-      merge(
-        this.receptionOpenTime.valueChanges,
-        this.receptionCloseTime.valueChanges,
-      ).subscribe(() => {
-        this.setFromOpenAndClose('reception_time', 'reception_time_duration', this.receptionOpenTime, this.receptionCloseTime);
+      this.receptionTimeCombined.valueChanges.subscribe(([ reception_time, reception_time_duration ]) => {
+        this.fg.patchValue({
+          reception_time: reception_time,
+          reception_time_duration: reception_time_duration,
+        }, { emitEvent: false });
       }),
     );
-
 
     this.s.add(
       this.activatedRoute.paramMap.subscribe(param => {
@@ -145,6 +125,14 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
           return;
         }
         this.id = parsed;
+
+        this.s.add(
+          this.operationTenantUserService.list(this.id)
+            .subscribe(res => {
+              this.users$.next(res);
+            }),
+        );
+
         this.s.add(
           this.operationTenantService.get(this.id)
             .subscribe(res => {
@@ -153,7 +141,7 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
                 ...this.detail,
                 tel: this.detail.tels?.map(t => t.tel),
                 line_id: this.detail.line?.line_id,
-                line_url: this.detail.line?.line_id,
+                line_url: this.detail.line?.line_url,
                 form_email: this.detail.form?.email,
                 open_time: this.detail.open_time.substr(0, 5),
                 open_time_duration: this.detail.open_time_duration.substr(0, 5),
@@ -167,42 +155,12 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
                 enable_receipt: this.detail.enable_receipt ? '1' : '0',
                 use_timetable: this.detail.use_timetable ? '1' : '0',
                 enable_edit_timetable_on_cast: this.detail.enable_edit_timetable_on_cast ? '1' : '0',
-                login_id: this.detail.users?.[0]?.login_id,
               }, { emitEvent: false });
 
-              const isOpen24h = this.detail.open_time === '00:00:00' && this.detail.open_time_duration === '24:00:00';
-              this.open24h.setValue(isOpen24h, { emitEvent: false });
-              if (!isOpen24h) {
-                this.openTime.setValue(parseInt(this.detail.open_time.substr(0, 2), 10).toString(10), { emitEvent: false });
-                this.closeTime.setValue(
-                  (
-                    parseInt(this.detail.open_time, 10) +
-                    parseInt(this.detail.open_time_duration.substr(0, 2), 10)
-                  ).toString(10),
-                  { emitEvent: false },
-                );
-              } else {
-                this.openTime.disable({ emitEvent: false });
-                this.closeTime.disable({ emitEvent: false });
-              }
-
-              const isReception24h = this.detail.reception_time === '00:00:00' && this.detail.reception_time_duration === '24:00:00';
-              this.reception24h.setValue(isReception24h, { emitEvent: false });
-              if (!isReception24h) {
-                this.receptionOpenTime.setValue(parseInt(this.detail.reception_time.substr(0, 2), 10).toString(10), { emitEvent: false });
-                this.receptionCloseTime.setValue(
-                  (
-                    parseInt(this.detail.reception_time, 10) +
-                    parseInt(this.detail.reception_time_duration.substr(0, 2), 10)
-                  ).toString(10),
-                  { emitEvent: false },
-                );
-              } else {
-                this.receptionOpenTime.disable({ emitEvent: false });
-                this.receptionCloseTime.disable({ emitEvent: false });
-              }
-
               this.useForm.setValue(typeof this.detail.form?.email === 'undefined' ? '0' : '1', { emitEvent: false });
+
+              this.openTimeCombined.setValue([ this.detail.open_time.substr(0, 5), this.detail.open_time_duration.substr(0, 5) ], { emitEvent: false });
+              this.receptionTimeCombined.setValue([ this.detail.reception_time.substr(0, 5), this.detail.reception_time_duration.substr(0, 5) ], { emitEvent: false });
 
               this.s.add(
                 this.operationCreditCardBrandService.list()
@@ -241,14 +199,6 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
     this.s.unsubscribe();
   }
 
-  getEndTimeOptions(startHour: string) {
-    const parsed = parseInt(startHour, 10);
-    const startHourNum = isNaN(parsed) ? 1 : parsed;
-    return new Array(24 - startHourNum)
-      .fill(0)
-      .map((v, i) => `0${ i + 1 + startHourNum }`.substr(-2, 2));
-  }
-
   onSub() {
     if (this.id != null) {
       this.s.add(
@@ -258,7 +208,6 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
           use_timetable: this.fg.get('use_timetable')?.value === '1',
           enable_edit_timetable_on_cast: this.fg.get('enable_edit_timetable_on_cast')?.value === '1',
           form_email: this.useForm.value === '1' ? this.fg.get('form_email')?.value ?? '' : undefined,
-          password: this.fg.get('password')?.value ? this.fg.get('password')?.value : null,
         })
           .subscribe((res) => {
             this.router.navigateByUrl('/operation/tenants');
@@ -267,28 +216,14 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  private set24Hour(startKey: string, durationKey: string) {
-    this.fg.patchValue({
-      [startKey]: '00:00',
-      [durationKey]: '24:00',
-    }, { emitEvent: false });
+  onClickUserRow(data: TenantUser) {
+    this.router.navigateByUrl(`/operation/tenants/${ data.tenant_id }/users/${ data.id }`);
   }
 
-  private setFromOpenAndClose(startKey: string, durationKey: string, startControl: AbstractControl, endControl: AbstractControl) {
-    const startHour = parseInt(startControl.value, 10);
-    const endHour = parseInt(endControl.value, 10);
-
-    if (isNaN(startHour) || isNaN(endHour)) {
-      this.fg.patchValue({
-        [startKey]: ``,
-        [durationKey]: ``,
-      }, { emitEvent: false });
-    } else {
-      this.fg.patchValue({
-        [startKey]: `${ `0${ startControl.value }`.substr(-2, 2) }:00`,
-        [durationKey]: `${ `0${ parseInt(endControl.value, 10) - parseInt(startControl.value, 10) }`.substr(-2, 2) }:00`,
-      }, { emitEvent: false });
-    }
+  onDeleteUser(data: TenantUser) {
+    this.operationTenantUserService.delete(data.tenant_id, data.id)
+      .subscribe(res => {
+        this.users$.next(res);
+      });
   }
-
 }

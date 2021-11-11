@@ -32,6 +32,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { OperationTenantGroupDetailComponent } from './components/operation-tenant-group-detail/operation-tenant-group-detail.component';
 import { OperationTenantGroupCreateComponent } from './components/operation-tenant-group-create/operation-tenant-group-create.component';
 import { CommonComponentsModule } from 'src/app/components/common-components.module';
+import { OperationTenantUserDetailComponent } from './components/operation-tenant-user-detail/operation-tenant-user-detail.component';
+import { OperationTenantUserCreateComponent } from './components/operation-tenant-user-create/operation-tenant-user-create.component';
 
 
 @NgModule({
@@ -49,6 +51,8 @@ import { CommonComponentsModule } from 'src/app/components/common-components.mod
     OperationTenantDetailComponent,
     OperationTenantGroupDetailComponent,
     OperationTenantGroupCreateComponent,
+    OperationTenantUserDetailComponent,
+    OperationTenantUserCreateComponent,
   ],
   imports: [
     CommonModule,
@@ -71,6 +75,7 @@ import { CommonComponentsModule } from 'src/app/components/common-components.mod
     MatRadioModule,
     CommonComponentsModule,
   ],
+  exports: [],
 })
 export class OperationModule {
 }

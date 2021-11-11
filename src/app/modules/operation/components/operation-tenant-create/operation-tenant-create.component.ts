@@ -43,22 +43,13 @@ export class OperationTenantCreateComponent implements OnInit, OnDestroy {
     note: new FormControl('', [ Validators.maxLength(200) ]),
     use_timetable: new FormControl('0', [ Validators.required ]),
     enable_edit_timetable_on_cast: new FormControl('1', [ Validators.required ]),
-    login_id: new FormControl('', [ Validators.required, Validators.minLength(1), Validators.maxLength(16) ]),
-    password: new FormControl('', [ Validators.required, Validators.minLength(8), Validators.maxLength(100) ]),
   });
-  openTime = new FormControl('');
-  closeTime = new FormControl('');
-  open24h = new FormControl(false);
-  receptionOpenTime = new FormControl('');
-  receptionCloseTime = new FormControl('');
-  reception24h = new FormControl(false);
+  openTimeCombined = new FormControl(['',""]);
+  receptionTimeCombined = new FormControl(['',""]);
+
   useForm = new FormControl('0');
 
   creditCardFormControlArray: FormControl[] = [];
-
-  startTimeOptions = new Array(23)
-    .fill(0)
-    .map((v, i) => `0${ i + 1 }`.substr(-2, 2));
 
   costSelections = [
     { value: 0, label: '4,999円以下' },
@@ -88,51 +79,21 @@ export class OperationTenantCreateComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.s.add(
-      this.open24h.valueChanges
-        .subscribe(res => {
-          if (res) {
-            this.openTime.disable({ emitEvent: false });
-            this.closeTime.disable({ emitEvent: false });
-            this.set24Hour('open_time', 'open_time_duration');
-          } else {
-            this.openTime.enable({ emitEvent: false });
-            this.closeTime.enable({ emitEvent: false });
-            this.setFromOpenAndClose('open_time', 'open_time_duration', this.openTime, this.closeTime);
-          }
-        }),
-    );
+      this.openTimeCombined.valueChanges.subscribe(([open_time, open_time_duration])=>{
+        this.fg.patchValue({
+          open_time: open_time,
+          open_time_duration: open_time_duration,
+        }, { emitEvent: false });
+      })
+    )
     this.s.add(
-      this.reception24h.valueChanges
-        .subscribe(res => {
-          if (res) {
-            this.receptionOpenTime.disable({ emitEvent: false });
-            this.receptionCloseTime.disable({ emitEvent: false });
-            this.set24Hour('reception_time', 'reception_time_duration');
-          } else {
-            this.receptionOpenTime.enable({ emitEvent: false });
-            this.receptionCloseTime.enable({ emitEvent: false });
-            this.setFromOpenAndClose('reception_time', 'reception_time_duration', this.receptionOpenTime, this.receptionCloseTime);
-          }
-        }),
-    );
-
-    this.s.add(
-      merge(
-        this.openTime.valueChanges,
-        this.closeTime.valueChanges,
-      ).subscribe(() => {
-        this.setFromOpenAndClose('open_time', 'open_time_duration', this.openTime, this.closeTime);
-      }),
-    );
-    this.s.add(
-      merge(
-        this.receptionOpenTime.valueChanges,
-        this.receptionCloseTime.valueChanges,
-      ).subscribe(() => {
-        this.setFromOpenAndClose('reception_time', 'reception_time_duration', this.receptionOpenTime, this.receptionCloseTime);
-      }),
-    );
-
+      this.receptionTimeCombined.valueChanges.subscribe(([reception_time, reception_time_duration])=>{
+        this.fg.patchValue({
+          reception_time: reception_time,
+          reception_time_duration: reception_time_duration,
+        }, { emitEvent: false });
+      })
+    )
 
     this.s.add(
       this.operationCreditCardBrandService.list()

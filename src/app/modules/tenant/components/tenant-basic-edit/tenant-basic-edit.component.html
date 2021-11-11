@@ -42,53 +42,16 @@
             <input type="text" name="region" formControlName="region" matInput>
           </mat-form-field>
         </p>
-        <p>
-          <mat-checkbox [formControl]="open24h">24時間営業</mat-checkbox>
-        </p>
-        <mat-grid-list [cols]="2" [rowHeight]="80">
-          <mat-grid-tile>
-            <mat-form-field appearance="fill" hintLabel="">
-              <mat-label>営業開始時間</mat-label>
-              <mat-select [formControl]="openTime">
-                <mat-option *ngFor="let hour of startTimeOptions" [value]="hour | number">{{ hour }}:00</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <mat-form-field appearance="fill" hintLabel="">
-              <mat-label>営業終了時間</mat-label>
-              <mat-select [formControl]="closeTime">
-                <mat-option *ngFor="let hour of getEndTimeOptions(openTime.value)" [value]="hour | number">{{ hour }}:00
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </mat-grid-tile>
-        </mat-grid-list>
 
+        <app-dashboard-time-range-form
+          label="営業"
+          [formControl]="openTimeCombined"
+        ></app-dashboard-time-range-form>
 
-        <p>
-          <mat-checkbox [formControl]="reception24h">24時間受付</mat-checkbox>
-        </p>
-        <mat-grid-list [cols]="2" [rowHeight]="80">
-          <mat-grid-tile>
-            <mat-form-field appearance="fill" hintLabel="">
-              <mat-label>受付開始時間</mat-label>
-              <mat-select [formControl]="receptionOpenTime">
-                <mat-option *ngFor="let hour of startTimeOptions" [value]="hour | number">{{ hour }}:00</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <mat-form-field appearance="fill" hintLabel="">
-              <mat-label>受付終了時間</mat-label>
-              <mat-select [formControl]="receptionCloseTime">
-                <mat-option *ngFor="let hour of getEndTimeOptions(receptionOpenTime.value)"
-                            [value]="hour | number">{{ hour }}:00
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </mat-grid-tile>
-        </mat-grid-list>
+        <app-dashboard-time-range-form
+          label="受付"
+          [formControl]="receptionTimeCombined"
+        ></app-dashboard-time-range-form>
 
         <p>
           <mat-form-field appearance="fill" hintLabel="60文字">
@@ -170,7 +133,8 @@
           <mat-label>クレジットカード</mat-label>
         </p>
         <p>
-          <mat-checkbox [formControl]="creditCardFormControlArray[index]" *ngFor="let item of brands$ | async; let index = index"
+          <mat-checkbox [formControl]="creditCardFormControlArray[index]"
+                        *ngFor="let item of brands$ | async; let index = index"
           >{{ item.name }}</mat-checkbox>
         </p>
 

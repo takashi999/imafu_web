@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { merge, Subject, Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Tenant } from 'src/app/services/tenant/api/responses';
@@ -44,19 +44,12 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
     use_timetable: new FormControl('0', [ Validators.required ]),
     enable_edit_timetable_on_cast: new FormControl('1', [ Validators.required ]),
   });
-  openTime = new FormControl('');
-  closeTime = new FormControl('');
-  open24h = new FormControl(false);
-  receptionOpenTime = new FormControl('');
-  receptionCloseTime = new FormControl('');
-  reception24h = new FormControl(false);
+  openTimeCombined = new FormControl([ '', '' ]);
+  receptionTimeCombined = new FormControl([ '', '' ]);
+
   useForm = new FormControl('0');
 
   creditCardFormControlArray: FormControl[] = [];
-
-  startTimeOptions = new Array(23)
-    .fill(0)
-    .map((v, i) => `0${ i + 1 }`.substr(-2, 2));
 
   costSelections = [
     { value: 0, label: '4,999円以下' },
@@ -85,48 +78,19 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.s.add(
-      this.open24h.valueChanges
-        .subscribe(res => {
-          if (res) {
-            this.openTime.disable({ emitEvent: false });
-            this.closeTime.disable({ emitEvent: false });
-            this.set24Hour('open_time', 'open_time_duration');
-          } else {
-            this.openTime.enable({ emitEvent: false });
-            this.closeTime.enable({ emitEvent: false });
-            this.setFromOpenAndClose('open_time', 'open_time_duration', this.openTime, this.closeTime);
-          }
-        }),
-    );
-    this.s.add(
-      this.reception24h.valueChanges
-        .subscribe(res => {
-          if (res) {
-            this.receptionOpenTime.disable({ emitEvent: false });
-            this.receptionCloseTime.disable({ emitEvent: false });
-            this.set24Hour('reception_time', 'reception_time_duration');
-          } else {
-            this.receptionOpenTime.enable({ emitEvent: false });
-            this.receptionCloseTime.enable({ emitEvent: false });
-            this.setFromOpenAndClose('reception_time', 'reception_time_duration', this.receptionOpenTime, this.receptionCloseTime);
-          }
-        }),
-    );
-
-    this.s.add(
-      merge(
-        this.openTime.valueChanges,
-        this.closeTime.valueChanges,
-      ).subscribe(() => {
-        this.setFromOpenAndClose('open_time', 'open_time_duration', this.openTime, this.closeTime);
+      this.openTimeCombined.valueChanges.subscribe(([ open_time, open_time_duration ]) => {
+        this.fg.patchValue({
+          open_time: open_time,
+          open_time_duration: open_time_duration,
+        }, { emitEvent: false });
       }),
     );
     this.s.add(
-      merge(
-        this.receptionOpenTime.valueChanges,
-        this.receptionCloseTime.valueChanges,
-      ).subscribe(() => {
-        this.setFromOpenAndClose('reception_time', 'reception_time_duration', this.receptionOpenTime, this.receptionCloseTime);
+      this.receptionTimeCombined.valueChanges.subscribe(([ reception_time, reception_time_duration ]) => {
+        this.fg.patchValue({
+          reception_time: reception_time,
+          reception_time_duration: reception_time_duration,
+        }, { emitEvent: false });
       }),
     );
 
@@ -198,7 +162,7 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
       ...res,
       tel: res.tels?.map(t => t.tel),
       line_id: res.line?.line_id,
-      line_url: res.line?.line_id,
+      line_url: res.line?.line_url,
       form_email: res.form?.email,
       open_time: res.open_time.substr(0, 5),
       open_time_duration: res.open_time_duration.substr(0, 5),
@@ -214,39 +178,9 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
       enable_edit_timetable_on_cast: res.enable_edit_timetable_on_cast ? '1' : '0',
     }, { emitEvent: false });
 
-    const isOpen24h = res.open_time === '00:00:00' && res.open_time_duration === '24:00:00';
-    this.open24h.setValue(isOpen24h, { emitEvent: false });
-    if (!isOpen24h) {
-      this.openTime.setValue(parseInt(res.open_time.substr(0, 2), 10).toString(10), { emitEvent: false });
-      this.closeTime.setValue(
-        (
-          parseInt(res.open_time, 10) +
-          parseInt(res.open_time_duration.substr(0, 2), 10)
-        ).toString(10),
-        { emitEvent: false },
-      );
-    } else {
-      this.openTime.disable({ emitEvent: false });
-      this.closeTime.disable({ emitEvent: false });
-    }
-
-    const isReception24h = res.reception_time === '00:00:00' && res.reception_time_duration === '24:00:00';
-    this.reception24h.setValue(isReception24h, { emitEvent: false });
-    if (!isReception24h) {
-      this.receptionOpenTime.setValue(parseInt(res.reception_time.substr(0, 2), 10).toString(10), { emitEvent: false });
-      this.receptionCloseTime.setValue(
-        (
-          parseInt(res.reception_time, 10) +
-          parseInt(res.reception_time_duration.substr(0, 2), 10)
-        ).toString(10),
-        { emitEvent: false },
-      );
-    } else {
-      this.receptionOpenTime.disable({ emitEvent: false });
-      this.receptionCloseTime.disable({ emitEvent: false });
-    }
-
     this.useForm.setValue(typeof res.form?.email === 'undefined' ? '0' : '1', { emitEvent: false });
+    this.openTimeCombined.setValue([ res.open_time.substr(0, 5), res.open_time_duration.substr(0, 5) ], { emitEvent: false });
+    this.receptionTimeCombined.setValue([ res.reception_time.substr(0, 5), res.reception_time_duration.substr(0, 5) ], { emitEvent: false });
 
     this.s.add(
       this.tenantCreditCardBrandService.list()
