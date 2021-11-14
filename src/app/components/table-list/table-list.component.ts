@@ -3,7 +3,12 @@ import { DataSource } from '@angular/cdk/collections';
 import { Observable, Subscription } from 'rxjs';
 import { OperationConfirmService } from 'src/app/services/operation/operation-confirm.service';
 
-type TableListColumnBaseType<T> = { key: keyof T | string, label: string }
+type TableListColumnBaseType<T, K extends keyof T | string = keyof T | string> = {
+  key: K;
+  label: string;
+  transform?: (v: any) => string;
+  type?: 'image';
+}
 export type TableListColumnType<T> = (TableListColumnBaseType<T> | { key: 'delete' })
 
 

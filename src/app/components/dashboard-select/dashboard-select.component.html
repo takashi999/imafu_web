@@ -1,0 +1,8 @@
+<p>
+  <mat-form-field appearance="fill" [hintLabel]="hintLabel">
+    <mat-label><ng-content></ng-content></mat-label>
+    <mat-select [formControl]="fc">
+      <mat-option *ngFor="let item of selects" [value]="item.value">{{ item.label }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</p>

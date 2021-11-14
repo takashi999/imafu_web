@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OperationTenantUserService } from 'src/app/services/operation/api/operation-tenant-user.service';
 import { mergeMap } from 'rxjs/operators';
+import { maxLength16Validator, passwordValidators } from 'src/app/validators/common-validators';
 
 @Component({
   selector: 'app-operation-tenant-user-detail',
@@ -26,8 +27,8 @@ export class OperationTenantUserDetailComponent implements OnInit, OnDestroy {
   );
 
   fg = new FormGroup({
-    login_id: new FormControl('', [ Validators.required, Validators.minLength(1), Validators.maxLength(16) ]),
-    password: new FormControl('', [ Validators.minLength(8), Validators.maxLength(100) ]),
+    login_id: new FormControl('', [ Validators.required, maxLength16Validator ]),
+    password: new FormControl('', [ ...passwordValidators ]),
   });
 
   constructor(

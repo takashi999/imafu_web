@@ -5,6 +5,7 @@ import { mergeMap } from 'rxjs/operators';
 import { OperationTenantGroupService } from 'src/app/services/operation/api/operation-tenant-group.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { OperationTenantGroup } from 'src/app/services/operation/api/responses';
+import { maxLength100Validator } from 'src/app/validators/common-validators';
 
 @Component({
   selector: 'app-operation-tenant-group-detail',
@@ -20,7 +21,7 @@ export class OperationTenantGroupDetailComponent implements OnInit, OnDestroy {
   fg = new FormGroup({
     name: new FormControl('', [
       Validators.required,
-      Validators.maxLength(100),
+      maxLength100Validator,
     ]),
   });
 

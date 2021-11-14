@@ -1,0 +1,291 @@
+  <app-dashboard-header prevRouterLink="../">キャスト</app-dashboard-header>
+  <mat-card>
+    <form [formGroup]="fg" (ngSubmit)="onSub()">
+      <mat-card-content>
+        <app-dashboard-select
+          formControlName="publish"
+          name="publish"
+          [selects]="[{value: '1', label: '公開'}, {value: '0', label: '非公開'}]"
+        >公開ステータス</app-dashboard-select>
+
+        <app-dashboard-input
+          formControlName="display_name"
+          name="display_name"
+        >
+          名前
+        </app-dashboard-input>
+
+        <app-dashboard-input
+          formControlName="display_name_kana"
+          name="display_name_kana"
+        >名前検索用（かな）
+        </app-dashboard-input>
+        <app-dashboard-select
+          formControlName="is_use_original_image"
+          name="is_use_original_image"
+          [selects]="originalSelects"
+        >画像選択
+        </app-dashboard-select>
+        <app-dashboard-select
+          formControlName="is_opened_face"
+          name="is_opened_face"
+          [selects]="mosaicSelects"
+        >顔出し
+        </app-dashboard-select>
+
+        <ng-container>
+          <h3 mat-subheader>画像</h3>
+          <p>
+            <mat-label>画像を追加</mat-label>
+          </p>
+          <p>
+            <input type="file" multiple name="image" (change)="onChangeFiles(imageFileInput.files)" #imageFileInput>
+          </p>
+          <ng-container *ngFor="let image of files; let index = index">
+            <p>
+              <img *ngIf="fileUrls && fileUrls[index]" [src]="fileUrls[index]" alt="">
+              <button type="button" mat-button mat-icon-button (click)="onDeleteFile(index)">
+                <mat-icon>close</mat-icon>
+              </button>
+            </p>
+            <p>
+              <mat-label>画像を変更</mat-label>
+            </p>
+            <p>
+              <input type="file" name="image"
+                     (change)="onChangeFile(index, imageFileInput.files ? imageFileInput.files[0] : null)"
+                     #imageFileInput>
+            </p>
+          </ng-container>
+        </ng-container>
+
+        <app-dashboard-select
+          formControlName="is_newbie"
+          name="is_newbie"
+          [selects]="yesOrNoSelects"
+        >新人
+        </app-dashboard-select>
+        <app-dashboard-select
+          formControlName="is_trial"
+          name="is_trial"
+          [selects]="yesOrNoSelects"
+        >体験入店
+        </app-dashboard-select>
+        <app-dashboard-select
+          formControlName="age"
+          name="age"
+          [selects]="ageSelects"
+        >年齢
+        </app-dashboard-select>
+        <app-dashboard-select
+          formControlName="height"
+          name="height"
+          [selects]="heightSelects"
+        >身長
+        </app-dashboard-select>
+        <app-dashboard-select
+          formControlName="bust"
+          name="bust"
+          [selects]="bustSelects"
+        >B
+        </app-dashboard-select>
+        <app-dashboard-select
+          formControlName="cup"
+          name="cup"
+          [selects]="cupSelects"
+        >カップ
+        </app-dashboard-select>
+        <app-dashboard-select
+          formControlName="waist"
+          name="waist"
+          [selects]="waistSelects"
+        >W
+        </app-dashboard-select>
+        <app-dashboard-select
+          formControlName="hip"
+          name="hip"
+          [selects]="hipSelects"
+        >H
+        </app-dashboard-select>
+        <app-dashboard-select
+          formControlName="blood_type"
+          name="blood_type"
+          [selects]="bloodSelects"
+        >血液型
+        </app-dashboard-select>
+
+        <app-dashboard-checkbox
+          formControlName="types"
+          [selects]="typesSelects"
+        >タイプ
+        </app-dashboard-checkbox>
+
+        <app-dashboard-select
+          formControlName="style"
+          name="style"
+          [selects]="styleSelects"
+        >スタイル
+        </app-dashboard-select>
+
+        <app-dashboard-select
+          formControlName="is_smoker"
+          name="is_smoker"
+          [selects]="doSelects"
+        >喫煙
+        </app-dashboard-select>
+        <app-dashboard-select
+          formControlName="is_irezumi"
+          name="is_irezumi"
+          [selects]="booleanWithNullSelects"
+        >入墨
+        </app-dashboard-select>
+        <app-dashboard-select
+          formControlName="is_tattoo"
+          name="is_tattoo"
+          [selects]="booleanWithNullSelects"
+        >タトゥー
+        </app-dashboard-select>
+        <app-dashboard-select
+          formControlName="is_shiohuki"
+          name="is_shiohuki"
+          [selects]="yesOrNoSelects"
+        >潮吹き
+        </app-dashboard-select>
+        <app-dashboard-select
+          formControlName="is_paipan"
+          name="is_paipan"
+          [selects]="yesOrNoSelects"
+        >パイパン
+        </app-dashboard-select>
+        <app-dashboard-select
+          formControlName="is_pregnant"
+          name="is_pregnant"
+          [selects]="yesOrNoSelects"
+        >妊婦
+        </app-dashboard-select>
+
+        <p>
+          <mat-label>誕生日</mat-label>
+          <mat-grid-list [cols]="2" rowHeight="80">
+            <mat-grid-tile>
+              <app-dashboard-select
+                formControlName="birth_month"
+                name="birth_month"
+                [selects]="monthSelects"
+              >月
+              </app-dashboard-select>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <app-dashboard-select
+                formControlName="birth_date"
+                name="birth_date"
+                [selects]="dateSelects"
+              >日
+              </app-dashboard-select>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </p>
+
+        <app-dashboard-input
+          formControlName="similar_famous"
+          name="similar_famous"
+        >似ている芸能人
+        </app-dashboard-input>
+        <app-dashboard-input
+          formControlName="similar_famous_kana"
+          name="similar_famous_kana"
+        >似ている芸能人（かな）
+        </app-dashboard-input>
+        <app-dashboard-select
+          formControlName="sm_barometer"
+          name="sm_barometer"
+          [selects]="smSelects"
+        >SMバロメーター
+        </app-dashboard-select>
+        <app-dashboard-textarea
+          formControlName="message"
+          name="message"
+        >メッセージ
+        </app-dashboard-textarea>
+        <app-dashboard-select
+          formControlName="is_use_photo_diary"
+          name="is_use_photo_diary"
+          [selects]="useSelects"
+        >写メール日記
+        </app-dashboard-select>
+        <app-dashboard-input
+          formControlName="login_id"
+          name="login_id"
+        >ログインID
+        </app-dashboard-input>
+        <app-dashboard-input
+          formControlName="password"
+          name="password"
+          [isPassword]="true"
+        >パスワード
+        </app-dashboard-input>
+        <app-dashboard-select
+          formControlName="is_use_video_diary"
+          name="is_use_video_diary"
+          [selects]="useSelects"
+        >写メ動画
+        </app-dashboard-select>
+        <app-dashboard-select
+          formControlName="is_use_fan_letter"
+          name="is_use_fan_letter"
+          [selects]="useSelects"
+        >ファンレター
+        </app-dashboard-select>
+
+        <p>
+          <mat-label>詳細情報</mat-label>
+        </p>
+        <mat-grid-list [cols]="7" [rowHeight]="150" formArrayName="details">
+          <ng-container *ngFor="let item of detailsFormArray.controls; let index = index" [formGroupName]="index">
+            <mat-grid-tile [colspan]="2"></mat-grid-tile>
+            <mat-grid-tile [colspan]="2">
+              <app-dashboard-textarea
+                [name]="'title-' + (index + 1)"
+                formControlName="title"
+                [rows]="5"
+                [autoResize]="false"
+              >
+                タイトル{{ index + 1 }}
+              </app-dashboard-textarea>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2">
+              <app-dashboard-textarea
+                [name]="'detail-' + (index + 1)"
+                formControlName="detail"
+                [rows]="5"
+                [autoResize]="false"
+              >
+                本文{{ index + 1 }}
+              </app-dashboard-textarea>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="1">
+              <button *ngIf="detailsFormArray.length > 1" type="button" mat-button mat-icon-button
+                      (click)="detailsFormArray.removeAt(index)">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-grid-tile>
+          </ng-container>
+        </mat-grid-list>
+        <p *ngIf="detailsFormArray.length < detailFormArrayMax">
+          <button type="button" mat-flat-button color="accent" (click)="onPushDetail()">項目を追加</button>
+        </p>
+
+
+        <app-dashboard-checkbox
+          formControlName="services"
+          [selects]="servicesSelects"
+        >可能サービス
+        </app-dashboard-checkbox>
+
+
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-button color="primary" [disabled]="fg.invalid">作成</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>

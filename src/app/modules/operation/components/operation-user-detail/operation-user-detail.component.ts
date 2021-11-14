@@ -5,6 +5,7 @@ import { OperationStaffService } from 'src/app/services/operation/api/operation-
 import { OperationUser } from 'src/app/services/operation/api/responses';
 import { OperationUserRoleService } from 'src/app/services/operation/api/operation-user-role.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { maxLength16Validator, passwordValidators } from 'src/app/validators/common-validators';
 
 @Component({
   selector: 'app-operation-user-detail',
@@ -21,8 +22,8 @@ export class OperationUserDetailComponent implements OnInit, OnDestroy {
   hidePassword = true;
 
   fg = new FormGroup({
-    login_id: new FormControl('', [ Validators.required, Validators.minLength(1), Validators.maxLength(16) ]),
-    password: new FormControl('', [ Validators.minLength(8), Validators.maxLength(100) ]),
+    login_id: new FormControl('', [ Validators.required, maxLength16Validator ]),
+    password: new FormControl('', [ ...passwordValidators ]),
     role_id: new FormControl('', [ Validators.required ]),
   });
 

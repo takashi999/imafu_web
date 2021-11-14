@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { OperationConfirmDialogComponent } from 'src/app/modules/operation/components/operation-confirm-dialog/operation-confirm-dialog.component';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: MatDialogModule,
+  providedIn: 'root',
 })
 export class OperationConfirmService {
 

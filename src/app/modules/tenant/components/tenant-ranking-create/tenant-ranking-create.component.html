@@ -1,0 +1,80 @@
+<app-dashboard-header prevRouterLink="../">ランキング</app-dashboard-header>
+<mat-card>
+  <form [formGroup]="fg" (ngSubmit)="onSub()">
+    <mat-card-content>
+      <app-dashboard-select
+        formControlName="is_publish_on_top"
+        name="is_publish_on_top"
+        [selects]="topSelects"
+      >トップ公開
+      </app-dashboard-select>
+
+      <app-dashboard-select
+        formControlName="publish"
+        name="publish"
+        [selects]="[{value: '1', label: '公開'}, {value: '0', label: '非公開'}]"
+      >公開ステータス
+      </app-dashboard-select>
+
+      <app-dashboard-input
+        formControlName="title"
+        name="title"
+      >
+        タイトル
+      </app-dashboard-input>
+      <app-dashboard-textarea
+        formControlName="comment"
+        name="comment"
+      >
+        コメント
+      </app-dashboard-textarea>
+
+      <ng-container>
+        <h3 mat-subheader>画像</h3>
+        <ng-container>
+          <p>
+            <img *ngIf="fileUrl" [src]="fileUrl" alt="">
+          </p>
+          <p>
+            <mat-label>画像を変更</mat-label>
+          </p>
+          <p>
+            <input type="file" name="thumbnail"
+                   (change)="onChangeFile(imageFileInput.files?.[0])"
+                   #imageFileInput>
+          </p>
+        </ng-container>
+      </ng-container>
+
+      <ng-container formArrayName="casts">
+        <h3 mat-subheader>ランキング</h3>
+        <div *ngFor="let item of castsFormArray.controls; let index = index" [formGroupName]="index">
+          <p>
+            #{{ index + 1 }}: {{ casts[item.value.id]?.display_name }}
+          </p>
+          <app-dashboard-textarea formControlName="comment" name="comment">コメント</app-dashboard-textarea>
+          <p>
+            <button mat-stroked-button color="warn" (click)="castsFormArray.removeAt(index)">ランキングから削除</button>
+          </p>
+          <p>
+            <mat-divider></mat-divider>
+          </p>
+          <br>
+        </div>
+      </ng-container>
+
+      <app-dashboard-select
+        [selects]="castsSelects"
+        [formControl]="selectedCast"
+      >キャスト
+      </app-dashboard-select>
+      <button type="button" mat-flat-button color="accent" [disabled]="selectedCast.invalid" (click)="onClickAdd()">
+        ランキングに追加
+      </button>
+
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary" [disabled]="fg.invalid">作成</button>
+    </mat-card-actions>
+  </form>
+</mat-card>

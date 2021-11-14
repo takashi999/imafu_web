@@ -179,7 +179,7 @@
 </ng-container>
 <br>
 <ng-container>
-  <app-dashboard-header [routerLink]="'/operation/tenants/' + id + '/users/create'">ユーザー一覧</app-dashboard-header>
+  <app-dashboard-header [rightRouterLink]="'/operation/tenants/' + id + '/users/create'">ユーザー一覧</app-dashboard-header>
   <app-table-list
     [dataSource]="users$"
     [getNameFn]="getUserNameFn"

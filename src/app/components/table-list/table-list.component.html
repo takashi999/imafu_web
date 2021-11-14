@@ -3,7 +3,17 @@
 
     <ng-container *ngFor="let col of displayedColumnsExcludedDelete" [matColumnDef]="'' + col.key">
       <mat-header-cell mat-header-cell *matHeaderCellDef>{{ col.label }}</mat-header-cell>
-      <mat-cell mat-cell *matCellDef="let element"> {{ getDataByKeyName(element, col.key) }} </mat-cell>
+      <mat-cell mat-cell
+                *matCellDef="let element">
+        <ng-container [ngSwitch]="col.type">
+          <ng-container *ngSwitchCase="undefined">
+            {{ col.transform ? col.transform(getDataByKeyName(element, col.key)) : getDataByKeyName(element, col.key) }}
+          </ng-container>
+          <ng-container *ngSwitchCase="'image'">
+            <img class="col-image" [src]="col.transform ? col.transform(getDataByKeyName(element, col.key)) : getDataByKeyName(element, col.key)" alt="">
+          </ng-container>
+        </ng-container>
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="delete">

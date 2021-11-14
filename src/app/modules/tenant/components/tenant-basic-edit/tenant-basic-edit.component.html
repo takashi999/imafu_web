@@ -69,15 +69,10 @@
           </mat-form-field>
         </p>
 
-        <p>
-          <mat-label>お問い合わせフォーム</mat-label>
-        </p>
-        <p>
-          <mat-radio-group aria-label="Select an option" [formControl]="useForm">
-            <mat-radio-button value="0">未使用</mat-radio-button>
-            <mat-radio-button value="1">使用</mat-radio-button>
-          </mat-radio-group>
-        </p>
+        <app-dashboard-radio
+          [formControl]="useForm"
+          [selects]="[{value: '0', label: '未使用'}, {value: '1', label: '使用'}]"
+        >お問い合わせフォーム</app-dashboard-radio>
 
         <ng-container *ngIf="useForm.value === '1'">
           <p>

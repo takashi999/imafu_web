@@ -1,0 +1,12 @@
+<p>
+  <mat-label>
+    <ng-content></ng-content>
+  </mat-label>
+  <ckeditor
+    #editor
+    editorUrl="https://cdn.ckeditor.com/4.16.2/full-all/ckeditor.js"
+    [config]="config"
+    (ready)="onReady()"
+    (dataChange)="onChange(editor.data)"
+  ></ckeditor>
+</p>

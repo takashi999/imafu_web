@@ -1,0 +1,12 @@
+<p>
+  <mat-label>
+    <ng-content></ng-content>
+  </mat-label>
+</p>
+<ng-container [formGroup]="fg">
+  <p formArrayName="array">
+    <mat-checkbox [formControlName]="index"
+                  *ngFor="let item of selects; let index = index"
+    >{{ item.label }}</mat-checkbox>
+  </p>
+</ng-container>

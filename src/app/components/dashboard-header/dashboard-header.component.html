@@ -6,9 +6,9 @@
     <span><ng-content></ng-content></span>
   </h2>
   <div class="spacer"></div>
-  <div class="actions" *ngIf="routerLink">
+  <div class="actions" *ngIf="rightRouterLink">
     <div class="button">
-      <a [routerLink]="routerLink">
+      <a [routerLink]="rightRouterLink">
         <button mat-flat-button color="primary">新規</button>
       </a>
     </div>

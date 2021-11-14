@@ -14,6 +14,15 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DashboardInputComponent } from './dashboard-input/dashboard-input.component';
+import { DashboardTextareaComponent } from './dashboard-textarea/dashboard-textarea.component';
+import { DashboardSelectComponent } from './dashboard-select/dashboard-select.component';
+import { MatInputModule } from '@angular/material/input';
+import { DashboardEditorComponent } from './dashboard-editor/dashboard-editor.component';
+import { CKEditorModule } from 'ckeditor4-angular';
+import { DashboardRadioComponent } from './dashboard-radio/dashboard-radio.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { DashboardCheckboxComponent } from './dashboard-checkbox/dashboard-checkbox.component';
 
 
 @NgModule({
@@ -22,6 +31,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     TableListComponent,
     DashboardHeaderComponent,
     DashboardTimeRangeFormComponent,
+    DashboardInputComponent,
+    DashboardTextareaComponent,
+    DashboardSelectComponent,
+    DashboardEditorComponent,
+    DashboardRadioComponent,
+    DashboardCheckboxComponent,
   ],
   imports: [
     CommonModule,
@@ -41,13 +56,22 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatSelectModule,
     ReactiveFormsModule,
+    MatInputModule,
+    CKEditorModule,
+    MatRadioModule,
   ],
-  exports: [
-    AppComponent,
-    TableListComponent,
-    DashboardHeaderComponent,
-    DashboardTimeRangeFormComponent,
-  ],
+    exports: [
+        AppComponent,
+        TableListComponent,
+        DashboardHeaderComponent,
+        DashboardTimeRangeFormComponent,
+        DashboardInputComponent,
+        DashboardTextareaComponent,
+        DashboardSelectComponent,
+        DashboardEditorComponent,
+        DashboardRadioComponent,
+        DashboardCheckboxComponent,
+    ],
 })
 export class CommonComponentsModule {
 }

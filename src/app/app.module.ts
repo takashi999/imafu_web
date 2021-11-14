@@ -9,6 +9,7 @@ import { APIInterceptor, LoadingSpinnerComponent } from 'src/app/interceptors/ap
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonComponentsModule } from 'src/app/components/common-components.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { CommonComponentsModule } from 'src/app/components/common-components.mod
     MatProgressSpinnerModule,
     OverlayModule,
     CommonComponentsModule,
+    MatDialogModule,
   ],
   providers: [
     {

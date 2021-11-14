@@ -125,7 +125,7 @@ export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, Contr
       this.onChange([ '', '' ]);
     } else {
       this.onChange([
-        `${ `0${ startControl.value }`.substr(-2, 2) }:00`, '',
+        `${ `0${ startControl.value }`.substr(-2, 2) }:00`,
         `${ `0${ parseInt(endControl.value, 10) - parseInt(startControl.value, 10) }`.substr(-2, 2) }:00`,
       ]);
     }

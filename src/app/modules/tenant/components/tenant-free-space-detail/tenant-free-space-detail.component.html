@@ -1,0 +1,41 @@
+<ng-container *ngIf="detail$ | async as detail">
+  <app-dashboard-header prevRouterLink="../">フリースペース: {{ detail.title }}</app-dashboard-header>
+  <mat-card>
+    <form [formGroup]="fg" (ngSubmit)="onSub(detail.id)">
+      <mat-card-content>
+        <app-dashboard-input
+          formControlName="title"
+          name="title"
+        >
+          タイトル
+        </app-dashboard-input>
+
+        <app-dashboard-select
+          formControlName="editable_text_type_id"
+          name="editable_text_type_id"
+          label="表示形式"
+          [selects]="types$ | async"
+        >
+          表示形式
+        </app-dashboard-select>
+
+        <app-dashboard-textarea
+          formControlName="content"
+          name="content"
+          *ngIf="currentType === 'plain'"
+        >
+          内容
+        </app-dashboard-textarea>
+        <app-dashboard-editor
+          formControlName="content"
+          *ngIf="currentType === 'html'"
+        >内容
+        </app-dashboard-editor>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-button color="primary" [disabled]="fg.invalid">更新</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+
+</ng-container>

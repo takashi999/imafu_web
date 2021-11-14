@@ -1,0 +1,51 @@
+<ng-container *ngIf="detail$ | async as detail">
+  <app-dashboard-header prevRouterLink="../">フリーギャラリー: {{ detail.title }}</app-dashboard-header>
+  <mat-card>
+    <form [formGroup]="fg" (ngSubmit)="onSub(detail.id)">
+      <mat-card-content>
+        <app-dashboard-select
+          formControlName="publish"
+          name="publish"
+          [selects]="[{value: '1', label: '公開'}, {value: '0', label: '非公開'}]"
+        ></app-dashboard-select>
+
+        <app-dashboard-input
+          formControlName="title"
+          name="title"
+        >
+          タイトル
+        </app-dashboard-input>
+
+        <ng-container>
+          <p>
+            <mat-label>画像</mat-label>
+          </p>
+          <p *ngFor="let image of files; let index = index">
+            <img *ngIf="fileUrls && fileUrls[index]" [src]="fileUrls[index]" alt="">
+            <button type="button" mat-button mat-icon-button (click)="onDeleteFile(index)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </p>
+          <p>
+            <input type="file" multiple name="image" (change)="onChangeFile()" #imageFileInput>
+          </p>
+          <p>
+            <mat-divider></mat-divider>
+          </p>
+        </ng-container>
+
+
+        <app-dashboard-textarea
+          formControlName="comment"
+          name="comment"
+        >備考
+        </app-dashboard-textarea>
+
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-button color="primary" [disabled]="fg.invalid">更新</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+
+</ng-container>

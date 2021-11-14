@@ -21,6 +21,36 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonComponentsModule } from 'src/app/components/common-components.module';
+import { TenantCourseComponent } from './components/tenant-course/tenant-course.component';
+import { TenantTransportationComponent } from './components/tenant-transportation/tenant-transportation.component';
+import { TenantOptionComponent } from './components/tenant-option/tenant-option.component';
+import { TenantFreeSpaceComponent } from './components/tenant-free-space/tenant-free-space.component';
+import { TenantFreeBlockComponent } from './components/tenant-free-block/tenant-free-block.component';
+import { TenantStaffComponent } from './components/tenant-staff/tenant-staff.component';
+import { TenantFreeBannerComponent } from './components/tenant-free-banner/tenant-free-banner.component';
+import { TenantFreeGalleryComponent } from './components/tenant-free-gallery/tenant-free-gallery.component';
+import { TenantCastComponent } from './components/tenant-cast/tenant-cast.component';
+import { TenantFreeImageComponent } from './components/tenant-free-image/tenant-free-image.component';
+import { TenantRankingComponent } from './components/tenant-ranking/tenant-ranking.component';
+import { TenantCourseDetailComponent } from './components/tenant-course-detail/tenant-course-detail.component';
+import { TenantFreeSpaceDetailComponent } from './components/tenant-free-space-detail/tenant-free-space-detail.component';
+import { TenantFreeBlockDetailComponent } from './components/tenant-free-block-detail/tenant-free-block-detail.component';
+import { TenantStaffDetailComponent } from './components/tenant-staff-detail/tenant-staff-detail.component';
+import { TenantFreeBannerDetailComponent } from './components/tenant-free-banner-detail/tenant-free-banner-detail.component';
+import { TenantFreeGalleryDetailComponent } from './components/tenant-free-gallery-detail/tenant-free-gallery-detail.component';
+import { TenantCastDetailComponent } from './components/tenant-cast-detail/tenant-cast-detail.component';
+import { TenantFreeImageDetailComponent } from './components/tenant-free-image-detail/tenant-free-image-detail.component';
+import { TenantRankingDetailComponent } from './components/tenant-ranking-detail/tenant-ranking-detail.component';
+import { TenantCourseCreateComponent } from './components/tenant-course-create/tenant-course-create.component';
+import { TenantFreeSpaceCreateComponent } from './components/tenant-free-space-create/tenant-free-space-create.component';
+import { TenantFreeBlockCreateComponent } from './components/tenant-free-block-create/tenant-free-block-create.component';
+import { TenantStaffCreateComponent } from './components/tenant-staff-create/tenant-staff-create.component';
+import { TenantFreeBannerCreateComponent } from './components/tenant-free-banner-create/tenant-free-banner-create.component';
+import { TenantFreeGalleryCreateComponent } from './components/tenant-free-gallery-create/tenant-free-gallery-create.component';
+import { TenantCastCreateComponent } from './components/tenant-cast-create/tenant-cast-create.component';
+import { TenantFreeImageCreateComponent } from './components/tenant-free-image-create/tenant-free-image-create.component';
+import { TenantRankingCreateComponent } from './components/tenant-ranking-create/tenant-ranking-create.component';
+import { CKEditorModule } from 'ckeditor4-angular';
 
 
 @NgModule({
@@ -28,26 +58,57 @@ import { CommonComponentsModule } from 'src/app/components/common-components.mod
     TenantDashboardContainerComponent,
     TenantAppContainerComponent,
     TenantLoginComponent,
-    TenantBasicEditComponent
+    TenantBasicEditComponent,
+    TenantCourseComponent,
+    TenantTransportationComponent,
+    TenantOptionComponent,
+    TenantFreeSpaceComponent,
+    TenantFreeBlockComponent,
+    TenantStaffComponent,
+    TenantFreeBannerComponent,
+    TenantFreeGalleryComponent,
+    TenantCastComponent,
+    TenantFreeImageComponent,
+    TenantRankingComponent,
+    TenantCourseDetailComponent,
+    TenantFreeSpaceDetailComponent,
+    TenantFreeBlockDetailComponent,
+    TenantStaffDetailComponent,
+    TenantFreeBannerDetailComponent,
+    TenantFreeGalleryDetailComponent,
+    TenantCastDetailComponent,
+    TenantFreeImageDetailComponent,
+    TenantRankingDetailComponent,
+    TenantCourseCreateComponent,
+    TenantFreeSpaceCreateComponent,
+    TenantFreeBlockCreateComponent,
+    TenantStaffCreateComponent,
+    TenantFreeBannerCreateComponent,
+    TenantFreeGalleryCreateComponent,
+    TenantCastCreateComponent,
+    TenantFreeImageCreateComponent,
+    TenantRankingCreateComponent,
   ],
-    imports: [
-        CommonModule,
-        TenantRoutingModule,
-        MatSidenavModule,
-        MatListModule,
-        MatIconModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatRippleModule,
-        MatCardModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatGridListModule,
-        MatRadioModule,
-        MatCheckboxModule,
-        MatSelectModule,
-        CommonComponentsModule,
-    ],
+  imports: [
+    CommonModule,
+    TenantRoutingModule,
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatRippleModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatGridListModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    CommonComponentsModule,
+    CKEditorModule,
+  ],
 })
-export class TenantModule { }
+export class TenantModule {
+}

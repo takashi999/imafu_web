@@ -5,6 +5,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Tenant } from 'src/app/services/tenant/api/responses';
 import { TenantBasicService } from 'src/app/services/tenant/api/tenant-basic.service';
 import { TenantCreditCardBrandService } from 'src/app/services/tenant/api/tenant-credit-card-brand.service';
+import {
+  maxLength15Validator,
+  maxLength180Validator,
+  maxLength200Validator,
+  maxLength30Validator,
+  maxLength60Validator,
+} from 'src/app/validators/common-validators';
 
 @Component({
   selector: 'app-tenant-basic-edit',
@@ -18,21 +25,21 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
   detail$ = new Subject<Tenant>();
 
   fg = new FormGroup({
-    catch: new FormControl('', [ Validators.maxLength(30) ]),
+    catch: new FormControl('', [ maxLength30Validator ]),
     tel: new FormArray(Array(2).fill(0).map(() => new FormControl('', [
-      Validators.maxLength(15),
+      maxLength15Validator,
     ])), [ Validators.required ]),
     line_id: new FormControl('', []),
     line_url: new FormControl('', []),
     form_email: new FormControl('', [ Validators.email ]),
-    region: new FormControl('', [ Validators.maxLength(30) ]),
+    region: new FormControl('', [ maxLength30Validator ]),
     open_time: new FormControl('', [ Validators.required ]),
     open_time_duration: new FormControl('', [ Validators.required ]),
     reception_time: new FormControl('', [ Validators.required ]),
     reception_time_duration: new FormControl('', [ Validators.required ]),
-    close_date: new FormControl('', [ Validators.maxLength(60) ]),
+    close_date: new FormControl('', [ maxLength60Validator ]),
     lowest_cost: new FormControl('', [ Validators.required ]),
-    regular_services: new FormControl('', [ Validators.maxLength(180) ]),
+    regular_services: new FormControl('', [ maxLength180Validator ]),
     services: new FormArray(Array(10).fill(0).map(() => new FormGroup({
       name: new FormControl(''),
       price: new FormControl(''),
@@ -40,7 +47,7 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
     regular_service_price: new FormControl('0', [ Validators.required ]),
     enable_receipt: new FormControl('0', [ Validators.required ]),
     credit_cards: new FormControl([], []),
-    note: new FormControl('', [ Validators.maxLength(200) ]),
+    note: new FormControl('', [ maxLength200Validator ]),
     use_timetable: new FormControl('0', [ Validators.required ]),
     enable_edit_timetable_on_cast: new FormControl('1', [ Validators.required ]),
   });

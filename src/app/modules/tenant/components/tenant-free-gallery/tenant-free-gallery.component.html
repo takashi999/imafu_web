@@ -1,0 +1,7 @@
+<app-dashboard-header rightRouterLink="./create">フリーギャラリー</app-dashboard-header>
+<app-table-list
+  [dataSource]="list$"
+  [displayedColumns]="columns"
+  [getNameFn]="getNameFn"
+  (clickRow)="onClickRow($event)"
+></app-table-list>
