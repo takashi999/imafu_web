@@ -1,8 +1,8 @@
 <app-dashboard-header rightRouterLink="/operation/tenant-groups/create">店舗グループ一覧</app-dashboard-header>
 <app-table-list
+  (clickRow)="onClickRow($event)"
+  (delete)="onDelete($event)"
   [dataSource]="list$"
   [displayedColumns]="displayedColumns"
   [getNameFn]="getNameFn"
-  (delete)="onDelete($event)"
-  (clickRow)="onClickRow($event)"
 ></app-table-list>

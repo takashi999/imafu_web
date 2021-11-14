@@ -60,18 +60,18 @@ import { DashboardCheckboxComponent } from './dashboard-checkbox/dashboard-check
     CKEditorModule,
     MatRadioModule,
   ],
-    exports: [
-        AppComponent,
-        TableListComponent,
-        DashboardHeaderComponent,
-        DashboardTimeRangeFormComponent,
-        DashboardInputComponent,
-        DashboardTextareaComponent,
-        DashboardSelectComponent,
-        DashboardEditorComponent,
-        DashboardRadioComponent,
-        DashboardCheckboxComponent,
-    ],
+  exports: [
+    AppComponent,
+    TableListComponent,
+    DashboardHeaderComponent,
+    DashboardTimeRangeFormComponent,
+    DashboardInputComponent,
+    DashboardTextareaComponent,
+    DashboardSelectComponent,
+    DashboardEditorComponent,
+    DashboardRadioComponent,
+    DashboardCheckboxComponent,
+  ],
 })
 export class CommonComponentsModule {
 }

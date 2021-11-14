@@ -1,17 +1,17 @@
 <ng-container *ngIf="detail$ | async as detail">
   <app-dashboard-header prevRouterLink="../">店舗グループ編集: {{ detail.name }}</app-dashboard-header>
   <mat-card>
-    <form [formGroup]="fg" (ngSubmit)="onSub(detail.id)">
+    <form (ngSubmit)="onSub(detail.id)" [formGroup]="fg">
       <mat-card-content>
         <p>
           <mat-form-field appearance="fill" hintLabel="1 - 100文字">
             <mat-label>店舗グループ名</mat-label>
-            <input type="text" name="name" min="1" max="100" matInput formControlName="name">
+            <input formControlName="name" matInput max="100" min="1" name="name" type="text">
           </mat-form-field>
         </p>
       </mat-card-content>
       <mat-card-actions align="end">
-        <button mat-raised-button color="primary" [disabled]="fg.invalid">更新</button>
+        <button [disabled]="fg.invalid" color="primary" mat-raised-button>更新</button>
       </mat-card-actions>
     </form>
   </mat-card>

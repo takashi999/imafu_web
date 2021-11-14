@@ -1,11 +1,11 @@
 <app-dashboard-header prevRouterLink="../">フリー画像</app-dashboard-header>
 <mat-card>
-  <form [formGroup]="fg" (ngSubmit)="onSub()">
+  <form (ngSubmit)="onSub()" [formGroup]="fg">
     <mat-card-content>
       <app-dashboard-select
+        [selects]="imageType$ | async"
         formControlName="tenant_free_image_type_id"
         name="tenant_free_image_type_id"
-        [selects]="imageType$ | async"
       >
         コンテンツ
       </app-dashboard-select>
@@ -20,11 +20,11 @@
       <p>
         <mat-label>画像</mat-label>
         <img *ngIf="fileUrl" [src]="fileUrl" alt="">
-        <input type="file" name="image" (change)="onChangeFile()" #imageFileInput>
+        <input #imageFileInput (change)="onChangeFile()" name="image" type="file">
       </p>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-raised-button color="primary" [disabled]="fg.invalid">更新</button>
+      <button [disabled]="fg.invalid" color="primary" mat-raised-button>更新</button>
     </mat-card-actions>
   </form>
 </mat-card>

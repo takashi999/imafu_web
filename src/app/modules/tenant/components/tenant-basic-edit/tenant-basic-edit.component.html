@@ -1,62 +1,62 @@
 <ng-container *ngIf="detail$ | async as detail">
   <app-dashboard-header>店舗基本情報</app-dashboard-header>
   <mat-card>
-    <form [formGroup]="fg" (ngSubmit)="onSub()">
+    <form (ngSubmit)="onSub()" [formGroup]="fg">
       <mat-card-content>
 
         <p>
           <mat-form-field appearance="fill" hintLabel="30文字">
             <mat-label>キャッチフレーズ</mat-label>
-            <input type="text" name="catch" max="30" formControlName="catch" matInput>
+            <input formControlName="catch" matInput max="30" name="catch" type="text">
           </mat-form-field>
         </p>
         <ng-container formArrayName="tel">
           <p>
             <mat-form-field appearance="fill" hintLabel="15文字">
               <mat-label>電話番号1</mat-label>
-              <input type="tel" name="tel1" max="15" formControlName="0" matInput>
+              <input formControlName="0" matInput max="15" name="tel1" type="tel">
             </mat-form-field>
           </p>
           <p>
             <mat-form-field appearance="fill" hintLabel="15文字">
               <mat-label>電話番号2</mat-label>
-              <input type="tel" name="tel2" max="15" formControlName="1" matInput>
+              <input formControlName="1" matInput max="15" name="tel2" type="tel">
             </mat-form-field>
           </p>
         </ng-container>
         <p>
           <mat-form-field appearance="fill" hintLabel="">
             <mat-label>LINE ID</mat-label>
-            <input type="text" name="line_id" formControlName="line_id" matInput>
+            <input formControlName="line_id" matInput name="line_id" type="text">
           </mat-form-field>
         </p>
         <p>
           <mat-form-field appearance="fill" hintLabel="">
             <mat-label>LINE URL</mat-label>
-            <input type="text" name="line_url" formControlName="line_url" matInput>
+            <input formControlName="line_url" matInput name="line_url" type="text">
           </mat-form-field>
         </p>
         <p>
           <mat-form-field appearance="fill" hintLabel="30文字">
             <mat-label>住所・地域（東部・中部・西部・全域）</mat-label>
-            <input type="text" name="region" formControlName="region" matInput>
+            <input formControlName="region" matInput name="region" type="text">
           </mat-form-field>
         </p>
 
         <app-dashboard-time-range-form
-          label="営業"
           [formControl]="openTimeCombined"
+          label="営業"
         ></app-dashboard-time-range-form>
 
         <app-dashboard-time-range-form
-          label="受付"
           [formControl]="receptionTimeCombined"
+          label="受付"
         ></app-dashboard-time-range-form>
 
         <p>
           <mat-form-field appearance="fill" hintLabel="60文字">
             <mat-label>定休日</mat-label>
-            <input type="text" max="60" name="close_date" formControlName="close_date" matInput>
+            <input formControlName="close_date" matInput max="60" name="close_date" type="text">
           </mat-form-field>
         </p>
 
@@ -72,26 +72,27 @@
         <app-dashboard-radio
           [formControl]="useForm"
           [selects]="[{value: '0', label: '未使用'}, {value: '1', label: '使用'}]"
-        >お問い合わせフォーム</app-dashboard-radio>
+        >お問い合わせフォーム
+        </app-dashboard-radio>
 
         <ng-container *ngIf="useForm.value === '1'">
           <p>
             <mat-form-field appearance="fill">
               <mat-label>書き込み通知先メールアドレス</mat-label>
-              <input type="email" max="256" name="form_email" formControlName="form_email" matInput>
+              <input formControlName="form_email" matInput max="256" name="form_email" type="email">
             </mat-form-field>
           </p>
         </ng-container>
         <p>
           <mat-form-field appearance="fill" hintLabel="180文字">
             <mat-label>基本サービス</mat-label>
-            <input type="text" max="180" name="regular_services" formControlName="regular_services" matInput>
+            <input formControlName="regular_services" matInput max="180" name="regular_services" type="text">
           </mat-form-field>
         </p>
         <p>
           <mat-form-field appearance="fill">
             <mat-label>基本サービス価格</mat-label>
-            <input type="number" min="0" name="regular_service_price" formControlName="regular_service_price" matInput>
+            <input formControlName="regular_service_price" matInput min="0" name="regular_service_price" type="number">
           </mat-form-field>
         </p>
 
@@ -101,13 +102,13 @@
             <mat-grid-tile [colspan]="2">
               <mat-form-field appearance="fill">
                 <mat-label>フリー{{ index + 1 }}</mat-label>
-                <input type="text" [name]="'service-' + (index + 1)" formControlName="name" matInput>
+                <input [name]="'service-' + (index + 1)" formControlName="name" matInput type="text">
               </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="2">
               <mat-form-field appearance="fill">
                 <mat-label>価格</mat-label>
-                <input type="number" [name]="'price-' + (index + 1)" formControlName="price" matInput>
+                <input [name]="'price-' + (index + 1)" formControlName="price" matInput type="number">
               </mat-form-field>
             </mat-grid-tile>
           </ng-container>
@@ -128,16 +129,16 @@
           <mat-label>クレジットカード</mat-label>
         </p>
         <p>
-          <mat-checkbox [formControl]="creditCardFormControlArray[index]"
-                        *ngFor="let item of brands$ | async; let index = index"
+          <mat-checkbox *ngFor="let item of brands$ | async; let index = index"
+                        [formControl]="creditCardFormControlArray[index]"
           >{{ item.name }}</mat-checkbox>
         </p>
 
         <p>
           <mat-form-field appearance="fill" hintLabel="200文字">
             <mat-label>備考欄</mat-label>
-            <textarea rows="3" type="text" name="note" formControlName="note" matInput
-                      [cdkTextareaAutosize]="true"></textarea>
+            <textarea [cdkTextareaAutosize]="true" formControlName="note" matInput name="note" rows="3"
+                      type="text"></textarea>
           </mat-form-field>
         </p>
 
@@ -162,7 +163,7 @@
         </p>
       </mat-card-content>
       <mat-card-actions align="end">
-        <button mat-raised-button color="primary" [disabled]="fg.invalid">更新</button>
+        <button [disabled]="fg.invalid" color="primary" mat-raised-button>更新</button>
       </mat-card-actions>
     </form>
   </mat-card>

@@ -1,17 +1,16 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { TableListColumnType } from 'src/app/components/table-list/table-list.component';
-import { TenantCastService } from 'src/app/services/tenant/api/tenant-cast.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TenantStaffService } from 'src/app/services/tenant/api/tenant-staff.service';
 
 @Component({
   selector: 'app-tenant-staff',
   templateUrl: './tenant-staff.component.html',
-  styleUrls: ['./tenant-staff.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: [ './tenant-staff.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TenantStaffComponent implements OnInit , OnDestroy {
+export class TenantStaffComponent implements OnInit, OnDestroy {
 
   list$: Subject<any[]> = new Subject();
   s = new Subscription();

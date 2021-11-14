@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
   CreateOperationTenantUserRequest,
-  CreateTenantRequest, ModifyOperationTenantUserRequest,
-  ModifyTenantRequest,
+  ModifyOperationTenantUserRequest,
 } from 'src/app/services/operation/api/requests';
 import { TenantUser } from 'src/app/services/tenant/api/responses';
 

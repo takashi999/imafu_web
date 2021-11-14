@@ -1,11 +1,11 @@
 <app-dashboard-header prevRouterLink="../">フリーバナー</app-dashboard-header>
 <mat-card>
-  <form [formGroup]="fg" (ngSubmit)="onSub()">
+  <form (ngSubmit)="onSub()" [formGroup]="fg">
     <mat-card-content>
       <app-dashboard-select
+        [selects]="[{value: '1', label: '公開'}, {value: '0', label: '非公開'}]"
         formControlName="publish"
         name="publish"
-        [selects]="[{value: '1', label: '公開'}, {value: '0', label: '非公開'}]"
       ></app-dashboard-select>
 
       <app-dashboard-input
@@ -17,9 +17,9 @@
 
 
       <app-dashboard-select
+        [selects]="displaySpaces$ | async"
         formControlName="tenant_free_banner_display_space_id"
         name="tenant_free_banner_display_space_id"
-        [selects]="displaySpaces$ | async"
       ></app-dashboard-select>
 
       <ng-container formArrayName="images">
@@ -28,12 +28,12 @@
           <mat-label>画像を追加</mat-label>
         </p>
         <p>
-          <input type="file" multiple name="image" (change)="onChangeFiles(imageFileInput.files)" #imageFileInput>
+          <input #imageFileInput (change)="onChangeFiles(imageFileInput.files)" multiple name="image" type="file">
         </p>
         <ng-container *ngFor="let image of files; let index = index" [formGroupName]="index">
           <p>
             <img *ngIf="fileUrls && fileUrls[index]" [src]="fileUrls[index]" alt="">
-            <button type="button" mat-button mat-icon-button (click)="onDeleteFile(index)">
+            <button (click)="onDeleteFile(index)" mat-button mat-icon-button type="button">
               <mat-icon>close</mat-icon>
             </button>
           </p>
@@ -41,9 +41,9 @@
             <mat-label>画像を変更</mat-label>
           </p>
           <p>
-            <input type="file" name="image"
-                   (change)="onChangeFile(index, imageFileInput.files ? imageFileInput.files[0] : null)"
-                   #imageFileInput>
+            <input #imageFileInput (change)="onChangeFile(index, imageFileInput.files ? imageFileInput.files[0] : null)"
+                   name="image"
+                   type="file">
           </p>
           <p>
             <app-dashboard-radio
@@ -54,32 +54,32 @@
           </p>
           <ng-container *ngIf="linkFCs[index].value === 'cast'">
             <app-dashboard-select
-              formControlName="cast_id"
               [selects]="castsSelects$ | async"
+              formControlName="cast_id"
             ></app-dashboard-select>
 
             <app-dashboard-select
               *ngIf="castLinkTypeEnabled[index]"
-              formControlName="cast_link_type_id"
               [selects]="castLinkTypesSelects[index]"
+              formControlName="cast_link_type_id"
             ></app-dashboard-select>
           </ng-container>
           <ng-container *ngIf="linkFCs[index].value === 'tenant'">
             <app-dashboard-select
-              formControlName="tenant_link_type_id"
               [selects]="tenantLinkTypesSelects$ | async"
+              formControlName="tenant_link_type_id"
             ></app-dashboard-select>
 
             <app-dashboard-select
               *ngIf="freeGalleryEnabled[index]"
-              formControlName="tenant_free_gallery_id"
               [selects]="galleriesSelects$ | async"
+              formControlName="tenant_free_gallery_id"
             ></app-dashboard-select>
 
             <app-dashboard-select
               *ngIf="foreignLinkEnabled[index]"
-              formControlName="foreign_link_id"
               [selects]="foreignLinks$ | async"
+              formControlName="foreign_link_id"
             ></app-dashboard-select>
           </ng-container>
           <ng-container>
@@ -95,7 +95,7 @@
 
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-raised-button color="primary" [disabled]="fg.invalid">作成</button>
+      <button [disabled]="fg.invalid" color="primary" mat-raised-button>作成</button>
     </mat-card-actions>
   </form>
 </mat-card>

@@ -1,17 +1,16 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { TableListColumnType } from 'src/app/components/table-list/table-list.component';
-import { TenantCastService } from 'src/app/services/tenant/api/tenant-cast.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TenantRankingService } from 'src/app/services/tenant/api/tenant-ranking.service';
 
 @Component({
   selector: 'app-tenant-ranking',
   templateUrl: './tenant-ranking.component.html',
-  styleUrls: ['./tenant-ranking.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: [ './tenant-ranking.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TenantRankingComponent implements OnInit , OnDestroy {
+export class TenantRankingComponent implements OnInit, OnDestroy {
 
   list$: Subject<any[]> = new Subject();
   s = new Subscription();
@@ -27,7 +26,7 @@ export class TenantRankingComponent implements OnInit , OnDestroy {
     {
       key: 'thumbnail_file_url',
       label: 'サムネイル',
-      type: 'image'
+      type: 'image',
     },
   ];
 

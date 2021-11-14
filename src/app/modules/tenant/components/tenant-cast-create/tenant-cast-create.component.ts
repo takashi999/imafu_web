@@ -13,7 +13,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import {
   maxLength1000Validator,
-  maxLength100Validator, maxLength10Validator,
+  maxLength10Validator,
   maxLength20Validator,
   passwordValidators,
 } from 'src/app/validators/common-validators';

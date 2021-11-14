@@ -8,9 +8,9 @@ describe('OperationLoginComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OperationLoginComponent ]
+      declarations: [ OperationLoginComponent ],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

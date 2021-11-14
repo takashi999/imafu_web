@@ -129,15 +129,15 @@ export class TenantRankingDetailComponent implements OnInit, OnDestroy, AfterVie
 
     this.s.add(
       this.castsFormArray.valueChanges
-        .subscribe(res=>{
+        .subscribe(res => {
           this.castsSelects = this.castsRaw
             .filter(r => !res.some((c: any) => c.id === r.id.toString(10)))
             .map(r => ({
               value: r.id.toString(10),
               label: r.display_name,
             }));
-        })
-    )
+        }),
+    );
   }
 
   ngAfterViewInit() {

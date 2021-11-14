@@ -1,15 +1,14 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { TableListColumnType } from 'src/app/components/table-list/table-list.component';
-import { TenantCastService } from 'src/app/services/tenant/api/tenant-cast.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TenantFreeSpaceService } from 'src/app/services/tenant/api/tenant-free-space.service';
 
 @Component({
   selector: 'app-tenant-free-space',
   templateUrl: './tenant-free-space.component.html',
-  styleUrls: ['./tenant-free-space.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: [ './tenant-free-space.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TenantFreeSpaceComponent implements OnInit, OnDestroy {
 

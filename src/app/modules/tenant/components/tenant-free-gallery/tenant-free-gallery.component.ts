@@ -1,15 +1,14 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { TableListColumnType } from 'src/app/components/table-list/table-list.component';
-import { TenantCastService } from 'src/app/services/tenant/api/tenant-cast.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TenantFreeGalleryService } from 'src/app/services/tenant/api/tenant-free-gallery.service';
 
 @Component({
   selector: 'app-tenant-free-gallery',
   templateUrl: './tenant-free-gallery.component.html',
-  styleUrls: ['./tenant-free-gallery.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: [ './tenant-free-gallery.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TenantFreeGalleryComponent implements OnInit, OnDestroy {
 

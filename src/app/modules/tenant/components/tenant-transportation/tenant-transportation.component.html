@@ -1,11 +1,11 @@
 <app-dashboard-header>交通費</app-dashboard-header>
 <mat-card>
-  <form [formGroup]="fg" (ngSubmit)="onSub()">
+  <form (ngSubmit)="onSub()" [formGroup]="fg">
     <mat-card-content>
       <p>
         <mat-form-field appearance="fill" hintLabel="40文字">
           <mat-label>タイトル</mat-label>
-          <input type="text" name="title" max="40" formControlName="title" matInput>
+          <input formControlName="title" matInput max="40" name="title" type="text">
         </mat-form-field>
       </p>
 
@@ -15,35 +15,39 @@
           <mat-grid-tile [colspan]="2">
             <mat-form-field appearance="fill">
               <mat-label>エリア{{ index + 1 }}</mat-label>
-              <input type="text" [name]="'service-' + (index + 1)" formControlName="area" matInput>
+              <input [name]="'service-' + (index + 1)" formControlName="area" matInput type="text">
             </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="2">
             <mat-form-field appearance="fill">
               <mat-label>料金</mat-label>
-              <input type="text" [name]="'price-' + (index + 1)" formControlName="price" matInput>
+              <input [name]="'price-' + (index + 1)" formControlName="price" matInput type="text">
             </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="1">
-            <button *ngIf="areaControlArray.length > 1" type="button" mat-button mat-icon-button (click)="areaControlArray.removeAt(index)"><mat-icon>close</mat-icon></button>
+            <button (click)="areaControlArray.removeAt(index)" *ngIf="areaControlArray.length > 1" mat-button mat-icon-button
+                    type="button">
+              <mat-icon>close</mat-icon>
+            </button>
           </mat-grid-tile>
         </ng-container>
       </mat-grid-list>
 
       <p *ngIf="areaControlArray.length < formArrayMax">
-        <button type="button" mat-flat-button color="accent" (click)="onPush()">項目を追加</button>
+        <button (click)="onPush()" color="accent" mat-flat-button type="button">項目を追加</button>
       </p>
 
       <p>
         <mat-form-field appearance="fill" hintLabel="500文字">
           <mat-label>備考</mat-label>
-          <textarea rows="3" type="text" maxlength="500" name="note" formControlName="note" matInput [cdkTextareaAutosize]="true"></textarea>
+          <textarea [cdkTextareaAutosize]="true" formControlName="note" matInput maxlength="500" name="note" rows="3"
+                    type="text"></textarea>
         </mat-form-field>
       </p>
 
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-raised-button color="primary" [disabled]="fg.invalid">更新</button>
+      <button [disabled]="fg.invalid" color="primary" mat-raised-button>更新</button>
     </mat-card-actions>
   </form>
 </mat-card>

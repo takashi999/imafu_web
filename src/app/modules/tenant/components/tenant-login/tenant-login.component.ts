@@ -1,14 +1,13 @@
-import { Component, OnInit , ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { OperationAuthService } from 'src/app/services/operation/api/operation-auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TenantAuthService } from 'src/app/services/tenant/api/tenant-auth.service';
 
 @Component({
   selector: 'app-tenant-login',
   templateUrl: './tenant-login.component.html',
-  styleUrls: ['./tenant-login.component.scss'],
+  styleUrls: [ './tenant-login.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TenantLoginComponent implements OnInit {

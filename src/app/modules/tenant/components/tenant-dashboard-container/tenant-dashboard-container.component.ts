@@ -1,14 +1,14 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit , ChangeDetectionStrategy } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDrawerMode } from '@angular/material/sidenav';
 import { fromEvent, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tenant-dashboard-container',
   templateUrl: './tenant-dashboard-container.component.html',
-  styleUrls: ['./tenant-dashboard-container.component.scss'],
+  styleUrls: [ './tenant-dashboard-container.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TenantDashboardContainerComponent implements OnInit,OnDestroy,AfterViewInit {
+export class TenantDashboardContainerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   opened = window.innerWidth >= 768;
   mode: MatDrawerMode = window.innerWidth >= 768 ? 'side' : 'over';

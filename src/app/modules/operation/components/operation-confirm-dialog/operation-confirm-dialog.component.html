@@ -1,7 +1,7 @@
-  <mat-dialog-content>
-    <p class="raw">{{ message }}</p>
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="false">キャンセル</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>OK</button>
-  </mat-dialog-actions>
+<mat-dialog-content>
+  <p class="raw">{{ message }}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button [mat-dialog-close]="false" mat-button>キャンセル</button>
+  <button [mat-dialog-close]="true" cdkFocusInitial mat-button>OK</button>
+</mat-dialog-actions>

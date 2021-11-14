@@ -1,13 +1,17 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, Optional, Self } from '@angular/core';
 import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
 import {
-  maxLength100000Validator, maxLength1000Validator,
-  maxLength100Validator, maxLength10Validator,
+  maxLength100000Validator,
+  maxLength1000Validator,
+  maxLength100Validator,
+  maxLength10Validator,
   maxLength15Validator,
   maxLength16Validator,
   maxLength180Validator,
-  maxLength200Validator, maxLength20Validator,
-  maxLength30Validator, maxLength35Validator,
+  maxLength200Validator,
+  maxLength20Validator,
+  maxLength30Validator,
+  maxLength35Validator,
   maxLength40Validator,
   maxLength500Validator,
   maxLength60Validator,

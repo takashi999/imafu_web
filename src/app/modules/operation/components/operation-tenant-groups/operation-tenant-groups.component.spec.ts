@@ -8,9 +8,9 @@ describe('OperationTenantGroupsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OperationTenantGroupsComponent ]
+      declarations: [ OperationTenantGroupsComponent ],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

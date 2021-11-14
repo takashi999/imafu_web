@@ -1,18 +1,18 @@
 <app-dashboard-header prevRouterLink="../">ランキング</app-dashboard-header>
 <mat-card>
-  <form [formGroup]="fg" (ngSubmit)="onSub()">
+  <form (ngSubmit)="onSub()" [formGroup]="fg">
     <mat-card-content>
       <app-dashboard-select
+        [selects]="topSelects"
         formControlName="is_publish_on_top"
         name="is_publish_on_top"
-        [selects]="topSelects"
       >トップ公開
       </app-dashboard-select>
 
       <app-dashboard-select
+        [selects]="[{value: '1', label: '公開'}, {value: '0', label: '非公開'}]"
         formControlName="publish"
         name="publish"
-        [selects]="[{value: '1', label: '公開'}, {value: '0', label: '非公開'}]"
       >公開ステータス
       </app-dashboard-select>
 
@@ -39,9 +39,9 @@
             <mat-label>画像を変更</mat-label>
           </p>
           <p>
-            <input type="file" name="thumbnail"
-                   (change)="onChangeFile(imageFileInput.files?.[0])"
-                   #imageFileInput>
+            <input #imageFileInput (change)="onChangeFile(imageFileInput.files?.[0])"
+                   name="thumbnail"
+                   type="file">
           </p>
         </ng-container>
       </ng-container>
@@ -54,7 +54,7 @@
           </p>
           <app-dashboard-textarea formControlName="comment" name="comment">コメント</app-dashboard-textarea>
           <p>
-            <button mat-stroked-button color="warn" (click)="castsFormArray.removeAt(index)">ランキングから削除</button>
+            <button (click)="castsFormArray.removeAt(index)" color="warn" mat-stroked-button>ランキングから削除</button>
           </p>
           <p>
             <mat-divider></mat-divider>
@@ -64,17 +64,17 @@
       </ng-container>
 
       <app-dashboard-select
-        [selects]="castsSelects"
         [formControl]="selectedCast"
+        [selects]="castsSelects"
       >キャスト
       </app-dashboard-select>
-      <button type="button" mat-flat-button color="accent" [disabled]="selectedCast.invalid" (click)="onClickAdd()">
+      <button (click)="onClickAdd()" [disabled]="selectedCast.invalid" color="accent" mat-flat-button type="button">
         ランキングに追加
       </button>
 
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-raised-button color="primary" [disabled]="fg.invalid">作成</button>
+      <button [disabled]="fg.invalid" color="primary" mat-raised-button>作成</button>
     </mat-card-actions>
   </form>
 </mat-card>

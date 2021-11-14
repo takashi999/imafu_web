@@ -1,30 +1,32 @@
 <div class="mat-elevation-z8">
-  <mat-table mat-table [dataSource]="dataSource">
+  <mat-table [dataSource]="dataSource" mat-table>
 
     <ng-container *ngFor="let col of displayedColumnsExcludedDelete" [matColumnDef]="'' + col.key">
-      <mat-header-cell mat-header-cell *matHeaderCellDef>{{ col.label }}</mat-header-cell>
-      <mat-cell mat-cell
-                *matCellDef="let element">
+      <mat-header-cell *matHeaderCellDef mat-header-cell>{{ col.label }}</mat-header-cell>
+      <mat-cell *matCellDef="let element"
+                mat-cell>
         <ng-container [ngSwitch]="col.type">
           <ng-container *ngSwitchCase="undefined">
             {{ col.transform ? col.transform(getDataByKeyName(element, col.key)) : getDataByKeyName(element, col.key) }}
           </ng-container>
           <ng-container *ngSwitchCase="'image'">
-            <img class="col-image" [src]="col.transform ? col.transform(getDataByKeyName(element, col.key)) : getDataByKeyName(element, col.key)" alt="">
+            <img [src]="col.transform ? col.transform(getDataByKeyName(element, col.key)) : getDataByKeyName(element, col.key)"
+                 alt=""
+                 class="col-image">
           </ng-container>
         </ng-container>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="delete">
-      <mat-header-cell mat-header-cell *matHeaderCellDef>削除</mat-header-cell>
-      <mat-cell mat-cell *matCellDef="let element">
+      <mat-header-cell *matHeaderCellDef mat-header-cell>削除</mat-header-cell>
+      <mat-cell *matCellDef="let element" mat-cell>
         <button
-          mat-icon-button
-          color="warn"
           (click)="onClickDelete($event, element)"
           (mouseenter)="onMouseEnter($event)"
           (mouseleave)="onMouseLeave($event)"
+          color="warn"
+          mat-icon-button
         >
           <mat-icon>delete</mat-icon>
         </button>
@@ -32,12 +34,12 @@
     </ng-container>
 
 
-    <mat-header-row mat-header-row *matHeaderRowDef="displayedColumnKeys; sticky: true"></mat-header-row>
+    <mat-header-row *matHeaderRowDef="displayedColumnKeys; sticky: true" mat-header-row></mat-header-row>
     <mat-row
-      matRipple
-      [matRippleDisabled]="rippleDisable"
       (click)="onClickRow(row)"
       *matRowDef="let row; columns: displayedColumnKeys;"
+      [matRippleDisabled]="rippleDisable"
+      matRipple
     ></mat-row>
   </mat-table>
 </div>

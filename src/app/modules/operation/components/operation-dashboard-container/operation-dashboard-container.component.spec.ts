@@ -8,9 +8,9 @@ describe('OperationDashboardContainerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OperationDashboardContainerComponent ]
+      declarations: [ OperationDashboardContainerComponent ],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

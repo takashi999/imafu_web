@@ -1,19 +1,20 @@
 <div class="container">
-  <form [formGroup]="fg" (ngSubmit)="onSub()">
+  <form (ngSubmit)="onSub()" [formGroup]="fg">
     <mat-card>
       <mat-card-title>ログイン</mat-card-title>
       <mat-card-content>
         <p>
           <mat-form-field appearance="fill">
             <mat-label>ID</mat-label>
-            <input matInput name="login_id" type="text" formControlName="login_id">
+            <input formControlName="login_id" matInput name="login_id" type="text">
           </mat-form-field>
         </p>
         <p>
           <mat-form-field appearance="fill">
             <mat-label>パスワード</mat-label>
-            <input [type]="hide ? 'password' : 'text'" matInput name="password" formControlName="password">
-            <button (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" mat-icon-button
+            <input [type]="hide ? 'password' : 'text'" formControlName="password" matInput name="password">
+            <button (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide"
+                    mat-icon-button
                     matSuffix>
               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>

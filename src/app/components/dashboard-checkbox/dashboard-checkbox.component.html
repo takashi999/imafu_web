@@ -5,8 +5,8 @@
 </p>
 <ng-container [formGroup]="fg">
   <p formArrayName="array">
-    <mat-checkbox [formControlName]="index"
-                  *ngFor="let item of selects; let index = index"
+    <mat-checkbox *ngFor="let item of selects; let index = index"
+                  [formControlName]="index"
     >{{ item.label }}</mat-checkbox>
   </p>
 </ng-container>

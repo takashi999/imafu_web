@@ -4,7 +4,8 @@ import {
   Component,
   ElementRef,
   OnDestroy,
-  OnInit, SecurityContext,
+  OnInit,
+  SecurityContext,
   ViewChild,
 } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
@@ -119,7 +120,7 @@ export class TenantFreeBlockDetailComponent implements OnInit, OnDestroy, AfterV
         }
 
         if (res.image.file_url) {
-          this.fileUrl = this.domSanitizer.sanitize(SecurityContext.URL, res.image.file_url)
+          this.fileUrl = this.domSanitizer.sanitize(SecurityContext.URL, res.image.file_url);
         }
       }),
     );
@@ -153,7 +154,7 @@ export class TenantFreeBlockDetailComponent implements OnInit, OnDestroy, AfterV
   }
 
   onSub(id: number) {
-    const req = this.formDataService.getFormData(this.fg.value)
+    const req = this.formDataService.getFormData(this.fg.value);
 
     if (this.file) {
       req.set('image', this.file);

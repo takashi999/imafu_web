@@ -12,7 +12,8 @@ import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
 import {
   maxLength100000Validator,
   maxLength1000Validator,
-  maxLength100Validator, maxLength10Validator,
+  maxLength100Validator,
+  maxLength10Validator,
   maxLength15Validator,
   maxLength16Validator,
   maxLength180Validator,
@@ -39,7 +40,7 @@ export class DashboardInputComponent implements OnInit, OnDestroy, ControlValueA
   @Input() name = '';
   @Input() isPassword = false;
 
-  hidePassword = true
+  hidePassword = true;
 
   s = new Subscription();
 

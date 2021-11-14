@@ -8,9 +8,9 @@ describe('TenantDashboardContainerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TenantDashboardContainerComponent ]
+      declarations: [ TenantDashboardContainerComponent ],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { maxLength100Validator, maxLength35Validator } from 'src/app/validators/common-validators';
+import { maxLength100Validator } from 'src/app/validators/common-validators';
 import { map } from 'rxjs/operators';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';

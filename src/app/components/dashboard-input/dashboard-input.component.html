@@ -1,24 +1,24 @@
 <p>
-  <mat-form-field appearance="fill" [hintLabel]="hintLabel">
+  <mat-form-field [hintLabel]="hintLabel" appearance="fill">
     <mat-label>
       <ng-content></ng-content>
     </mat-label>
     <input
-      [type]="isPassword && hidePassword ? 'password' : 'text'"
+      [autocomplete]="isPassword ? 'new-password' : 'on'"
       [formControl]="fc"
-      [name]="name"
       [maxLength]="max"
       [minLength]="min"
+      [name]="name"
+      [type]="isPassword && hidePassword ? 'password' : 'text'"
       matInput
-      [autocomplete]="isPassword ? 'new-password' : 'on'"
     >
     <button
-      *ngIf="isPassword"
-      mat-icon-button
-      matSuffix
       (click)="hidePassword = !hidePassword"
+      *ngIf="isPassword"
       [attr.aria-label]="'Hide password'"
       [attr.aria-pressed]="hidePassword"
+      mat-icon-button
+      matSuffix
     >
       <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>

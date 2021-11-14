@@ -58,6 +58,7 @@ export interface CreateOperationTenantUserRequest {
   login_id: string;
   password: string;
 }
+
 export interface ModifyOperationTenantUserRequest {
   login_id: string;
   password: string | null;

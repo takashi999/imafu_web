@@ -1,4 +1,4 @@
-import { Component, OnInit , ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TenantAuthService } from 'src/app/services/tenant/api/tenant-auth.service';
 
 @Component({

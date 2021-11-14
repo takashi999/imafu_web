@@ -112,7 +112,7 @@ export class TenantFreeBlockCreateComponent implements OnInit, OnDestroy, AfterV
   }
 
   onSub() {
-    const req = this.formDataService.getFormData(this.fg.value)
+    const req = this.formDataService.getFormData(this.fg.value);
 
     if (this.file) {
       req.set('image', this.file);

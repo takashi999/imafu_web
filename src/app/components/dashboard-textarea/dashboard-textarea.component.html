@@ -1,9 +1,11 @@
 <p>
-  <mat-form-field appearance="fill" [hintLabel]="hintLabel">
-    <mat-label><ng-content></ng-content></mat-label>
-    <textarea [rows]="rows" type="text" [maxlength]="max" [minlength]="min" [name]="name"  matInput
-              [cdkTextareaAutosize]="autoResize"
-              [formControl]="fc"
+  <mat-form-field [hintLabel]="hintLabel" appearance="fill">
+    <mat-label>
+      <ng-content></ng-content>
+    </mat-label>
+    <textarea [cdkTextareaAutosize]="autoResize" [formControl]="fc" [maxlength]="max" [minlength]="min" [name]="name" [rows]="rows"
+              matInput
+              type="text"
     ></textarea>
   </mat-form-field>
 </p>

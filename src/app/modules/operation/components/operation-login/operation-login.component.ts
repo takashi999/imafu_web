@@ -1,4 +1,4 @@
-import { Component, OnInit , ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { OperationAuthService } from 'src/app/services/operation/api/operation-auth.service';
 import { Subscription } from 'rxjs';

@@ -30,7 +30,7 @@ export class OperationAuthService {
     });
   }
 
-  guest$(){
+  guest$() {
     return this.loggIn$().pipe(map(v => !v));
   }
 

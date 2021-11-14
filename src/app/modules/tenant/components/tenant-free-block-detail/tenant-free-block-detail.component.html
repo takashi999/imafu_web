@@ -1,28 +1,28 @@
 <ng-container *ngIf="detail$ | async as detail">
   <app-dashboard-header prevRouterLink="../">フリーブロック: {{ detail.title }}</app-dashboard-header>
   <mat-card>
-    <form [formGroup]="fg" (ngSubmit)="onSub(detail.id)">
+    <form (ngSubmit)="onSub(detail.id)" [formGroup]="fg">
       <mat-card-content>
         <app-dashboard-select
+          [selects]="publishSelects"
           formControlName="publish_at"
           name="publish_at"
-          [selects]="publishSelects"
         >
           公開ステータス
         </app-dashboard-select>
 
         <app-dashboard-select
+          [selects]="displayType$ | async"
           formControlName="tenant_free_block_display_type_id"
           name="tenant_free_block_display_type_id"
-          [selects]="displayType$ | async"
         >
           表示初期状態
         </app-dashboard-select>
 
         <app-dashboard-select
+          [selects]="displaySpace$ | async"
           formControlName="tenant_free_block_display_space_id"
           name="tenant_free_block_display_space_id"
-          [selects]="displaySpace$ | async"
         >
           表示位置
         </app-dashboard-select>
@@ -37,29 +37,29 @@
         <p>
           <mat-label>画像</mat-label>
           <img [src]="fileUrl" alt="">
-          <input type="file" name="image" (change)="onChangeFile()" #imageFileInput>
+          <input #imageFileInput (change)="onChangeFile()" name="image" type="file">
         </p>
 
         <app-dashboard-select
-          formControlName="editable_text_type_id"
-          name="editable_text_type_id"
-          label="表示形式"
           [selects]="textTypeSelects"
+          formControlName="editable_text_type_id"
+          label="表示形式"
+          name="editable_text_type_id"
         >
           表示形式
         </app-dashboard-select>
 
         <app-dashboard-textarea
+          *ngIf="selectedTextType === 'plain'"
           formControlName="content"
           name="content"
-          *ngIf="selectedTextType === 'plain'"
         >
           本文
         </app-dashboard-textarea>
 
         <app-dashboard-editor
-          formControlName="content"
           *ngIf="selectedTextType === 'html'"
+          formControlName="content"
         >本文
         </app-dashboard-editor>
 
@@ -73,7 +73,7 @@
 
       </mat-card-content>
       <mat-card-actions align="end">
-        <button mat-raised-button color="primary" [disabled]="fg.invalid">更新</button>
+        <button [disabled]="fg.invalid" color="primary" mat-raised-button>更新</button>
       </mat-card-actions>
     </form>
   </mat-card>

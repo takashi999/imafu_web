@@ -1,7 +1,7 @@
 <app-dashboard-header rightRouterLink="./create">コース設定</app-dashboard-header>
 <app-table-list
+  (clickRow)="onClickRow($event)"
   [dataSource]="list$"
   [displayedColumns]="columns"
   [getNameFn]="getNameFn"
-  (clickRow)="onClickRow($event)"
 ></app-table-list>
