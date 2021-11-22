@@ -16,7 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     LoadingSpinnerComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
