@@ -8,6 +8,10 @@
       <div class="toolbar">
         <mat-toolbar color="accent">
           <span matRipple routerLink="/tenant">店舗管理画面</span>
+          <div class="spacer"></div>
+          <a *ngIf="tenantLink$ | async as tenantLink" [href]="tenantLink" target="_blank">
+            <button color="primary" mat-raised-button>プレビュー</button>
+          </a>
         </mat-toolbar>
       </div>
       <div class="router-container">
