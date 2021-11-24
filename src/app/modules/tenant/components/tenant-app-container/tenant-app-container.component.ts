@@ -4,6 +4,7 @@ import { TenantBasicService } from 'src/app/services/tenant/api/tenant-basic.ser
 import { DomSanitizer } from '@angular/platform-browser';
 import { filter, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tenant-app-container',
@@ -13,10 +14,19 @@ import { environment } from 'src/environments/environment';
 })
 export class TenantAppContainerComponent implements OnInit {
 
-  tenantLink$ = this.tenantBasicService.tenantId$.pipe(
-    filter((v): v is Exclude<typeof v, null> => v !== null),
-    map(v => this.domSanitizer.bypassSecurityTrustResourceUrl(`${ environment.serverUrl }/shop/${ v }`)),
-  );
+  tenantLink$ = new Observable(subscriber => {
+    subscriber.add(
+      this.tenantBasicService.tenantId$.pipe(
+        filter((v): v is Exclude<typeof v, null> => v !== null),
+        map(v => this.domSanitizer.bypassSecurityTrustResourceUrl(`${ environment.serverUrl }/shop/${ v }`)),
+      )
+        .subscribe((res) => {
+          subscriber.next(res);
+          subscriber.complete();
+        }),
+    );
+    this.tenantBasicService.get().subscribe();
+  });
 
   constructor(
     public tenantAuthService: TenantAuthService,
@@ -26,7 +36,7 @@ export class TenantAppContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tenantBasicService.get().subscribe();
+
   }
 
 }
