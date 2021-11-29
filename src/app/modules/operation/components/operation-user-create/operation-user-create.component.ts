@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OperationStaffService } from 'src/app/services/operation/api/operation-staff.service';
 import { OperationUserRoleService } from 'src/app/services/operation/api/operation-user-role.service';
-import { maxLength16Validator, passwordValidators } from 'src/app/validators/common-validators';
+import { maxLength16Validator, maxLength30Validator, passwordValidators } from 'src/app/validators/common-validators';
 
 @Component({
   selector: 'app-operation-user-create',
@@ -20,6 +20,7 @@ export class OperationUserCreateComponent implements OnInit, OnDestroy {
   fg = new FormGroup({
     login_id: new FormControl('', [ Validators.required, maxLength16Validator ]),
     password: new FormControl('', [ Validators.required, ...passwordValidators ]),
+    display_name: new FormControl('', [ maxLength30Validator ]),
     role_id: new FormControl('', [ Validators.required ]),
   });
 

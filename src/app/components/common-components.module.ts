@@ -23,6 +23,8 @@ import { CKEditorModule } from 'ckeditor4-angular';
 import { DashboardRadioComponent } from './dashboard-radio/dashboard-radio.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { DashboardCheckboxComponent } from './dashboard-checkbox/dashboard-checkbox.component';
+import { DashboardDatePickerComponent } from './dashboard-date-picker/dashboard-date-picker.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 @NgModule({
@@ -37,29 +39,31 @@ import { DashboardCheckboxComponent } from './dashboard-checkbox/dashboard-check
     DashboardEditorComponent,
     DashboardRadioComponent,
     DashboardCheckboxComponent,
+    DashboardDatePickerComponent,
   ],
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatTableModule,
-    MatTableModule,
-    MatTableModule,
-    MatTableModule,
-    MatTableModule,
-    MatTableModule,
-    MatTableModule,
-    MatRippleModule,
-    MatButtonModule,
-    RouterModule,
-    MatCheckboxModule,
-    MatGridListModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    CKEditorModule,
-    MatRadioModule,
-  ],
+    imports: [
+        CommonModule,
+        MatIconModule,
+        MatTableModule,
+        MatTableModule,
+        MatTableModule,
+        MatTableModule,
+        MatTableModule,
+        MatTableModule,
+        MatTableModule,
+        MatRippleModule,
+        MatButtonModule,
+        RouterModule,
+        MatCheckboxModule,
+        MatGridListModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        CKEditorModule,
+        MatRadioModule,
+        MatDatepickerModule,
+    ],
   exports: [
     AppComponent,
     TableListComponent,
@@ -71,6 +75,7 @@ import { DashboardCheckboxComponent } from './dashboard-checkbox/dashboard-check
     DashboardEditorComponent,
     DashboardRadioComponent,
     DashboardCheckboxComponent,
+    DashboardDatePickerComponent,
   ],
 })
 export class CommonComponentsModule {

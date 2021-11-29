@@ -2,6 +2,12 @@
 <mat-card>
   <form (ngSubmit)="onSub()" [formGroup]="fg">
     <mat-card-content>
+      <app-dashboard-select
+        formControlName="group"
+        [selects]="groupSelects$ | async"
+        name="group"
+      >グループ
+      </app-dashboard-select>
       <p>
         <mat-form-field appearance="fill" hintLabel="1 - 100文字">
           <mat-label>店舗名</mat-label>
@@ -9,6 +15,34 @@
         </mat-form-field>
       </p>
 
+      <app-dashboard-select
+        formControlName="tenant_sector_id"
+        [selects]="sectorSelects$ | async"
+        name="tenant_sector_id"
+      >業種
+      </app-dashboard-select>
+      <app-dashboard-checkbox
+        formControlName="support_regions"
+        [selects]="regionSelects$ | async"
+      >派遣可能エリア
+      </app-dashboard-checkbox>
+      <app-dashboard-select
+        formControlName="tenant_plan_id"
+        [selects]="planSelects$ | async"
+      >プラン
+      </app-dashboard-select>
+      <ng-container *ngIf="isSelectedLimitedPlan">
+        <app-dashboard-date-picker formControlName="begin_plan_limit_date" name="begin_plan_limit_date">お試し開始日
+        </app-dashboard-date-picker>
+        <app-dashboard-date-picker formControlName="end_plan_limit_date" name="end_plan_limit_date">お試し終了日
+        </app-dashboard-date-picker>
+      </ng-container>
+      <app-dashboard-input type="number" formControlName="plan_price">料金</app-dashboard-input>
+      <app-dashboard-date-picker formControlName="begin_publish_date">公開日</app-dashboard-date-picker>
+      <app-dashboard-date-picker formControlName="end_publish_date">公開停止日</app-dashboard-date-picker>
+      <app-dashboard-input type="number" formControlName="refresh_place_rate_limit_per_date">配置更新数</app-dashboard-input>
+      <app-dashboard-input type="number" formControlName="shop_news_rate_limit_per_date">ショップニュース数</app-dashboard-input>
+      <app-dashboard-select [selects]="statusSelects" formControlName="is_suspend">ステータス</app-dashboard-select>
       <p>
         <mat-form-field appearance="fill" hintLabel="30文字">
           <mat-label>キャッチフレーズ</mat-label>

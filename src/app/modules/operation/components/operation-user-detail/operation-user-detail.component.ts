@@ -5,7 +5,7 @@ import { OperationStaffService } from 'src/app/services/operation/api/operation-
 import { OperationUser } from 'src/app/services/operation/api/responses';
 import { OperationUserRoleService } from 'src/app/services/operation/api/operation-user-role.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { maxLength16Validator, passwordValidators } from 'src/app/validators/common-validators';
+import { maxLength16Validator, maxLength30Validator, passwordValidators } from 'src/app/validators/common-validators';
 
 @Component({
   selector: 'app-operation-user-detail',
@@ -24,6 +24,7 @@ export class OperationUserDetailComponent implements OnInit, OnDestroy {
   fg = new FormGroup({
     login_id: new FormControl('', [ Validators.required, maxLength16Validator ]),
     password: new FormControl('', [ ...passwordValidators ]),
+    display_name: new FormControl('', [ maxLength30Validator ]),
     role_id: new FormControl('', [ Validators.required ]),
   });
 

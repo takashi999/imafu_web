@@ -13,11 +13,12 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OperationUsersComponent implements OnInit, OnDestroy {
-  staffs$ = new Subject<OperationUser[]>();
+  staffs$: Subject<OperationUser[]> = new Subject();
   s = new Subscription();
   displayedColumns: TableListColumnType<OperationUser>[] = [
     { key: 'id', label: 'ID' },
     { key: 'login_id', label: 'ログインID' },
+    { key: 'display_name', label: '氏名' },
     { key: 'role.display_name', label: '権限' },
     { key: 'delete' },
   ];

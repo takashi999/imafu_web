@@ -10,13 +10,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonComponentsModule } from 'src/app/components/common-components.module';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
     LoadingSpinnerComponent,
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -24,6 +24,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     OverlayModule,
     CommonComponentsModule,
     MatDialogModule,
+    MatNativeDateModule,
   ],
   providers: [
     {

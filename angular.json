@@ -216,6 +216,9 @@
           },
           "defaultConfiguration": "production"
         }
+      },
+      "i18n": {
+        "sourceLocale": "ja-JP"
       }
     }
   },

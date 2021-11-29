@@ -38,6 +38,7 @@ import { Subscription } from 'rxjs';
 export class DashboardInputComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
   @Input() name = '';
+  @Input() type = '';
   @Input() isPassword = false;
 
   hidePassword = true;

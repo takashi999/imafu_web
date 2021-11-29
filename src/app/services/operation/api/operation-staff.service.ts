@@ -23,6 +23,7 @@ export class OperationStaffService {
   create(body: {
     login_id: string;
     password: string;
+    display_name: string;
     role_id: number;
   }) {
     return this.httpClient.post<OperationUser[]>('@op/staffs', body);
@@ -31,6 +32,7 @@ export class OperationStaffService {
   modify(id: number, body: {
     login_id: string;
     password?: string;
+    display_name: string;
     role_id: number;
   }) {
     return this.httpClient.patch<OperationUser[]>('@op/staffs/' + id, body);

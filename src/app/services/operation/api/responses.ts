@@ -1,6 +1,7 @@
 export interface OperationUser {
   id: number;
   login_id: string;
+  display_name: string;
   created_at: string;
   updated_at: string;
   role_id: number;
@@ -89,6 +90,27 @@ export interface OperationTenant {
     updated_at: string;
   } | null;
   users: OperationTenantUser[];
+  sector: {
+    id: number;
+    display_name: string;
+  };
+  plan: {
+    id: number;
+    display_name: number;
+    is_limited: boolean;
+  };
+  groups: OperationTenantGroup[];
+  tenant_sector_id: number;
+  tenant_plan_id: number;
+  begin_plan_limit_date: string | null;
+  end_plan_limit_date: string | null;
+  plan_price: number;
+  begin_publish_date: string;
+  end_publish_date: string | null;
+  refresh_place_rate_limit_per_date: number;
+  shop_news_rate_limit_per_date: number;
+  is_suspend: number;
+  tenant_support_regions: { id: number; display_name: string }[];
 }
 
 export interface OperationTenantGroup {

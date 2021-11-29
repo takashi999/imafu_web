@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CreateTenantRequest, ModifyTenantRequest } from 'src/app/services/operation/api/requests';
+import { CreateTenantRequest } from 'src/app/services/operation/api/requests';
 import { OperationTenant } from 'src/app/services/operation/api/responses';
 
 @Injectable({
@@ -25,7 +25,7 @@ export class OperationTenantService {
     return this.httpClient.post<OperationTenant[]>('@op/tenants', body);
   }
 
-  modify(id: number, body: ModifyTenantRequest) {
+  modify(id: number, body: CreateTenantRequest) {
     return this.httpClient.patch<OperationTenant[]>('@op/tenants/' + id, body);
   }
 

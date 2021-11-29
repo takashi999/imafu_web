@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OperationTenantService } from 'src/app/services/operation/api/operation-tenant.service';
@@ -16,6 +16,9 @@ import {
   maxLength30Validator,
   maxLength60Validator,
 } from 'src/app/validators/common-validators';
+import { map } from 'rxjs/operators';
+import { OperationTenantGroupService } from 'src/app/services/operation/api/operation-tenant-group.service';
+import { OperationMasterService } from 'src/app/services/operation/api/operation-master.service';
 
 @Component({
   selector: 'app-operation-tenant-detail',
@@ -31,7 +34,19 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
   users$: Subject<TenantUser[]> = new Subject();
 
   fg = new FormGroup({
+    group: new FormControl('', []),
     name: new FormControl('', [ Validators.required, maxLength100Validator ]),
+    tenant_sector_id: new FormControl('', [ Validators.required ]),
+    support_regions: new FormControl([], []),
+    tenant_plan_id: new FormControl('', []),
+    begin_plan_limit_date: new FormControl('', []),
+    end_plan_limit_date: new FormControl('', []),
+    plan_price: new FormControl('0', []),
+    begin_publish_date: new FormControl('', []),
+    end_publish_date: new FormControl('', []),
+    refresh_place_rate_limit_per_date: new FormControl('20', []),
+    shop_news_rate_limit_per_date: new FormControl('10', []),
+    is_suspend: new FormControl(false, []),
     catch: new FormControl('', [ maxLength30Validator ]),
     tel: new FormArray(Array(2).fill(0).map(() => new FormControl('', [
       maxLength15Validator,
@@ -91,12 +106,58 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
     },
   ];
 
+  groupSelects$ = this.operationTenantGroupService.list().pipe(
+    map(r => r.map((v): {
+      value: any;
+      label: string;
+    } => ({
+      value: v.id.toString(10),
+      label: v.name,
+    }))),
+  );
+
+  sectorSelects$ = this.operationMasterService.sectors().pipe(
+    map(r => r.map((v): {
+      value: any;
+      label: string;
+    } => ({
+      value: v.id.toString(10),
+      label: v.display_name,
+    }))),
+  );
+
+  regionSelects$ = this.operationMasterService.regions().pipe(
+    map(r => r.map((v): {
+      value: any;
+      label: string;
+    } => ({
+      value: v.id.toString(10),
+      label: v.display_name,
+    }))),
+  );
+
+  planSelects$ = new BehaviorSubject<{ value: any; label: string; }[] | null>(null);
+  isSelectedLimitedPlan = false;
+
+  statusSelects = [
+    {
+      value: false,
+      label: '通常',
+    },
+    {
+      value: true,
+      label: '一時停止',
+    },
+  ];
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private operationTenantService: OperationTenantService,
     private operationCreditCardBrandService: OperationCreditCardBrandService,
     private operationTenantUserService: OperationTenantUserService,
+    private operationTenantGroupService: OperationTenantGroupService,
+    private operationMasterService: OperationMasterService,
     private changeDetectorRef: ChangeDetectorRef,
   ) {
   }
@@ -163,6 +224,11 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
                 enable_receipt: this.detail.enable_receipt ? '1' : '0',
                 use_timetable: this.detail.use_timetable ? '1' : '0',
                 enable_edit_timetable_on_cast: this.detail.enable_edit_timetable_on_cast ? '1' : '0',
+                tenant_sector_id: this.detail.sector.id.toString(10),
+                tenant_plan_id: this.detail.plan.id.toString(10),
+                group: this.detail.groups[0]?.id.toString(10),
+                is_suspend: !!this.detail.is_suspend,
+                support_regions: this.detail.tenant_support_regions.map(r => r.id.toString(10)),
               }, { emitEvent: false });
 
               this.useForm.setValue(typeof this.detail.form?.email === 'undefined' ? '0' : '1', { emitEvent: false });
@@ -198,6 +264,26 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
 
               this.changeDetectorRef.markForCheck();
             }),
+        );
+      }),
+    );
+
+    this.s.add(
+      this.operationMasterService.plans().subscribe(res => {
+        this.s.add(
+          this.fg.get('tenant_plan_id')?.valueChanges.subscribe(planIdStr => {
+            this.isSelectedLimitedPlan = res.find(r => r.id.toString(10) === planIdStr)?.is_limited ?? false;
+          }),
+        );
+
+        this.planSelects$.next(
+          res.map((v): {
+            value: any;
+            label: string;
+          } => ({
+            value: v.id.toString(10),
+            label: v.display_name,
+          })),
         );
       }),
     );
