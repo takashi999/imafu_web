@@ -179,42 +179,6 @@
             }
           },
           "defaultConfiguration": "production"
-        },
-        "serve-ssr": {
-          "builder": "@nguniversal/builders:ssr-dev-server",
-          "options": {
-            "port": 4367
-          },
-          "configurations": {
-            "development": {
-              "browserTarget": "imafuu-front:build:development",
-              "serverTarget": "imafuu-front:server:development"
-            },
-            "production": {
-              "browserTarget": "imafuu-front:build:production",
-              "serverTarget": "imafuu-front:server:production"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
-        "prerender": {
-          "builder": "@nguniversal/builders:prerender",
-          "options": {
-            "routes": [
-              "/"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "imafuu-front:build:production",
-              "serverTarget": "imafuu-front:server:production"
-            },
-            "development": {
-              "browserTarget": "imafuu-front:build:development",
-              "serverTarget": "imafuu-front:server:development"
-            }
-          },
-          "defaultConfiguration": "production"
         }
       },
       "i18n": {

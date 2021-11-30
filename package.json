@@ -7,11 +7,7 @@
     "build": "ng build",
     "build:stage": "ng build -c stage",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "dev:ssr": "ng run imafuu-front:serve-ssr",
-    "serve:ssr": "node dist/imafuu-front/server/main.js",
-    "build:ssr": "ng build && ng run imafuu-front:server",
-    "prerender": "ng run imafuu-front:prerender"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
