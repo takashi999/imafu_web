@@ -26,6 +26,11 @@ export class APIInterceptor implements HttpInterceptor {
       replacement: '@te',
       tokenKey: 'tenantToken',
     },
+    {
+      endpoint: environment.serverUrl + '/api/v1/tenant-cast',
+      replacement: '@ca',
+      tokenKey: 'tenantCastToken',
+    },
   ];
 
   overlayRef = this.overlay.create({

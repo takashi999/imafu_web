@@ -1,0 +1,20 @@
+<mat-drawer-container class="container">
+  <mat-drawer #drawer mode="over">
+    <mat-action-list (click)="drawer.close()">
+    </mat-action-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="content">
+      <div class="toolbar">
+        <mat-toolbar color="warn">
+          <span matRipple routerLink="/tenant-cast">キャスト管理画面</span>
+        </mat-toolbar>
+      </div>
+      <div class="router-container">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+

@@ -10,6 +10,10 @@ const routes: Routes = [
     path: 'tenant',
     loadChildren: () => import('./modules/tenant/tenant.module').then(m => m.TenantModule),
   },
+  {
+    path: 'tenant-cast',
+    loadChildren: () => import('./modules/cast/cast.module').then(m => m.CastModule),
+  },
 ];
 
 @NgModule({

@@ -1,0 +1,15 @@
+<div class="container">
+  <form (ngSubmit)="onSub()" [formGroup]="fg">
+    <mat-card>
+      <mat-card-title>ログイン</mat-card-title>
+      <mat-card-content>
+        <app-dashboard-input formControlName="login_id" name="login_id">ID</app-dashboard-input>
+        <app-dashboard-input [isPassword]="true" formControlName="password" name="password">パスワード</app-dashboard-input>
+        <p *ngIf="failed">ログインに失敗しました</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button class="sign-in-button" color="primary" mat-flat-button>ログイン</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

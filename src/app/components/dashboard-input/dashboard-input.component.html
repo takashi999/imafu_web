@@ -6,8 +6,8 @@
     <input
       [autocomplete]="isPassword ? 'new-password' : 'on'"
       [formControl]="fc"
-      [maxLength]="max"
-      [minLength]="min"
+      [attr.maxLength]="max !== null ? max : null"
+      [attr.minLength]="min !== null ? min : null"
       [name]="name"
       [type]="isPassword && hidePassword ? 'password' : type"
       matInput
