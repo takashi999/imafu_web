@@ -5,7 +5,6 @@ import {
   ElementRef,
   OnDestroy,
   OnInit,
-  SecurityContext,
   ViewChild,
 } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
@@ -19,7 +18,6 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { TenantMasterService } from 'src/app/services/tenant/api/tenant-master.service';
 import { TenantFreeBlockService } from 'src/app/services/tenant/api/tenant-free-block.service';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FormDataService } from 'src/app/services/form-data.service';
 
 @Component({
@@ -69,14 +67,13 @@ export class TenantFreeBlockDetailComponent implements OnInit, OnDestroy, AfterV
   selectedTextType: string | null = null;
 
   file: File | null = null;
-  fileUrl: SafeUrl | null = null;
+  defaultFileUrl: string | null = null;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private tenantFreeBlockService: TenantFreeBlockService,
     private tenantMasterService: TenantMasterService,
-    private domSanitizer: DomSanitizer,
     private formDataService: FormDataService,
   ) {
   }
@@ -120,7 +117,7 @@ export class TenantFreeBlockDetailComponent implements OnInit, OnDestroy, AfterV
         }
 
         if (res.image.file_url) {
-          this.fileUrl = this.domSanitizer.sanitize(SecurityContext.URL, res.image.file_url);
+          this.defaultFileUrl = res.image.file_url;
         }
       }),
     );
@@ -168,13 +165,8 @@ export class TenantFreeBlockDetailComponent implements OnInit, OnDestroy, AfterV
     );
   }
 
-  onChangeFile() {
-    this.file = this.imageFileInputElm?.nativeElement.files?.[0] ?? null;
-    this.fileUrl = null;
-
-    if (this.file) {
-      this.fileUrl = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.file));
-    }
+  onChangeFile(file: File) {
+    this.file = file;
   }
 
 }

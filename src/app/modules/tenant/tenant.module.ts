@@ -51,6 +51,7 @@ import { TenantCastCreateComponent } from './components/tenant-cast-create/tenan
 import { TenantFreeImageCreateComponent } from './components/tenant-free-image-create/tenant-free-image-create.component';
 import { TenantRankingCreateComponent } from './components/tenant-ranking-create/tenant-ranking-create.component';
 import { CKEditorModule } from 'ckeditor4-angular';
+import { TenantFreeBannerImagesComponent } from './components/tenant-free-banner-images/tenant-free-banner-images.component';
 
 
 @NgModule({
@@ -88,6 +89,7 @@ import { CKEditorModule } from 'ckeditor4-angular';
     TenantCastCreateComponent,
     TenantFreeImageCreateComponent,
     TenantRankingCreateComponent,
+    TenantFreeBannerImagesComponent,
   ],
   imports: [
     CommonModule,

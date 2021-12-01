@@ -1,0 +1,9 @@
+<p>
+  <mat-label>画像</mat-label>
+</p>
+<div *ngIf="fileUrl" class="image-container">
+  <img [src]="fileUrl" alt="">
+</div>
+<p>
+  <input #imageFileInput (change)="onChangeFile(imageFileInput.files)" name="image" type="file">
+</p>

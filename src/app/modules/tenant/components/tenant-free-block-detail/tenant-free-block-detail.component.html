@@ -34,11 +34,7 @@
           タイトル
         </app-dashboard-input>
 
-        <p>
-          <mat-label>画像</mat-label>
-          <img [src]="fileUrl" alt="">
-          <input #imageFileInput (change)="onChangeFile()" name="image" type="file">
-        </p>
+        <app-dashboard-image (changeFile)="onChangeFile($event)" [defaultUrl]="defaultFileUrl"></app-dashboard-image>
 
         <app-dashboard-select
           [selects]="textTypeSelects"

@@ -25,6 +25,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { DashboardCheckboxComponent } from './dashboard-checkbox/dashboard-checkbox.component';
 import { DashboardDatePickerComponent } from './dashboard-date-picker/dashboard-date-picker.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DashboardImageComponent } from './dashboard-image/dashboard-image.component';
+import { DashboardImageMultipleComponent } from './dashboard-image-multiple/dashboard-image-multiple.component';
 
 
 @NgModule({
@@ -40,6 +42,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     DashboardRadioComponent,
     DashboardCheckboxComponent,
     DashboardDatePickerComponent,
+    DashboardImageComponent,
+    DashboardImageMultipleComponent,
   ],
     imports: [
         CommonModule,
@@ -76,6 +80,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     DashboardRadioComponent,
     DashboardCheckboxComponent,
     DashboardDatePickerComponent,
+    DashboardImageComponent,
   ],
 })
 export class CommonComponentsModule {

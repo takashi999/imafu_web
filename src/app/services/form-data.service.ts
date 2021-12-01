@@ -20,6 +20,10 @@ export class FormDataService {
       const val = obj[key];
       const currentKey = prefix === '' ? key : `${ prefix }[${ key }]`;
 
+      if (val === null) {
+        return f;
+      }
+
       switch (typeof val) {
         case 'undefined':
           break;
