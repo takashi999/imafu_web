@@ -200,7 +200,7 @@ export class TenantCastScheduleComponent implements OnInit, OnDestroy {
   }
 
   getCurrentDate() {
-    return formatDate(Date.now(), 'YYYY-MM-dd', 'ja');
+    return format(Date.now(), 'yyyy-MM-dd');
   }
 
   onClickCreate(date: DateScheduleDetail, cast: TenantCast, setting: TenantCastScheduleSettingResponse) {
