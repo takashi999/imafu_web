@@ -52,6 +52,11 @@ import { TenantFreeImageCreateComponent } from './components/tenant-free-image-c
 import { TenantRankingCreateComponent } from './components/tenant-ranking-create/tenant-ranking-create.component';
 import { CKEditorModule } from 'ckeditor4-angular';
 import { TenantFreeBannerImagesComponent } from './components/tenant-free-banner-images/tenant-free-banner-images.component';
+import { TenantCastScheduleSettingComponent } from './components/tenant-cast-schedule-setting/tenant-cast-schedule-setting.component';
+import { TenantCastScheduleComponent } from './components/tenant-cast-schedule/tenant-cast-schedule.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { TenantCastScheduleDialogComponent } from './components/tenant-cast-schedule-dialog/tenant-cast-schedule-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -90,27 +95,32 @@ import { TenantFreeBannerImagesComponent } from './components/tenant-free-banner
     TenantFreeImageCreateComponent,
     TenantRankingCreateComponent,
     TenantFreeBannerImagesComponent,
+    TenantCastScheduleSettingComponent,
+    TenantCastScheduleComponent,
+    TenantCastScheduleDialogComponent,
   ],
-  imports: [
-    CommonModule,
-    TenantRoutingModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatRippleModule,
-    MatCardModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatGridListModule,
-    MatRadioModule,
-    MatCheckboxModule,
-    MatSelectModule,
-    CommonComponentsModule,
-    CKEditorModule,
-  ],
+    imports: [
+        CommonModule,
+        TenantRoutingModule,
+        MatSidenavModule,
+        MatListModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatRippleModule,
+        MatCardModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatGridListModule,
+        MatRadioModule,
+        MatCheckboxModule,
+        MatSelectModule,
+        CommonComponentsModule,
+        CKEditorModule,
+        MatPaginatorModule,
+        MatDialogModule,
+    ],
 })
 export class TenantModule {
 }

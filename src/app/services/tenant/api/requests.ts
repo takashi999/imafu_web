@@ -6,9 +6,9 @@ export interface ModifyTenantByTenantRequest {
   form_email: string;
   region: string;
   open_time: string;
-  open_time_duration: string;
+  open_time_end: string;
   reception_time: string;
-  reception_time_duration: string;
+  reception_time_end: string;
   close_date: string;
   lowest_cost: number;
   regular_services: string;
@@ -19,4 +19,10 @@ export interface ModifyTenantByTenantRequest {
   note: string;
   use_timetable: boolean;
   enable_edit_timetable_on_cast: boolean;
+}
+
+export interface ModifyTenantCastScheduleSettingRequest{
+  no_schedule_comment: string;
+  dashboard_display_num: number;
+  dashboard_minute_step: number;
 }

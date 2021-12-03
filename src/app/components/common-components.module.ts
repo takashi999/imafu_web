@@ -27,6 +27,7 @@ import { DashboardDatePickerComponent } from './dashboard-date-picker/dashboard-
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DashboardImageComponent } from './dashboard-image/dashboard-image.component';
 import { DashboardImageMultipleComponent } from './dashboard-image-multiple/dashboard-image-multiple.component';
+import { DashboardSearchComponent } from './dashboard-search/dashboard-search.component';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { DashboardImageMultipleComponent } from './dashboard-image-multiple/dash
     DashboardDatePickerComponent,
     DashboardImageComponent,
     DashboardImageMultipleComponent,
+    DashboardSearchComponent,
   ],
     imports: [
         CommonModule,
@@ -81,6 +83,7 @@ import { DashboardImageMultipleComponent } from './dashboard-image-multiple/dash
     DashboardCheckboxComponent,
     DashboardDatePickerComponent,
     DashboardImageComponent,
+    DashboardSearchComponent,
   ],
 })
 export class CommonComponentsModule {

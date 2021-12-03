@@ -1,0 +1,108 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    border: 1px solid #ccc;
+  }
+}
+
+.cast-icon {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+.table-container {
+  overflow: auto;
+}
+
+.schedule-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 160px;
+  color: #333333;
+
+  .data-container {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    width: 100%;
+
+    .modify-schedule {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      flex: 1 1 auto;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+      color: #ffffff;
+      font-size: 20px;
+      opacity: 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .create-schedule {
+    flex: 1 1 auto;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    font-size: 20px;
+    opacity: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+.calendar-date-box {
+  position: relative;
+
+  .date {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    padding: 5px;
+    width: 15px;
+    height: 15px;
+    font-size: 12px;
+    line-height: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+
+    &.is-today {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+  .schedule-box{
+    padding-top: 35px;
+  }
+}
+.day-0{
+  color: #711f1f;
+}
+.day-6{
+  color: #1e5790;
+}

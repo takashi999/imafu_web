@@ -35,6 +35,8 @@ import { TenantStaffCreateComponent } from 'src/app/modules/tenant/components/te
 import { TenantCastCreateComponent } from 'src/app/modules/tenant/components/tenant-cast-create/tenant-cast-create.component';
 import { TenantFreeSpaceCreateComponent } from 'src/app/modules/tenant/components/tenant-free-space-create/tenant-free-space-create.component';
 import { TenantFreeBannerCreateComponent } from 'src/app/modules/tenant/components/tenant-free-banner-create/tenant-free-banner-create.component';
+import { TenantCastScheduleSettingComponent } from 'src/app/modules/tenant/components/tenant-cast-schedule-setting/tenant-cast-schedule-setting.component';
+import { TenantCastScheduleComponent } from 'src/app/modules/tenant/components/tenant-cast-schedule/tenant-cast-schedule.component';
 
 const routes: Routes = [
   {
@@ -151,6 +153,14 @@ const routes: Routes = [
           {
             path: 'cast/:castId',
             component: TenantCastDetailComponent,
+          },
+          {
+            path: 'cast-schedule-setting',
+            component: TenantCastScheduleSettingComponent,
+          },
+          {
+            path: 'cast-schedule',
+            component: TenantCastScheduleComponent,
           },
           {
             path: 'free-image',

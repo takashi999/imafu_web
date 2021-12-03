@@ -14,9 +14,9 @@ export interface Tenant {
   catch: string;
   region: string;
   open_time: string;
-  open_time_duration: string;
+  open_time_end: string;
   reception_time: string;
-  reception_time_duration: string;
+  reception_time_end: string;
   close_date: string;
   lowest_cost: number;
   regular_services: string;
@@ -158,4 +158,54 @@ export interface TenantCast {
   created_at: string;
   updated_at: string;
   sequence: number;
+  details: {
+    created_at: string;
+    detail: string;
+    id: number
+    tenant_cast_id: number
+    title: string;
+    updated_at: string;
+  }[];
+  services: {
+    created_at: string;
+    id: number;
+    tenant_cast_id: number;
+    tenant_cast_service_type_id: number;
+    updated_at: string;
+  }[];
+  images: {
+    created_at: string;
+    file_path: {
+      id: number;
+      deleted_at: string | null;
+      created_at: string;
+      updated_at: string;
+    }
+    file_path_id: number;
+    file_url: string;
+    id: number;
+    tenant_cast_id: number;
+    updated_at: string;
+  }[];
 }
+
+export interface TenantCastScheduleSettingResponse {
+  no_schedule_comment: string;
+  dashboard_display_num: number;
+  dashboard_minute_step: number;
+}
+
+export interface TenantCastScheduleResponse {
+  id: number;
+  tenant_id: number;
+  tenant_cast_id: number;
+  schedule_date: string;
+  start_time: string;
+  end_time: string;
+  finished_at: string | null;
+  comment: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export type TenantCastScheduleListResponse = TenantCastScheduleResponse[];

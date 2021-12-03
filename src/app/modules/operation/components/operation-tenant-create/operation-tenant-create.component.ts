@@ -50,9 +50,9 @@ export class OperationTenantCreateComponent implements OnInit, OnDestroy {
     form_email: new FormControl('', [ Validators.email ]),
     region: new FormControl('', [ maxLength30Validator ]),
     open_time: new FormControl('', [ Validators.required ]),
-    open_time_duration: new FormControl('', [ Validators.required ]),
+    open_time_end: new FormControl('', [ Validators.required ]),
     reception_time: new FormControl('', [ Validators.required ]),
-    reception_time_duration: new FormControl('', [ Validators.required ]),
+    reception_time_end: new FormControl('', [ Validators.required ]),
     close_date: new FormControl('', [ maxLength60Validator ]),
     lowest_cost: new FormControl('', [ Validators.required ]),
     regular_services: new FormControl('', [ maxLength180Validator ]),
@@ -148,18 +148,18 @@ export class OperationTenantCreateComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.s.add(
-      this.openTimeCombined.valueChanges.subscribe(([ open_time, open_time_duration ]) => {
+      this.openTimeCombined.valueChanges.subscribe(([ open_time, open_time_end ]) => {
         this.fg.patchValue({
           open_time: open_time,
-          open_time_duration: open_time_duration,
+          open_time_end: open_time_end,
         }, { emitEvent: false });
       }),
     );
     this.s.add(
-      this.receptionTimeCombined.valueChanges.subscribe(([ reception_time, reception_time_duration ]) => {
+      this.receptionTimeCombined.valueChanges.subscribe(([ reception_time, reception_time_end ]) => {
         this.fg.patchValue({
           reception_time: reception_time,
-          reception_time_duration: reception_time_duration,
+          reception_time_end: reception_time_end,
         }, { emitEvent: false });
       }),
     );

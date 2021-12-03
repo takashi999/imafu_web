@@ -1,11 +1,12 @@
 import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError, timer } from 'rxjs';
 import { TokenService } from 'src/app/services/token.service';
-import { tap } from 'rxjs/operators';
+import { mergeMap, retryWhen, tap } from 'rxjs/operators';
 import { Overlay } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { environment } from 'src/environments/environment';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class APIInterceptor implements HttpInterceptor {
@@ -47,6 +48,7 @@ export class APIInterceptor implements HttpInterceptor {
   constructor(
     private tokenService: TokenService,
     private overlay: Overlay,
+    private matSnackBar: MatSnackBar,
   ) {
   }
 
@@ -70,6 +72,23 @@ export class APIInterceptor implements HttpInterceptor {
           },
         }),
       ).pipe(
+        retryWhen(errors => {
+          return errors.pipe(
+            mergeMap(error => {
+              if (error instanceof HttpErrorResponse) {
+                if (error.status === 429) {
+                  const retrySeconds = parseInt(error.headers.get('Retry-After') ?? ``, 10)
+                  const ref = this.matSnackBar.open(`短期間でのアクセスが多すぎました、${ retrySeconds }秒後にリトライします`, '閉じる', {
+                    duration: retrySeconds * 1000,
+                  });
+                  return timer(retrySeconds * 1000);
+                }
+              }
+
+              return throwError(error);
+            }),
+          );
+        }),
         tap({
           error: err => {
             this.incrementCount--;
@@ -77,15 +96,37 @@ export class APIInterceptor implements HttpInterceptor {
               this.overlayRef.detach();
             }
 
-            if (err instanceof HttpErrorResponse && err.status === 401) {
-              this.tokenService.resetToken(endpoint.tokenKey);
-              location.reload();
+            if (err instanceof HttpErrorResponse) {
+              if (err.status === 401) {
+                this.tokenService.resetToken(endpoint.tokenKey);
+                location.reload();
+              }
+              if (err.status === 422 && err.error?.message) {
+                this.matSnackBar.open(err.error.message, '閉じる', {
+                  duration: 3000,
+                });
+              }
             }
           },
           complete: () => {
             this.incrementCount--;
             if (this.incrementCount === 0) {
               this.overlayRef.detach();
+            }
+            if (request.method === 'POST') {
+              this.matSnackBar.open('作成が完了しました', '閉じる', {
+                duration: 3000,
+              });
+            }
+            if (request.method === 'PATCH') {
+              this.matSnackBar.open('更新が完了しました', '閉じる', {
+                duration: 3000,
+              });
+            }
+            if (request.method === 'DELETE') {
+              this.matSnackBar.open('削除が完了しました', '閉じる', {
+                duration: 3000,
+              });
             }
           },
         }),

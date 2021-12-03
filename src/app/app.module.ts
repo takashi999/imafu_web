@@ -11,6 +11,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonComponentsModule } from 'src/app/components/common-components.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     CommonComponentsModule,
     MatDialogModule,
     MatNativeDateModule,
+    MatSnackBarModule,
   ],
   providers: [
     {

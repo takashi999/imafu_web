@@ -1,8 +1,10 @@
 <header>
   <h2 class="headline">
-    <button *ngIf="prevRouterLink" [routerLink]="prevRouterLink" color="accent" mat-flat-button mat-icon-button>
-      <mat-icon>arrow_back</mat-icon>
-    </button>
+    <a *ngIf="prevRouterLink" [routerLink]="prevRouterLink">
+      <button color="accent" mat-flat-button mat-icon-button>
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+    </a>
     <span><ng-content></ng-content></span>
   </h2>
   <div class="spacer"></div>

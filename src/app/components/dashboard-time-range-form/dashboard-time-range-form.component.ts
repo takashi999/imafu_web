@@ -16,6 +16,8 @@ import { merge, Subscription } from 'rxjs';
 export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
   @Input() label: string = '';
+  @Input() enable24h = true;
+  @Input() minuteStep = 60;
 
   openTime = new FormControl('');
   closeTime = new FormControl('');
@@ -23,11 +25,30 @@ export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, Contr
 
   s = new Subscription();
 
-  startTimeOptions = new Array(23)
-    .fill(0)
-    .map((v, i) => `0${ i + 1 }`.substr(-2, 2));
+  startTimeOptions: string[] = [];
+  endTimeOptions: string[] = [];
 
   constructor() {
+  }
+
+  * getTimes(startHour: number, maxHour: number) {
+    let hour = startHour;
+    let minute = 0;
+
+    const padZero = (str: number) => `0${ str }`.substr(-2, 2);
+
+    while (hour < maxHour) {
+      yield `${ padZero(hour) }:${ padZero(minute) }`;
+
+      minute += this.minuteStep;
+
+      if (minute >= 60) {
+        const minuteRemainder = minute % 60;
+        hour += (minute - minuteRemainder) / 60;
+        minute = minuteRemainder;
+      }
+    }
+    yield `${ padZero(hour) }:00`;
   }
 
   onChange = (v: any) => {
@@ -35,14 +56,6 @@ export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, Contr
 
   onTouched = () => {
   };
-
-  getEndTimeOptions(startHour: string) {
-    const parsed = parseInt(startHour, 10);
-    const startHourNum = isNaN(parsed) ? 1 : parsed;
-    return new Array(24 - startHourNum)
-      .fill(0)
-      .map((v, i) => `0${ i + 1 + startHourNum }`.substr(-2, 2));
-  }
 
   ngOnInit(): void {
     this.s.add(
@@ -68,6 +81,9 @@ export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, Contr
         this.setFromOpenAndClose(this.openTime, this.closeTime);
       }),
     );
+
+    this.startTimeOptions = [ ...this.getTimes(0, 24) ];
+    this.endTimeOptions = [ ...this.getTimes(1, 24) ];
   }
 
   ngOnDestroy() {
@@ -83,18 +99,12 @@ export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, Contr
   }
 
   writeValue(obj: string[]): void {
-    const [ openTime, openTimeDuration ] = obj;
-    const isOpen24h = openTime === '00:00' && openTimeDuration === '24:00';
+    const [ openTime, endTime ] = obj;
+    const isOpen24h = openTime.substr(0, 5) === '00:00' && endTime.substr(0, 5) === '24:00';
     this.open24h.setValue(isOpen24h, { emitEvent: false });
     if (!isOpen24h) {
-      this.openTime.setValue(parseInt(openTime.substr(0, 2), 10).toString(10), { emitEvent: false });
-      this.closeTime.setValue(
-        (
-          parseInt(openTime, 10) +
-          parseInt(openTimeDuration.substr(0, 2), 10)
-        ).toString(10),
-        { emitEvent: false },
-      );
+      this.openTime.setValue(openTime.substr(0, 5), { emitEvent: false });
+      this.closeTime.setValue(endTime.substr(0, 5), { emitEvent: false });
     } else {
       this.openTime.disable({ emitEvent: false });
       this.closeTime.disable({ emitEvent: false });
@@ -118,16 +128,9 @@ export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, Contr
   }
 
   private setFromOpenAndClose(startControl: AbstractControl, endControl: AbstractControl) {
-    const startHour = parseInt(startControl.value, 10);
-    const endHour = parseInt(endControl.value, 10);
-
-    if (isNaN(startHour) || isNaN(endHour)) {
-      this.onChange([ '', '' ]);
-    } else {
-      this.onChange([
-        `${ `0${ startControl.value }`.substr(-2, 2) }:00`,
-        `${ `0${ parseInt(endControl.value, 10) - parseInt(startControl.value, 10) }`.substr(-2, 2) }:00`,
-      ]);
-    }
+    this.onChange([
+      startControl.value,
+      endControl.value,
+    ]);
   }
 }

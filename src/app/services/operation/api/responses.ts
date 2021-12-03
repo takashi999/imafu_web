@@ -36,9 +36,9 @@ export interface OperationTenant {
   catch: string;
   region: string;
   open_time: string;
-  open_time_duration: string;
+  open_time_end: string;
   reception_time: string;
-  reception_time_duration: string;
+  reception_time_end: string;
   close_date: string;
   lowest_cost: number;
   regular_services: string;

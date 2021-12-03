@@ -56,9 +56,9 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
     form_email: new FormControl('', [ Validators.email ]),
     region: new FormControl('', [ maxLength30Validator ]),
     open_time: new FormControl('', [ Validators.required ]),
-    open_time_duration: new FormControl('', [ Validators.required ]),
+    open_time_end: new FormControl('', [ Validators.required ]),
     reception_time: new FormControl('', [ Validators.required ]),
-    reception_time_duration: new FormControl('', [ Validators.required ]),
+    reception_time_end: new FormControl('', [ Validators.required ]),
     close_date: new FormControl('', [ maxLength60Validator ]),
     lowest_cost: new FormControl('', [ Validators.required ]),
     regular_services: new FormControl('', [ maxLength180Validator ]),
@@ -170,18 +170,18 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.s.add(
-      this.openTimeCombined.valueChanges.subscribe(([ open_time, open_time_duration ]) => {
+      this.openTimeCombined.valueChanges.subscribe(([ open_time, open_time_end ]) => {
         this.fg.patchValue({
           open_time: open_time,
-          open_time_duration: open_time_duration,
+          open_time_end: open_time_end,
         }, { emitEvent: false });
       }),
     );
     this.s.add(
-      this.receptionTimeCombined.valueChanges.subscribe(([ reception_time, reception_time_duration ]) => {
+      this.receptionTimeCombined.valueChanges.subscribe(([ reception_time, reception_time_end ]) => {
         this.fg.patchValue({
           reception_time: reception_time,
-          reception_time_duration: reception_time_duration,
+          reception_time_end: reception_time_end,
         }, { emitEvent: false });
       }),
     );
@@ -213,9 +213,9 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
                 line_url: this.detail.line?.line_url,
                 form_email: this.detail.form?.email,
                 open_time: this.detail.open_time.substr(0, 5),
-                open_time_duration: this.detail.open_time_duration.substr(0, 5),
+                open_time_end: this.detail.open_time_end.substr(0, 5),
                 reception_time: this.detail.reception_time.substr(0, 5),
-                reception_time_duration: this.detail.reception_time_duration.substr(0, 5),
+                reception_time_end: this.detail.reception_time_end.substr(0, 5),
                 services: this.detail.services?.map(s => ({
                   name: s.name,
                   price: s.price,
@@ -233,8 +233,8 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
 
               this.useForm.setValue(typeof this.detail.form?.email === 'undefined' ? '0' : '1', { emitEvent: false });
 
-              this.openTimeCombined.setValue([ this.detail.open_time.substr(0, 5), this.detail.open_time_duration.substr(0, 5) ], { emitEvent: false });
-              this.receptionTimeCombined.setValue([ this.detail.reception_time.substr(0, 5), this.detail.reception_time_duration.substr(0, 5) ], { emitEvent: false });
+              this.openTimeCombined.setValue([ this.detail.open_time.substr(0, 5), this.detail.open_time_end.substr(0, 5) ], { emitEvent: false });
+              this.receptionTimeCombined.setValue([ this.detail.reception_time.substr(0, 5), this.detail.reception_time_end.substr(0, 5) ], { emitEvent: false });
 
               this.s.add(
                 this.operationCreditCardBrandService.list()
