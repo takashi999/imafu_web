@@ -37,6 +37,7 @@ import { TenantFreeSpaceCreateComponent } from 'src/app/modules/tenant/component
 import { TenantFreeBannerCreateComponent } from 'src/app/modules/tenant/components/tenant-free-banner-create/tenant-free-banner-create.component';
 import { TenantCastScheduleSettingComponent } from 'src/app/modules/tenant/components/tenant-cast-schedule-setting/tenant-cast-schedule-setting.component';
 import { TenantCastScheduleComponent } from 'src/app/modules/tenant/components/tenant-cast-schedule/tenant-cast-schedule.component';
+import { TenantCastScheduleStandByStatusComponent } from 'src/app/modules/tenant/components/tenant-cast-schedule-stand-by-status/tenant-cast-schedule-stand-by-status.component';
 
 const routes: Routes = [
   {
@@ -161,6 +162,10 @@ const routes: Routes = [
           {
             path: 'cast-schedule',
             component: TenantCastScheduleComponent,
+          },
+          {
+            path: 'cast-schedule-status',
+            component: TenantCastScheduleStandByStatusComponent,
           },
           {
             path: 'free-image',

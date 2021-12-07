@@ -57,6 +57,8 @@ import { TenantCastScheduleComponent } from './components/tenant-cast-schedule/t
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { TenantCastScheduleDialogComponent } from './components/tenant-cast-schedule-dialog/tenant-cast-schedule-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { TenantCastScheduleStandByStatusComponent } from './components/tenant-cast-schedule-stand-by-status/tenant-cast-schedule-stand-by-status.component';
+import { TenantCastScheduleStandByStatusDialogComponent } from './components/tenant-cast-schedule-stand-by-status-dialog/tenant-cast-schedule-stand-by-status-dialog.component';
 
 
 @NgModule({
@@ -98,6 +100,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     TenantCastScheduleSettingComponent,
     TenantCastScheduleComponent,
     TenantCastScheduleDialogComponent,
+    TenantCastScheduleStandByStatusComponent,
+    TenantCastScheduleStandByStatusDialogComponent,
   ],
     imports: [
         CommonModule,

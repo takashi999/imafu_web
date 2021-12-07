@@ -40,6 +40,7 @@ export class DashboardInputComponent implements OnInit, OnDestroy, ControlValueA
   @Input() name = '';
   @Input() type = '';
   @Input() isPassword = false;
+  @Input() isClearable = false;
 
   hidePassword = true;
 

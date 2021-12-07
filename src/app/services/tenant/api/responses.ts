@@ -209,3 +209,18 @@ export interface TenantCastScheduleResponse {
 }
 
 export type TenantCastScheduleListResponse = TenantCastScheduleResponse[];
+
+export interface TenantCastScheduleStandbyResponse extends TenantCastScheduleResponse {
+  cast: TenantCast;
+  stand_by_status: {
+    id: number;
+    tenant_cast_schedule_id: number;
+    start_time: string;
+    deleted_at: null;
+    created_at: string;
+    updated_at: string;
+    time_to_available_minutes: number | null;
+  };
+}
+
+export type TenantCastScheduleStandbyListResponse = TenantCastScheduleStandbyResponse[];
