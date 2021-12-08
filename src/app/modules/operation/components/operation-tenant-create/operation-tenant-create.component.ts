@@ -66,6 +66,7 @@ export class OperationTenantCreateComponent implements OnInit, OnDestroy {
     note: new FormControl('', [ maxLength200Validator ]),
     use_timetable: new FormControl('0', [ Validators.required ]),
     enable_edit_timetable_on_cast: new FormControl('1', [ Validators.required ]),
+    image: new FormControl(null),
   });
   openTimeCombined = new FormControl([ '', '' ]);
   receptionTimeCombined = new FormControl([ '', '' ]);

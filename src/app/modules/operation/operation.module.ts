@@ -34,6 +34,7 @@ import { OperationTenantGroupCreateComponent } from './components/operation-tena
 import { CommonComponentsModule } from 'src/app/components/common-components.module';
 import { OperationTenantUserDetailComponent } from './components/operation-tenant-user-detail/operation-tenant-user-detail.component';
 import { OperationTenantUserCreateComponent } from './components/operation-tenant-user-create/operation-tenant-user-create.component';
+import { OperationTenantBannerImageComponent } from './components/operation-tenant-banner-image/operation-tenant-banner-image.component';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { OperationTenantUserCreateComponent } from './components/operation-tenan
     OperationTenantGroupCreateComponent,
     OperationTenantUserDetailComponent,
     OperationTenantUserCreateComponent,
+    OperationTenantBannerImageComponent,
   ],
   imports: [
     CommonModule,

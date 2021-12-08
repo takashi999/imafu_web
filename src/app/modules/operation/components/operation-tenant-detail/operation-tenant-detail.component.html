@@ -207,6 +207,10 @@
             <mat-radio-button value="1">使用</mat-radio-button>
           </mat-radio-group>
         </p>
+        <app-operation-tenant-banner-image
+          formControlName="image"
+          (markedDeleteImage)="onMarkedDeleteImage()"
+        ></app-operation-tenant-banner-image>
       </mat-card-content>
       <mat-card-actions align="end">
         <button [disabled]="fg.invalid" color="primary" mat-raised-button>更新</button>

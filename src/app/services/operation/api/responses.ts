@@ -111,6 +111,11 @@ export interface OperationTenant {
   shop_news_rate_limit_per_date: number;
   is_suspend: number;
   tenant_support_regions: { id: number; display_name: string }[];
+  banner_images: {
+    id: number;
+    file_url: string;
+    sequence: number;
+  }[];
 }
 
 export interface OperationTenantGroup {

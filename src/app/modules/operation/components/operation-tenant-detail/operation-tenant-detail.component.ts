@@ -72,6 +72,8 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
     note: new FormControl('', [ maxLength200Validator ]),
     use_timetable: new FormControl('0', [ Validators.required ]),
     enable_edit_timetable_on_cast: new FormControl('1', [ Validators.required ]),
+    image: new FormControl(null),
+    delete_image: new FormControl(false),
   });
   openTimeCombined = new FormControl([ '', '' ]);
   receptionTimeCombined = new FormControl([ '', '' ]);
@@ -229,6 +231,7 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
                 group: this.detail.groups[0]?.id.toString(10),
                 is_suspend: !!this.detail.is_suspend,
                 support_regions: this.detail.tenant_support_regions.map(r => r.id.toString(10)),
+                image: this.detail.banner_images.find(i => i.sequence === 1),
               }, { emitEvent: false });
 
               this.useForm.setValue(typeof this.detail.form?.email === 'undefined' ? '0' : '1', { emitEvent: false });
@@ -319,5 +322,9 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         this.users$.next(res);
       });
+  }
+
+  onMarkedDeleteImage() {
+    this.fg.patchValue({ delete_image: true }, { emitEvent: false });
   }
 }

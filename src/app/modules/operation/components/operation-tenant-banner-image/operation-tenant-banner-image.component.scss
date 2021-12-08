@@ -1,0 +1,45 @@
+.rows-container {
+  margin: -10px 0;
+}
+
+.row-container {
+  padding: 20px 10px;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-radius: 10px;
+  margin: 10px 0;
+}
+
+.row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: -10px;
+  position: relative;
+
+  .image-container {
+    flex: 0 0 200px;
+    margin: 10px;
+  }
+
+  .file-input-container {
+    flex: 0 0 auto;
+    margin: 10px;
+  }
+
+  .select-container {
+    flex: 1 1 auto;
+    margin: 10px;
+  }
+
+  .textarea-container {
+    margin: 10px;
+    flex: 1 1 100%;
+  }
+
+  button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+}

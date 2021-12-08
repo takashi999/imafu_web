@@ -28,7 +28,11 @@ export class FormDataService {
         case 'undefined':
           break;
         case 'object':
-          this.flatten(formData, val, currentKey);
+          if (val instanceof File) {
+            f.set(currentKey, val);
+          } else {
+            this.flatten(formData, val, currentKey);
+          }
           break;
         case 'boolean':
           f.set(currentKey, val ? '1' : '0');
