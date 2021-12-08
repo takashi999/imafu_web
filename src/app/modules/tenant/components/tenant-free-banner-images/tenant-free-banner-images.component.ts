@@ -99,54 +99,7 @@ export class TenantFreeBannerImagesComponent implements OnInit, OnDestroy, Contr
     this.s.add(
       this.imagesFormArray.valueChanges
         .subscribe((values: any[]) => {
-          this.s.add(
-            combineLatest([
-              this.castLinkTypes$.pipe(filter(v => v !== null), first()),
-              this.casts$.pipe(filter(v => v !== null), first()),
-            ]).pipe(
-              map(([ types, casts ]) => {
-                const normalSelects = types?.map(t => ({ value: t.id, label: t.display_name })) ?? [];
-                const withoutPhotoDiary = types?.filter(t => t.type_id !== 'photo_diary').map(t => ({
-                  value: t.id,
-                  label: t.display_name,
-                })) ?? [];
-
-                return (values ?? [])
-                  .map((v: { cast_id: number | ''; }): { value: any; label: string }[] => {
-                    if (v.cast_id !== '') {
-                      const cast = casts?.find(c => c.id === v.cast_id);
-                      if (cast?.is_use_photo_diary ?? false) {
-                        return normalSelects;
-                      }
-                      return withoutPhotoDiary;
-                    }
-
-                    return [];
-                  });
-              }),
-            )
-              .subscribe(selects => this.castLinkTypesSelects = selects),
-          );
-
-          this.s.add(
-            this.tenantLinkTypes$
-              .pipe(
-                first(),
-              )
-              .subscribe(linkTypes => {
-                this.castLinkTypeEnabled = [];
-                this.freeGalleryEnabled = [];
-                this.foreignLinkEnabled = [];
-
-                values.forEach((v: any, i: number) => {
-                  const typeId = linkTypes?.find(t => t.id === v.tenant_link_type_id)?.type_id ?? '';
-
-                  this.castLinkTypeEnabled[i] = v.cast_id !== '';
-                  this.freeGalleryEnabled[i] = typeId === 'gallery';
-                  this.foreignLinkEnabled[i] = typeId === 'foreign_link';
-                });
-              }),
-          );
+          this.checkLinkTypeEnabled(values);
 
           this.onChange(values);
           this.changeFiles.emit(this.files);
@@ -238,7 +191,7 @@ export class TenantFreeBannerImagesComponent implements OnInit, OnDestroy, Contr
             '',
       ), { emitEvent: false });
 
-      fg.patchValue(v, {emitEvent: false});
+      fg.patchValue(v, { emitEvent: false });
     });
 
     this.fileUrls = [];
@@ -246,7 +199,9 @@ export class TenantFreeBannerImagesComponent implements OnInit, OnDestroy, Contr
       this.files = val.map((i: { id: number; file_url: string }) => i.id);
       this.fileUrls = val.map((i: { id: number; file_url: string }): SafeResourceUrl => this.domSanitizer.bypassSecurityTrustResourceUrl(i.file_url));
     }
-    this.changeFiles.emit(this.files)
+    this.changeFiles.emit(this.files);
+
+    this.checkLinkTypeEnabled(this.imagesFormArray.value);
   }
 
   private makeImageFormGroup() {
@@ -281,5 +236,57 @@ export class TenantFreeBannerImagesComponent implements OnInit, OnDestroy, Contr
         ),
       ]),
     });
+  }
+
+  private checkLinkTypeEnabled(values: any[]) {
+    this.s.add(
+      combineLatest([
+        this.castLinkTypes$.pipe(filter(v => v !== null), first()),
+        this.casts$.pipe(filter(v => v !== null), first()),
+      ]).pipe(
+        map(([ types, casts ]) => {
+          const normalSelects = types?.map(t => ({ value: t.id, label: t.display_name })) ?? [];
+          const withoutPhotoDiary = types?.filter(t => t.type_id !== 'photo_diary').map(t => ({
+            value: t.id,
+            label: t.display_name,
+          })) ?? [];
+
+          return (values ?? [])
+            .map((v: { cast_id: number | ''; }): { value: any; label: string }[] => {
+              if (v.cast_id !== '') {
+                const cast = casts?.find(c => c.id === v.cast_id);
+                if (cast?.is_use_photo_diary ?? false) {
+                  return normalSelects;
+                }
+                return withoutPhotoDiary;
+              }
+
+              return [];
+            });
+        }),
+      )
+        .subscribe(selects => this.castLinkTypesSelects = selects),
+    );
+
+    this.s.add(
+      this.tenantLinkTypes$
+        .pipe(
+          filter((v): v is Exclude<typeof v, null> => v !== null),
+          first(),
+        )
+        .subscribe(linkTypes => {
+          this.castLinkTypeEnabled = [];
+          this.freeGalleryEnabled = [];
+          this.foreignLinkEnabled = [];
+
+          values.forEach((v: any, i: number) => {
+            const typeId = linkTypes?.find(t => t.id === v.tenant_link_type_id)?.type_id ?? '';
+
+            this.castLinkTypeEnabled[i] = v.cast_id !== '';
+            this.freeGalleryEnabled[i] = typeId === 'gallery';
+            this.foreignLinkEnabled[i] = typeId === 'foreign_link';
+          });
+        }),
+    );
   }
 }
