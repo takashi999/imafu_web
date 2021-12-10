@@ -130,6 +130,7 @@ export class DashboardInputComponent implements OnInit, OnDestroy, ControlValueA
 
   writeValue(obj: any): void {
     this.fc.setValue(obj, { emitEvent: false });
+    this.changeDetectorRef.markForCheck();
   }
 
   setDisabledState(isDisabled: boolean) {

@@ -35,6 +35,8 @@ import { CommonComponentsModule } from 'src/app/components/common-components.mod
 import { OperationTenantUserDetailComponent } from './components/operation-tenant-user-detail/operation-tenant-user-detail.component';
 import { OperationTenantUserCreateComponent } from './components/operation-tenant-user-create/operation-tenant-user-create.component';
 import { OperationTenantBannerImageComponent } from './components/operation-tenant-banner-image/operation-tenant-banner-image.component';
+import { OperationTenantCastServiceTypeListComponent } from './components/operation-tenant-cast-service-type-list/operation-tenant-cast-service-type-list.component';
+import { OperationTenantCastServiceTypeDetailComponent } from './components/operation-tenant-cast-service-type-detail/operation-tenant-cast-service-type-detail.component';
 
 
 @NgModule({
@@ -55,6 +57,8 @@ import { OperationTenantBannerImageComponent } from './components/operation-tena
     OperationTenantUserDetailComponent,
     OperationTenantUserCreateComponent,
     OperationTenantBannerImageComponent,
+    OperationTenantCastServiceTypeListComponent,
+    OperationTenantCastServiceTypeDetailComponent,
   ],
   imports: [
     CommonModule,

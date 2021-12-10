@@ -1,0 +1,9 @@
+<app-dashboard-header rightRouterLink="/operation/cast-services/create">可能サービス一覧</app-dashboard-header>
+<app-table-list
+  (clickRow)="onClickRow($event)"
+  (delete)="onDelete($event)"
+  *ngIf="list$ | async as list"
+  [dataSource]="list"
+  [displayedColumns]="displayedColumns"
+  [getNameFn]="getNameFn"
+></app-table-list>

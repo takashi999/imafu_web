@@ -128,3 +128,8 @@ export interface OperationTenantGroup {
   tenants: OperationTenant[] | null;
 }
 
+export interface OperationTenantCastServiceType {
+  id: number;
+  service_type_id: string;
+  display_name: string;
+}

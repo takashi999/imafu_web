@@ -49,3 +49,8 @@ export interface ModifyOperationTenantUserRequest {
   login_id: string;
   password: string | null;
 }
+
+export interface ModifyOperationTenantCastServiceTypeRequest {
+  service_type_id: string;
+  display_name: string;
+}

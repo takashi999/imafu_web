@@ -16,6 +16,8 @@ import { OperationTenantGroupDetailComponent } from 'src/app/modules/operation/c
 import { OperationTenantGroupCreateComponent } from 'src/app/modules/operation/components/operation-tenant-group-create/operation-tenant-group-create.component';
 import { OperationTenantUserDetailComponent } from 'src/app/modules/operation/components/operation-tenant-user-detail/operation-tenant-user-detail.component';
 import { OperationTenantUserCreateComponent } from 'src/app/modules/operation/components/operation-tenant-user-create/operation-tenant-user-create.component';
+import { OperationTenantCastServiceTypeListComponent } from 'src/app/modules/operation/components/operation-tenant-cast-service-type-list/operation-tenant-cast-service-type-list.component';
+import { OperationTenantCastServiceTypeDetailComponent } from 'src/app/modules/operation/components/operation-tenant-cast-service-type-detail/operation-tenant-cast-service-type-detail.component';
 
 const routes: Routes = [
   {
@@ -81,6 +83,18 @@ const routes: Routes = [
           {
             path: 'tenant-groups/:tenant_group_id',
             component: OperationTenantGroupDetailComponent,
+          },
+          {
+            path: 'cast-services',
+            component: OperationTenantCastServiceTypeListComponent,
+          },
+          {
+            path: 'cast-services/create',
+            component: OperationTenantCastServiceTypeDetailComponent,
+          },
+          {
+            path: 'cast-services/:tenant_cast_service_type_id',
+            component: OperationTenantCastServiceTypeDetailComponent,
           },
         ],
       },

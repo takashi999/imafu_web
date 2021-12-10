@@ -1,0 +1,13 @@
+<app-dashboard-header prevRouterLink="../">{{ title$ | async }}</app-dashboard-header>
+<form (ngSubmit)="onSub()" [formGroup]="fg">
+  <mat-card>
+    <mat-card-content>
+      <app-dashboard-input formControlName="service_type_id" name="service_type_id">識別ID - アルファベット、数字、ハイフン（ - ）
+      </app-dashboard-input>
+      <app-dashboard-input formControlName="display_name" name="display_name">名前</app-dashboard-input>
+    </mat-card-content>
+  </mat-card>
+  <mat-card-actions align="end">
+    <button [disabled]="fg.invalid" color="primary" mat-flat-button>{{ buttonText$ | async }}</button>
+  </mat-card-actions>
+</form>
