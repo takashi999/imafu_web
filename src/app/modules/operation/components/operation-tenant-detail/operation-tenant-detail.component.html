@@ -43,8 +43,10 @@
         <app-dashboard-input type="number" formControlName="plan_price">料金</app-dashboard-input>
         <app-dashboard-date-picker formControlName="begin_publish_date">公開日</app-dashboard-date-picker>
         <app-dashboard-date-picker formControlName="end_publish_date">公開停止日</app-dashboard-date-picker>
-        <app-dashboard-input type="number" formControlName="refresh_place_rate_limit_per_date">配置更新数</app-dashboard-input>
-        <app-dashboard-input type="number" formControlName="shop_news_rate_limit_per_date">ショップニュース数</app-dashboard-input>
+        <app-dashboard-input type="number" formControlName="refresh_place_rate_limit_per_date">配置更新数
+        </app-dashboard-input>
+        <app-dashboard-input type="number" formControlName="shop_news_rate_limit_per_date">ショップニュース数
+        </app-dashboard-input>
         <app-dashboard-select [selects]="statusSelects" formControlName="is_suspend">ステータス</app-dashboard-select>
 
         <p>
@@ -209,7 +211,9 @@
         </p>
         <app-operation-tenant-banner-image
           formControlName="image"
-          (markedDeleteImage)="onMarkedDeleteImage()"
+          [galleries]="detail.free_galleries"
+          [foreignLinks]="detail.foreign_links"
+          [casts]="detail.casts"
         ></app-operation-tenant-banner-image>
       </mat-card-content>
       <mat-card-actions align="end">

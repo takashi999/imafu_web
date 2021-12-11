@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OperationTenantService } from 'src/app/services/operation/api/operation-tenant.service';
 import { OperationCreditCardBrandService } from 'src/app/services/operation/api/operation-credit-card-brand.service';
@@ -36,7 +36,7 @@ export class OperationTenantCreateComponent implements OnInit, OnDestroy {
     begin_plan_limit_date: new FormControl('', []),
     end_plan_limit_date: new FormControl('', []),
     plan_price: new FormControl('0', []),
-    begin_publish_date: new FormControl('', []),
+    begin_publish_date: new FormControl('', [ Validators.required ]),
     end_publish_date: new FormControl('', []),
     refresh_place_rate_limit_per_date: new FormControl('20', []),
     shop_news_rate_limit_per_date: new FormControl('10', []),
@@ -217,14 +217,6 @@ export class OperationTenantCreateComponent implements OnInit, OnDestroy {
     this.s.unsubscribe();
   }
 
-  getEndTimeOptions(startHour: string) {
-    const parsed = parseInt(startHour, 10);
-    const startHourNum = isNaN(parsed) ? 1 : parsed;
-    return new Array(24 - startHourNum)
-      .fill(0)
-      .map((v, i) => `0${ i + 1 + startHourNum }`.substr(-2, 2));
-  }
-
   onSub() {
     this.s.add(
       this.operationTenantService.create({
@@ -239,29 +231,4 @@ export class OperationTenantCreateComponent implements OnInit, OnDestroy {
         }),
     );
   }
-
-  private set24Hour(startKey: string, durationKey: string) {
-    this.fg.patchValue({
-      [startKey]: '00:00',
-      [durationKey]: '24:00',
-    }, { emitEvent: false });
-  }
-
-  private setFromOpenAndClose(startKey: string, durationKey: string, startControl: AbstractControl, endControl: AbstractControl) {
-    const startHour = parseInt(startControl.value, 10);
-    const endHour = parseInt(endControl.value, 10);
-
-    if (isNaN(startHour) || isNaN(endHour)) {
-      this.fg.patchValue({
-        [startKey]: ``,
-        [durationKey]: ``,
-      }, { emitEvent: false });
-    } else {
-      this.fg.patchValue({
-        [startKey]: `${ `0${ startControl.value }`.substr(-2, 2) }:00`,
-        [durationKey]: `${ `0${ parseInt(endControl.value, 10) - parseInt(startControl.value, 10) }`.substr(-2, 2) }:00`,
-      }, { emitEvent: false });
-    }
-  }
-
 }

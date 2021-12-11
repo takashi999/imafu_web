@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, forwardRef, Injectable, Input, OnDe
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DateAdapter, NativeDateAdapter } from '@angular/material/core';
 import { Subscription } from 'rxjs';
+import { format } from 'date-fns';
 
 @Injectable({
   providedIn: 'root',
@@ -54,7 +55,7 @@ export class DashboardDatePickerComponent implements OnInit, OnDestroy, ControlV
   ngOnInit(): void {
     this.s.add(
       this.fc.valueChanges.subscribe(value => {
-        this.onChange(value);
+        this.onChange(format(value, 'yyyy-MM-dd'));
       }),
     );
   }

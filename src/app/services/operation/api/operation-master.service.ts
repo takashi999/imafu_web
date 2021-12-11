@@ -18,7 +18,16 @@ export class OperationMasterService {
   regions() {
     return this.httpClient.get<{ id: number; display_name: string; }[]>('@op/master/regions');
   }
+
   plans() {
     return this.httpClient.get<{ id: number; display_name: string; is_limited: boolean; }[]>('@op/master/plans');
+  }
+
+  freeBannerImageCastLinkTypes() {
+    return this.httpClient.get<{ id: number; type_id: string; display_name: string }[]>('@op/master/free-banner-image-cast-link-types');
+  }
+
+  freeBannerImageTenantLinkTypes() {
+    return this.httpClient.get<{ id: number; type_id: string; display_name: string }[]>('@op/master/free-banner-image-tenant-link-types');
   }
 }

@@ -27,7 +27,7 @@ export interface OperationTenantUser {
   is_system: number;
   created_at: string;
   updated_at: string;
-  deleted_at?: any;
+  deleted_at: any | null;
 }
 
 export interface OperationTenant {
@@ -51,7 +51,7 @@ export interface OperationTenant {
   updated_at: string;
   created_by: number;
   updated_by: number;
-  deleted_at?: any;
+  deleted_at: any | null;
   tels: {
     id: number;
     tenant_id: number;
@@ -99,6 +99,9 @@ export interface OperationTenant {
     display_name: number;
     is_limited: boolean;
   };
+  casts: OperationTenantCast[];
+  foreign_links: OperationTenantForeignLink[];
+  free_galleries: OperationTenantFreeGallery[];
   groups: OperationTenantGroup[];
   tenant_sector_id: number;
   tenant_plan_id: number;
@@ -112,9 +115,40 @@ export interface OperationTenant {
   is_suspend: number;
   tenant_support_regions: { id: number; display_name: string }[];
   banner_images: {
-    id: number;
+    created_at: string;
+    file_path: {
+      created_at: string;
+      deleted_at: string | null;
+      id: number;
+      updated_at: string;
+    };
+    file_path_id: number;
     file_url: string;
+    id: number;
     sequence: number;
+    tenant_id: number;
+    updated_at: string;
+    tenant_banner_image_cast_link: {
+      id:number;
+      tenant_banner_image_id: number;
+      tenant_cast_id: number;
+      tenant_free_banner_cast_link_type_id: number;
+    } | null;
+    tenant_banner_image_tenant_link: {
+      id:number;
+      tenant_banner_image_id: number;
+      tenant_free_banner_image_tenant_link_type_id: number;
+    } | null;
+    tenant_banner_image_free_gallery_link: {
+      id:number;
+      tenant_banner_image_tenant_link_id: number;
+      tenant_free_gallery_id: number;
+    } | null;
+    tenant_banner_image_foreign_link: {
+      id:number;
+      tenant_banner_image_tenant_link_id: number;
+      tenant_foreign_link_id: number;
+    } | null;
   }[];
 }
 
@@ -132,4 +166,134 @@ export interface OperationTenantCastServiceType {
   id: number;
   service_type_id: string;
   display_name: string;
+}
+
+
+export interface OperationTenantCast {
+  id: number;
+  tenant_id: number;
+  publish_at: string | null;
+  display_name: string;
+  display_name_kana: string;
+  is_use_original_image: number;
+  is_opened_face: number;
+  is_newbie: number;
+  is_trial: number;
+  age: number | null;
+  age_selected_at: string | null;
+  height: number | null;
+  bust: number | null;
+  cup: string | null;
+  waist: number | null;
+  hip: number | null;
+  blood_type: string | null;
+  is_smoker: number | null;
+  is_irezumi: number | null;
+  is_tattoo: number | null;
+  is_shiohuki: number;
+  is_paipan: number;
+  is_pregnant: number;
+  birth_month: number | null;
+  birth_date: number | null;
+  similar_famous: string;
+  similar_famous_kana: string;
+  sm_barometer: number | null;
+  message: string;
+  is_use_photo_diary: number;
+  is_use_video_diary: number;
+  is_use_fan_letter: number;
+  created_at: string;
+  updated_at: string;
+  sequence: number;
+  images: OperationTenantCastImage[];
+  details: OperationTenantCastDetail[];
+  services: OperationTenantCastService[];
+  types: OperationTenantCastType[];
+  style: OperationTenantCastStyle | null;
+}
+
+export interface OperationTenantCastImage {
+  id: number;
+  tenant_cast_id: number;
+  file_path_id: number;
+  created_at: string;
+  updated_at: string;
+  file_url: string;
+  file_path: OperationTenantCastFilePath | null;
+}
+
+export interface OperationTenantCastFilePath {
+  id: number;
+  deleted_at: any;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface OperationTenantCastDetail {
+  id: number;
+  tenant_cast_id: number;
+  title: string;
+  detail: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface OperationTenantCastService {
+  id: number;
+  tenant_cast_id: number;
+  tenant_cast_service_type_id: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface OperationTenantCastType {
+  id: number;
+  tenant_cast_id: number;
+  tenant_cast_type_id: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface OperationTenantCastStyle {
+  id: number;
+  tenant_cast_id: number;
+  tenant_cast_style_type_id: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface OperationTenantForeignLink {
+  id: number;
+  tenant_id: number;
+  link_address: string;
+  accept_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface OperationTenantFreeGallery {
+  id: number;
+  tenant_id: number;
+  publish_at: string | null;
+  title: string;
+  comment: string;
+  created_at: string;
+  updated_at: string;
+  sequence: number;
+  images: OperationTenantFreeGalleryImage[];
+}
+
+export interface OperationTenantFreeGalleryImage {
+  id: number;
+  tenant_free_gallery_id: number;
+  file_path_id: number;
+  created_at: string;
+  updated_at: string;
+  file_url: string;
+  file_path: {
+    id: number
+    deleted_at: any
+    created_at: string
+    updated_at: string
+  };
 }
