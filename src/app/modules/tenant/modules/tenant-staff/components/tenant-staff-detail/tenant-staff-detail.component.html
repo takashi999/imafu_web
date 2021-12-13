@@ -1,0 +1,31 @@
+<ng-container *ngIf="detail$ | async as detail">
+  <app-dashboard-header prevRouterLink="../">スタッフ編集: #{{ detail.id }}[ {{ detail.login_id }} ]</app-dashboard-header>
+  <mat-card>
+    <form (ngSubmit)="onSub(detail.id)" [formGroup]="fg">
+      <mat-card-content>
+        <p>
+          <mat-form-field appearance="fill" hintLabel="1 - 16文字">
+            <mat-label>ログインID</mat-label>
+            <input formControlName="login_id" matInput max="16" min="1" name="login_id" type="text">
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill" hintLabel="8 - 100文字">
+            <mat-label>パスワード（変更する場合のみ入力）</mat-label>
+            <input [type]="hidePassword ? 'password' : 'text'" autocomplete="new-password" formControlName="password"
+                   matInput max="100"
+                   min="8">
+            <button (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hidePassword" mat-icon-button
+                    matSuffix>
+              <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+        </p>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button [disabled]="fg.invalid" color="primary" mat-raised-button>更新</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</ng-container>

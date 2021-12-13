@@ -1,0 +1,153 @@
+<ng-container *ngIf="list$ | async as list">
+  <ng-container *ngIf="castsIdNormalized$ | async as castIdNormalized">
+    <app-dashboard-header *ngIf="!isMonth">出勤表</app-dashboard-header>
+    <app-dashboard-header *ngIf="currentCastId && castIdNormalized[currentCastId] as cast"
+                          prevRouterLink="./">{{ cast.display_name }}の出勤表
+    </app-dashboard-header>
+    <mat-card>
+      <mat-card-content>
+        <app-dashboard-search (search)="onSearch($event)" *ngIf="!isMonth">ふりがな</app-dashboard-search>
+        <ng-container *ngIf="dateNormalizedList$ | async as list">
+          <ng-container *ngIf="castPaged$ | async as paged">
+            <ng-container *ngIf="settings$ | async as settings">
+              <mat-paginator
+                (page)="currentPageIndex = $event.pageIndex"
+                *ngIf="!isMonth"
+                [length]="(castsSearched$ | async)?.length ?? 0"
+                [pageSize]="settings.dashboard_display_num"
+                aria-label="Select page">
+              </mat-paginator>
+              <p *ngIf="activatedRoute.queryParamMap | async as paramMap">
+                <span>{{ paramMap.get('start_date') ?? getCurrentDate() | date:"YYYY年M月" }}</span>
+                <ng-container
+                  *ngIf="isMonth"
+                >
+                  <button (click)="onClickPrevMonth()" [disabled]="isPrevDisabled" mat-flat-button>< 前月へ</button>
+                  <button (click)="onClickNextMonth()" [disabled]="isNextDisabled" mat-flat-button>翌月へ ></button>
+                </ng-container>
+                <ng-container
+                  *ngIf="!isMonth"
+                >
+                  <button (click)="onClickPrevWeek()" [disabled]="isPrevDisabled" mat-flat-button>< 前週へ</button>
+                  <button (click)="onClickNextWeek()" [disabled]="isNextDisabled" mat-flat-button>翌週へ ></button>
+                </ng-container>
+              </p>
+              <div class="table-container">
+
+                <table *ngIf="!isMonth">
+                  <thead>
+                  <tr>
+                    <th>日付</th>
+                    <th *ngFor="let date of dates[0]" [ngClass]="'day-' + date.dayNum">{{ date.dateString }}</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let cast of paged[currentPageIndex]; trackBy: trackByCastId">
+                    <th>
+                      <div class="cast-box">
+                        <p>
+                          <a [queryParams]="{
+                     'month': '1',
+                     'cast_id': cast.id,
+                     'start_date': activatedRoute.snapshot.paramMap.get('start_date')
+                    }" routerLink="./">
+                            <button mat-button>
+                              <mat-icon>date_range</mat-icon>
+                              カレンダーで設定
+                            </button>
+                          </a>
+                        </p>
+                        <p><img [src]="cast.images[0]?.file_url" alt="" class="cast-icon"></p>
+                        <p><a [routerLink]="'/tenant/cast/' + cast.id">{{ cast.display_name }}</a></p>
+                      </div>
+                    </th>
+                    <td *ngFor="let date of dates[0]" [ngClass]="'day-' + date.dayNum">
+                      <div class="schedule-box">
+                        <ng-container
+                          *ngIf="list?.[date.year]?.[date.month]?.[date.date]?.[cast.id] as data; else noSchedule"
+                        >
+                          <p>
+                            <button (click)="onClickCopyNextDate(date, cast, settings, data)" color="primary"
+                                    mat-flat-button>→翌日コピー
+                            </button>
+                          </p>
+                          <div class="data-container">
+                            <p *ngIf="!date.isToday">出勤</p>
+                            <p *ngIf="data.finished_at === null && date.isToday">本日出勤</p>
+                            <p *ngIf="data.finished_at !== null && date.isToday">受付終了</p>
+                            <p>{{ getWithoutSeconds(data.start_time) }} - {{ getWithoutSeconds(data.end_time) }}</p>
+                            <div (click)="onClickModify(date, cast, settings, data)" class="modify-schedule">
+                              編集する
+                            </div>
+                          </div>
+                          <p>
+                            <button (click)="onClickDelete(data)" color="warn" mat-flat-button>❌クリア</button>
+                          </p>
+                        </ng-container>
+                        <ng-template #noSchedule>
+                          <div (click)="onClickCreate(date, cast, settings)" class="create-schedule">
+                            追加する
+                          </div>
+                        </ng-template>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+
+                <table *ngIf="isMonth">
+                  <thead>
+                  <tr>
+                    <th class="day-0">日</th>
+                    <th class="day-1">月</th>
+                    <th class="day-2">火</th>
+                    <th class="day-3">水</th>
+                    <th class="day-4">木</th>
+                    <th class="day-5">金</th>
+                    <th class="day-6">土</th>
+                  </tr>
+                  </thead>
+                  <tbody *ngIf="currentCastId && castIdNormalized[currentCastId] as cast">
+                  <tr *ngFor="let week of dates">
+                    <td *ngFor="let date of week" [ngClass]="'day-' + date.dayNum">
+                      <div class="calendar-date-box">
+                        <div [class.is-today]="date.isToday" class="date">{{ date.date }}</div>
+                        <div class="schedule-box">
+                          <ng-container
+                            *ngIf="list?.[date.year]?.[date.month]?.[date.date]?.[cast.id] as data; else noSchedule"
+                          >
+                            <p>
+                              <button (click)="onClickCopyNextDate(date, cast, settings, data)" color="primary"
+                                      mat-flat-button>→翌日コピー
+                              </button>
+                            </p>
+                            <div class="data-container">
+                              <p>出勤</p>
+                              <p>{{ getWithoutSeconds(data.start_time) }} - {{ getWithoutSeconds(data.end_time) }}</p>
+                              <div (click)="onClickModify(date, cast, settings, data)" class="modify-schedule">
+                                編集する
+                              </div>
+                            </div>
+                            <p>
+                              <button (click)="onClickDelete(data)" color="warn" mat-flat-button>❌クリア</button>
+                            </p>
+                          </ng-container>
+                          <ng-template #noSchedule>
+                            <div (click)="onClickCreate(date, cast, settings)" class="create-schedule">
+                              追加する
+                            </div>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+</ng-container>

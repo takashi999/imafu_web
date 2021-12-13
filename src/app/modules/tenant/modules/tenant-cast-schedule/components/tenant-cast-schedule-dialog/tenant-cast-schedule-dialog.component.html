@@ -1,0 +1,14 @@
+<mat-dialog-content [formGroup]="fg">
+  <h3 mat-subheader>出勤情報</h3>
+  <p>
+    <mat-checkbox formControlName="finished">受付終了</mat-checkbox>
+  </p>
+  <app-dashboard-time-range-form [enable24h]="false" [formControl]="timeControl" [minuteStep]="data.setting.dashboard_minute_step"
+                                 label="出勤">
+    出勤時間
+  </app-dashboard-time-range-form>
+  <app-dashboard-input formControlName="comment">コメント</app-dashboard-input>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button [disabled]="fg.invalid" [matDialogClose]="fg.value" color="primary" mat-flat-button>設定する</button>
+</mat-dialog-actions>

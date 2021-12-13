@@ -1,0 +1,18 @@
+<ng-container *ngIf="detail$ | async as detail">
+  <app-dashboard-header>出勤表の設定</app-dashboard-header>
+  <mat-card>
+    <form (ngSubmit)="onSub()" [formGroup]="fg">
+      <mat-card-content>
+        <app-dashboard-input formControlName="no_schedule_comment">非出勤時のデフォルトコメント</app-dashboard-input>
+        <app-dashboard-select [selects]="display_num_selects" formControlName="dashboard_display_num">管理画面での出勤表の表示人数
+        </app-dashboard-select>
+        <app-dashboard-select [selects]="minute_step_selects" formControlName="dashboard_minute_step">出勤時間の入力間隔
+        </app-dashboard-select>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button [disabled]="fg.invalid" color="primary" mat-raised-button>更新</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+
+</ng-container>

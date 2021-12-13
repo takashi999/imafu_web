@@ -187,6 +187,15 @@ export interface TenantCast {
     tenant_cast_id: number;
     updated_at: string;
   }[];
+  style: {
+    tenant_cast_style_type_id: number
+  } | null;
+  types: {
+    tenant_cast_type_id: number
+  }[];
+  user: {
+    login_id: string;
+  } | null;
 }
 
 export interface TenantCastScheduleSettingResponse {

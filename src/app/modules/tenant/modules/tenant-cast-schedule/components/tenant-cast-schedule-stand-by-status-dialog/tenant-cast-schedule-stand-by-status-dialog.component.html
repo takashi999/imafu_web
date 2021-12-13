@@ -1,0 +1,20 @@
+<div class="container">
+  <form (ngSubmit)="onSub()" [formGroup]="fg">
+    <mat-dialog-content>
+      <h3 mat-subheader>待ち時間の設定</h3>
+      <p>
+        <mat-checkbox [formControl]="standby">現在待機中にする</mat-checkbox>
+      </p>
+      <div class="time-input">
+        <input formControlName="time" type="time">
+        <button (click)="time.reset()" [disabled]="time.disabled" type="button">クリア</button>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button [disabled]="fg.invalid" color="primary" mat-flat-button>設定する</button>
+    </mat-dialog-actions>
+  </form>
+  <button class="close-btn" color="warn" mat-dialog-close mat-flat-button mat-icon-button>
+    <mat-icon>close</mat-icon>
+  </button>
+</div>

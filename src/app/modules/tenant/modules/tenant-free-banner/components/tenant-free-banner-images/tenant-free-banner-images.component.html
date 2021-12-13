@@ -1,0 +1,84 @@
+<div [formGroup]="fg" class="container">
+  <ng-container formArrayName="images">
+    <h3 mat-subheader>バナー画像</h3>
+    <p>
+      <mat-label>画像を追加</mat-label>
+    </p>
+    <p>
+      <input #imageFileInput (change)="onChangeFiles(imageFileInput.files)" multiple name="image" type="file">
+    </p>
+    <div class="rows-container">
+      <ng-container *ngFor="let image of files; let index = index" [formGroupName]="index">
+        <div class="row-container">
+          <div class="row">
+            <div class="image-container">
+              <img *ngIf="fileUrls && fileUrls[index]" [src]="fileUrls[index]" alt="">
+            </div>
+            <div class="file-input-container">
+              <p>
+                <mat-label>画像を変更</mat-label>
+              </p>
+              <p>
+                <input #imageFileInput
+                       (change)="onChangeFile(index, imageFileInput.files ? imageFileInput.files[0] : null)"
+                       name="image"
+                       type="file">
+              </p>
+            </div>
+            <div class="select-container">
+              <p>
+                <app-dashboard-radio
+                  [formControl]="getLinkFormArrayAt(index)"
+                  [selects]="linkSelects"
+                >リンク先
+                </app-dashboard-radio>
+              </p>
+              <ng-container *ngIf="linkFormArray.at(index).value === 'cast'">
+                <app-dashboard-select
+                  [selects]="castsSelects$ | async"
+                  formControlName="cast_id"
+                ></app-dashboard-select>
+
+                <app-dashboard-select
+                  *ngIf="castLinkTypeEnabled[index]"
+                  [selects]="castLinkTypesSelects[index]"
+                  formControlName="cast_link_type_id"
+                ></app-dashboard-select>
+              </ng-container>
+              <ng-container *ngIf="linkFormArray.at(index).value === 'tenant'">
+                <app-dashboard-select
+                  [selects]="tenantLinkTypesSelects$ | async"
+                  formControlName="tenant_link_type_id"
+                ></app-dashboard-select>
+
+                <app-dashboard-select
+                  *ngIf="freeGalleryEnabled[index]"
+                  [selects]="galleriesSelects$ | async"
+                  formControlName="tenant_free_gallery_id"
+                ></app-dashboard-select>
+
+                <app-dashboard-select
+                  *ngIf="foreignLinkEnabled[index]"
+                  [selects]="foreignLinks$ | async"
+                  formControlName="foreign_link_id"
+                ></app-dashboard-select>
+              </ng-container>
+            </div>
+            <ng-container>
+              <div class="textarea-container">
+                <app-dashboard-textarea
+                  formControlName="comment"
+                  name="comment"
+                >備考
+                </app-dashboard-textarea>
+              </div>
+            </ng-container>
+            <button (click)="onDeleteFile(index)" color="warn" mat-button mat-flat-button mat-icon-button type="button">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>

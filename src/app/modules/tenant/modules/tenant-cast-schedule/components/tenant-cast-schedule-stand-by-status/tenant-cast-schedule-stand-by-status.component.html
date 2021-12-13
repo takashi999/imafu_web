@@ -1,0 +1,32 @@
+<app-dashboard-header>待ち時間の設定</app-dashboard-header>
+<mat-card>
+  <mat-card-content>
+    <div class="cast-list">
+      <div *ngFor="let item of list$ | async" class="cast">
+        <h3>{{ item.cast.display_name }}</h3>
+        <div class="image">
+          <img [src]="item.cast.images[0]?.file_url" alt="">
+        </div>
+        <p class="available-time">{{ getAvailableTime(item) }}</p>
+        <ng-container *ngIf="item.stand_by_status !== null">
+          <div class="wait-card">
+            <p class="available-time-start">{{ item.stand_by_status.start_time.substr(0, 5) }}</p>
+            <ng-container *ngIf="item.stand_by_status.time_to_available_minutes !== null">
+              <p *ngIf="item.stand_by_status.time_to_available_minutes > 0"
+                 class="time-to-available">{{ item.stand_by_status.time_to_available_minutes }}
+                分待ち</p>
+              <p *ngIf="item.stand_by_status.time_to_available_minutes <= 0" class="time-to-available available">
+                現在待機中</p>
+            </ng-container>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="item.stand_by_status === null">
+          <div class="wait-card">
+            <p>本日出勤</p>
+          </div>
+        </ng-container>
+        <div (click)="onClickEdit(item)" class="edit" mat-ripple>編集する</div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
