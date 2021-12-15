@@ -78,7 +78,7 @@ export class TenantLayoutTopComponent implements OnInit, OnDestroy {
         res.detail.modules.forEach(v => {
           const fc = new FormControl(v.is_enabled === 1);
           this.s.add(
-            fc.valueChanges.subscribe(res => {
+            fc.valueChanges.subscribe(() => {
               this.updateFormValue();
             }),
           );
