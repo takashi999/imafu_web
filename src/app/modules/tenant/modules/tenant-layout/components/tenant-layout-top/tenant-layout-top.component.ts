@@ -85,6 +85,8 @@ export class TenantLayoutTopComponent implements OnInit, OnDestroy {
           this.enableFormControlsMap[v.tenant_layout_module_type_id] = fc;
         });
 
+        this.updateFormValue();
+
         this.fg.patchValue({
           top_right_side_tenant_layout_contents_type_id: res.detail.top_right_side_tenant_layout_contents_type_id ?? '',
         }, { emitEvent: false });
