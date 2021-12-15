@@ -86,9 +86,8 @@ export class TenantCastScheduleDialogComponent implements OnInit, OnDestroy {
 
   private checkFinishedEnabled() {
     const isTimeValid = !!this.fg.get('start_time')?.valid && !!this.fg.get('end_time')?.valid;
-    const isTodaySchedule = this.fg.get('schedule_date')?.value && this.fg.get('schedule_date')?.value !== '' && isToday(parseISO(this.fg.get('schedule_date')?.value));
 
-    this.fg.get('finished')?.[isTodaySchedule && isTimeValid ? 'enable' : 'disable']({ emitEvent: false });
+    this.fg.get('finished')?.[isTimeValid ? 'enable' : 'disable']({ emitEvent: false });
   }
 
 }

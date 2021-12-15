@@ -1,0 +1,61 @@
+<ng-container *ngIf="view$ | async as view">
+  <form [formGroup]="fg" (ngSubmit)="onSub()">
+    <app-dashboard-header>トップの設定</app-dashboard-header>
+    <mat-card>
+      <mat-card-content>
+        <div class="columns">
+          <div class="container">
+            <h2>左サイド</h2>
+
+            <div
+              id="leftList"
+              cdkDropList
+              [cdkDropListData]="left"
+              cdkDropListConnectedTo="centerList"
+              class="list"
+              (cdkDropListDropped)="drop($event)"
+              [cdkDropListEnterPredicate]="thinPredicate">
+              <div
+                class="box"
+                *ngFor="let item of left"
+                [cdkDragData]="item"
+                cdkDrag>
+                <mat-checkbox [formControl]="enableFormControlsMap[item.id]">{{ item.display_name }}</mat-checkbox>
+              </div>
+            </div>
+          </div>
+
+          <div class="container">
+            <h2>中央</h2>
+
+            <div
+              id="centerList"
+              cdkDropList
+              [cdkDropListData]="center"
+              cdkDropListConnectedTo="leftList"
+              class="list"
+              (cdkDropListDropped)="drop($event)"
+              [cdkDropListEnterPredicate]="allAcceptPredicate">
+              <div
+                class="box"
+                *ngFor="let item of center"
+                [cdkDragData]="item"
+                cdkDrag
+              >
+                <mat-checkbox [formControl]="enableFormControlsMap[item.id]">{{ item.display_name }}</mat-checkbox>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <h2>右サイド</h2>
+
+            <app-dashboard-select [selects]="contentsSelect" formControlName="top_right_side_tenant_layout_contents_type_id">コンテンツ</app-dashboard-select>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-flat-button color="primary">更新</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</ng-container>

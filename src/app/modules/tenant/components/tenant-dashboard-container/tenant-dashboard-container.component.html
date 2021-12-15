@@ -84,6 +84,33 @@
         <div mat-line>ランキング管理</div>
       </mat-list-item>
       <mat-divider></mat-divider>
+      <h3 mat-subheader>レイアウト管理</h3>
+      <mat-list-item routerLink="/tenant/layout/top">
+        <mat-icon mat-list-icon>home_work</mat-icon>
+        <div mat-line>トップ画面</div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item routerLink="/tenant/layout/other">
+        <mat-icon mat-list-icon>home_work</mat-icon>
+        <div mat-line>トップ以外</div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item routerLink="/tenant/layout/banner">
+        <mat-icon mat-list-icon>home_work</mat-icon>
+        <div mat-line>バナー</div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item routerLink="/tenant/layout/design">
+        <mat-icon mat-list-icon>home_work</mat-icon>
+        <div mat-line>デザイン</div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <!--      <mat-list-item routerLink="/tenant/layout/animation-banner">-->
+      <!--        <mat-icon mat-list-icon>home_work</mat-icon>-->
+      <!--        <div mat-line>動くバナー</div>-->
+      <!--      </mat-list-item>-->
+      <!--      <mat-divider></mat-divider>-->
+      <h3 mat-subheader>ログアウト</h3>
       <mat-list-item (click)="onClickLogOut()">
         <mat-icon mat-list-icon>home_work</mat-icon>
         <div mat-line>ログアウト</div>

@@ -59,6 +59,10 @@ const routes: Routes = [
             path: 'ranking',
             loadChildren: () => import('./modules/tenant-ranking/tenant-ranking.module').then(m => m.TenantRankingModule),
           },
+          {
+            path: 'layout',
+            loadChildren: () => import('./modules/tenant-layout/tenant-layout.module').then(m => m.TenantLayoutModule),
+          },
         ],
       },
       {

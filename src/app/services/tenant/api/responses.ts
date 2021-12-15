@@ -213,6 +213,8 @@ export interface TenantCastScheduleResponse {
   end_time: string;
   finished_at: string | null;
   comment: string;
+  time_to_available_minutes: number | null;
+  is_working_now: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -228,8 +230,82 @@ export interface TenantCastScheduleStandbyResponse extends TenantCastScheduleRes
     deleted_at: null;
     created_at: string;
     updated_at: string;
-    time_to_available_minutes: number | null;
   };
 }
 
 export type TenantCastScheduleStandbyListResponse = TenantCastScheduleStandbyResponse[];
+
+export interface TenantRanking {
+  id: number;
+  tenant_id: number;
+  is_publish_on_top: boolean;
+  publish_at: string | null;
+  title: string;
+  comment: string;
+  thumbnail_file_path_id: number;
+  created_at: string;
+  updated_at: string;
+  thumbnail_file_url: string;
+  casts: TenantCast[];
+  thumbnail_file_path: TenantRankingThumbnailFilePath;
+}
+
+export interface TenantRankingThumbnailFilePath {
+  id: number;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TenantLayout {
+  id: number;
+  tenant_id: number;
+  top_right_side_tenant_layout_contents_type_id: number;
+  right_side_tenant_layout_contents_type_id: number;
+  pc_shop_bg_image_size: string;
+  pc_shop_bg_image_attachment: string;
+  pc_shop_bg_color: string;
+  pc_shop_bg_image_file_path_id: number;
+  created_at: string;
+  updated_at: string;
+  modules: TenantLayoutModuleRelation[];
+  top_side_content: TenantLayoutTopSideContent | null;
+  side_content: TenantLayoutSideContent | null;
+  bg_image_file_path: TenantLayoutBgImageFilePath | null;
+  bg_image_file_url: string | null;
+}
+
+
+export interface TenantLayoutModuleRelation {
+  id: number;
+  tenant_layout_id: number;
+  is_side: number;
+  tenant_layout_module_type_id: number;
+  sequence: number;
+  is_enabled: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TenantLayoutTopSideContent {
+  id: number;
+  type_id: string;
+  display_name: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TenantLayoutSideContent {
+  id: number;
+  type_id: string;
+  display_name: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TenantLayoutBgImageFilePath {
+  id: number;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+}

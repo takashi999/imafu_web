@@ -23,6 +23,11 @@ export class TenantFreeGalleryComponent implements OnInit, OnDestroy {
       key: 'title',
       label: '名前',
     },
+    {
+      key: 'publish_at',
+      label: '公開',
+      transform: (v: string | null) => v !== null ? '公開' : '非公開',
+    },
   ];
 
   constructor(

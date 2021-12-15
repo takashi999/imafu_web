@@ -74,7 +74,7 @@ export class TenantFreeBannerDetailComponent implements OnInit, OnDestroy, After
           images: res.images.map((i: any) => ({
             ...i,
             cast_id: i.cast_link?.tenant_cast_id ?? '',
-            cast_link_type_id: i.cast_link?.tenant_free_banner_image_cast_link_type ?? '',
+            cast_link_type_id: i.cast_link?.tenant_free_banner_image_cast_link_type_id ?? '',
             tenant_link_type_id: i.tenant_link?.tenant_free_banner_image_tenant_link_type_id ?? '',
             tenant_free_gallery_id: i.tenant_link?.free_gallery_link?.tenant_free_gallery_id ?? '',
             foreign_link_id: i.tenant_link?.free_gallery_link?.tenant_foreign_link_id ?? '',

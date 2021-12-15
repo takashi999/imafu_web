@@ -1,0 +1,32 @@
+<ng-container *ngIf="view$ | async as view">
+  <app-dashboard-header>デザイン</app-dashboard-header>
+  <form [formGroup]="fg" (ngSubmit)="onSub()">
+    <mat-card>
+      <mat-card-content>
+        <app-dashboard-select [selects]="imageSizeSelects" formControlName="pc_shop_bg_image_size">表示サイズ
+        </app-dashboard-select>
+        <app-dashboard-select [selects]="imageAttachmentSelects" formControlName="pc_shop_bg_image_attachment">表示方法
+        </app-dashboard-select>
+        <p>
+          <mat-label>背景色</mat-label>
+          {{ fg.value.pc_shop_bg_color }}
+          <input type="color" name="pc_shop_bg_color" formControlName="pc_shop_bg_color">
+          <span class="colorSquare"></span>
+        </p>
+        <app-dashboard-radio [selects]="usePcShopBgImageSelects"
+                             formControlName="use_pc_shop_bg_image"></app-dashboard-radio>
+        <p>
+          <mat-label>ファイル</mat-label>
+          <input type="file" name="file" [disabled]="fg.get('pc_shop_bg_image')?.disabled" #file
+                 (change)="onChangeFile(file.files?.item(0) ?? null)">
+        </p>
+        <p *ngIf="fileUrl && fg.get('pc_shop_bg_image')?.enabled">
+          <img [src]="fileUrl" alt="">
+        </p>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-flat-button color="primary">更新</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</ng-container>

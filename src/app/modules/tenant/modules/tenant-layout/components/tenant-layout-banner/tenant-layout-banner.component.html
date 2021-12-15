@@ -1,0 +1,24 @@
+<ng-container *ngIf="view$ | async as view">
+  <app-dashboard-header>バナー画像</app-dashboard-header>
+  <form [formGroup]="fg" (ngSubmit)="onSub()">
+    <mat-card>
+      <mat-card-content>
+        <p>
+          <button type="button" mat-flat-button color="primary" (click)="onClickAddNewBanner()">バナー画像の追加</button>
+        </p>
+        <ng-container *ngFor="let control of formArray.controls; let index = index" formArrayName="images">
+          <app-tenant-layout-banner-image
+            [formControlName]="index"
+            [galleries]="view.freeGalleries"
+            [foreignLinks]="view.foreignLinks"
+            [casts]="view.casts"
+            (delete)="formArray.removeAt(index)"
+          ></app-tenant-layout-banner-image>
+        </ng-container>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-flat-button color="primary">更新</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</ng-container>

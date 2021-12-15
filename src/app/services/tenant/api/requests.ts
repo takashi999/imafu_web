@@ -21,8 +21,33 @@ export interface ModifyTenantByTenantRequest {
   enable_edit_timetable_on_cast: boolean;
 }
 
-export interface ModifyTenantCastScheduleSettingRequest{
+export interface ModifyTenantCastScheduleSettingRequest {
   no_schedule_comment: string;
   dashboard_display_num: number;
   dashboard_minute_step: number;
+}
+
+export interface TenantModifyTenantLayoutModulesRequest {
+  relations: {
+    is_side: boolean;
+    tenant_layout_module_type_id: number;
+    is_enabled: boolean;
+  }[];
+  top_right_side_tenant_layout_contents_type_id: number;
+}
+
+export interface TenantModifyTenantLayoutSideContentRequest {
+
+}
+
+export interface TenantModifyTenantLayoutBannerRequest {
+
+}
+
+export interface TenantModifyTenantLayoutDesignRequest {
+
+}
+
+export interface TenantModifyTenantLayoutMoveBannerRequest {
+
 }

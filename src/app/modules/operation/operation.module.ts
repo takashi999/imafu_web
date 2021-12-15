@@ -81,7 +81,9 @@ import { OperationTenantCastServiceTypeDetailComponent } from './components/oper
     MatRadioModule,
     CommonComponentsModule,
   ],
-  exports: [],
+    exports: [
+        OperationTenantBannerImageComponent,
+    ],
 })
 export class OperationModule {
 }

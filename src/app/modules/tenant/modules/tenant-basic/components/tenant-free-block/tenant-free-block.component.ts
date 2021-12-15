@@ -23,6 +23,14 @@ export class TenantFreeBlockComponent implements OnInit, OnDestroy {
       key: 'title',
       label: '名前',
     },
+    {
+      key: 'publish_at',
+      label: '公開',
+      transform: (v: string | null) => v !== null ? '公開' : '非公開',
+    },
+    {
+      key: 'delete',
+    },
   ];
 
   constructor(
@@ -32,7 +40,7 @@ export class TenantFreeBlockComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  getNameFn = (v: any) => v.display_name;
+  getNameFn = (v: any) => v.title;
 
   ngOnInit(): void {
     this.s.add(
@@ -49,5 +57,14 @@ export class TenantFreeBlockComponent implements OnInit, OnDestroy {
     this.router.navigate([ data.id ], {
       relativeTo: this.activatedRoute,
     });
+  }
+
+  onDelete(data: any) {
+    this.s.add(
+      this.tenantFreeBlockService.delete(data.id)
+        .subscribe((res) => {
+          this.list$.next(res);
+        }),
+    );
   }
 }

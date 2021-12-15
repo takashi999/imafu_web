@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { TenantRanking } from 'src/app/services/tenant/api/responses';
 
 @Injectable({
   providedIn: 'root',
@@ -12,22 +13,22 @@ export class TenantRankingService {
   }
 
   list() {
-    return this.httpClient.get<any[]>(`@te/rankings`);
+    return this.httpClient.get<TenantRanking[]>(`@te/rankings`);
   }
 
   create(body: any) {
-    return this.httpClient.post(`@te/rankings`, body);
+    return this.httpClient.post<TenantRanking[]>(`@te/rankings`, body);
   }
 
   get(tenantRankingId: number) {
-    return this.httpClient.get(`@te/rankings/${ tenantRankingId }`);
+    return this.httpClient.get<TenantRanking>(`@te/rankings/${ tenantRankingId }`);
   }
 
   modify(tenantRankingId: number, body: any) {
-    return this.httpClient.patch(`@te/rankings/${ tenantRankingId }`, body);
+    return this.httpClient.patch<TenantRanking[]>(`@te/rankings/${ tenantRankingId }`, body);
   }
 
   delete(tenantRankingId: number) {
-    return this.httpClient.delete(`@te/rankings/${ tenantRankingId }`);
+    return this.httpClient.delete<TenantRanking[]>(`@te/rankings/${ tenantRankingId }`);
   }
 }

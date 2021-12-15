@@ -23,6 +23,11 @@ export class TenantCastComponent implements OnInit, OnDestroy {
       key: 'display_name',
       label: '名前',
     },
+    {
+      key: 'publish_at',
+      label: '公開',
+      transform: (v: string | null) => v !== null ? '公開' : '非公開',
+    },
   ];
 
   constructor(

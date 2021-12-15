@@ -13,6 +13,7 @@ import {
   FreeBlockDisplayTypes,
   FreeImageTypes,
 } from 'src/app/services/tenant/api/responses';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -66,5 +67,13 @@ export class TenantMasterService {
 
   foreignLinks() {
     return this.httpClient.get<ForeignLinks>('@te/master/foreign-links');
+  }
+
+  layoutContents() {
+    return this.httpClient.get<{ id: number; type_id: string; display_name: string; }[]>('@te/master/layout-contents');
+  }
+
+  layoutModules() {
+    return this.httpClient.get<{ id: number; display_name: string; is_wide: boolean }[]>('@te/master/layout-modules');
   }
 }

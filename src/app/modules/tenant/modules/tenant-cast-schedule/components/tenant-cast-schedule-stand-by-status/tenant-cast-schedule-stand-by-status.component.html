@@ -11,11 +11,11 @@
         <ng-container *ngIf="item.stand_by_status !== null">
           <div class="wait-card">
             <p class="available-time-start">{{ item.stand_by_status.start_time.substr(0, 5) }}</p>
-            <ng-container *ngIf="item.stand_by_status.time_to_available_minutes !== null">
-              <p *ngIf="item.stand_by_status.time_to_available_minutes > 0"
-                 class="time-to-available">{{ item.stand_by_status.time_to_available_minutes }}
+            <ng-container *ngIf="item.time_to_available_minutes !== null">
+              <p *ngIf="item.time_to_available_minutes > 0"
+                 class="time-to-available">{{ item.time_to_available_minutes }}
                 分待ち</p>
-              <p *ngIf="item.stand_by_status.time_to_available_minutes <= 0" class="time-to-available available">
+              <p *ngIf="item.time_to_available_minutes <= 0" class="time-to-available available">
                 現在待機中</p>
             </ng-container>
           </div>

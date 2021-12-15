@@ -3,6 +3,7 @@ import { Subject, Subscription } from 'rxjs';
 import { TableListColumnType } from 'src/app/components/table-list/table-list.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TenantRankingService } from 'src/app/services/tenant/api/tenant-ranking.service';
+import { TenantRanking } from 'src/app/services/tenant/api/responses';
 
 @Component({
   selector: 'app-tenant-ranking',
@@ -12,9 +13,9 @@ import { TenantRankingService } from 'src/app/services/tenant/api/tenant-ranking
 })
 export class TenantRankingComponent implements OnInit, OnDestroy {
 
-  list$: Subject<any[]> = new Subject();
+  list$: Subject<TenantRanking[]> = new Subject();
   s = new Subscription();
-  columns: TableListColumnType<any>[] = [
+  columns: TableListColumnType<TenantRanking>[] = [
     {
       key: 'id',
       label: 'ID',
@@ -27,6 +28,11 @@ export class TenantRankingComponent implements OnInit, OnDestroy {
       key: 'thumbnail_file_url',
       label: 'サムネイル',
       type: 'image',
+    },
+    {
+      key: 'publish_at',
+      label: '公開',
+      transform: (v: string | null) => v !== null ? '公開' : '非公開',
     },
   ];
 

@@ -28,7 +28,7 @@ export class TenantFreeBlockService {
   }
 
   delete(tenantFreeBlockId: number) {
-    return this.httpClient.delete(`@te/free-blocks/${ tenantFreeBlockId }`);
+    return this.httpClient.delete<any[]>(`@te/free-blocks/${ tenantFreeBlockId }`);
   }
 
   changeSort(body: any) {
