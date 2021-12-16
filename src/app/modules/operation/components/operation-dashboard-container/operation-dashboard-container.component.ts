@@ -1,6 +1,8 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDrawerMode } from '@angular/material/sidenav';
 import { fromEvent, Subscription } from 'rxjs';
+import { OperationAuthService } from 'src/app/services/operation/api/operation-auth.service';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-operation-dashboard-container',
@@ -16,6 +18,8 @@ export class OperationDashboardContainerComponent implements OnInit, OnDestroy, 
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
+    private operationAuthService: OperationAuthService,
+    private tokenService: TokenService,
   ) {
   }
 
@@ -37,4 +41,13 @@ export class OperationDashboardContainerComponent implements OnInit, OnDestroy, 
   ngAfterViewInit() {
   }
 
+  onClickLogout() {
+    this.sub.add(
+      this.operationAuthService.logout()
+        .subscribe(() => {
+          this.tokenService.resetToken('operationToken');
+          location.reload();
+        }),
+    );
+  }
 }

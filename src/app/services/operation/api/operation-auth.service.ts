@@ -49,4 +49,10 @@ export class OperationAuthService {
   me() {
     return this.httpClient.get('@op/me');
   }
+
+  logout() {
+    return this.httpClient.patch('@op/logout', {}, {
+      responseType: 'text',
+    });
+  }
 }
