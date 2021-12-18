@@ -36,7 +36,7 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
     open_time: new FormControl('', [ Validators.required ]),
     open_time_end: new FormControl('', [ Validators.required ]),
     reception_time: new FormControl('', [ Validators.required ]),
-    reception_time_end: new FormControl('', [ Validators.required ]),
+    reception_time_end: new FormControl('', []),
     close_date: new FormControl('', [ maxLength60Validator ]),
     lowest_cost: new FormControl('', [ Validators.required ]),
     regular_services: new FormControl('', [ maxLength180Validator ]),

@@ -18,6 +18,7 @@ export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, Contr
   @Input() label: string = '';
   @Input() enable24h = true;
   @Input() minuteStep = 60;
+  @Input() insertLast = false;
 
   openTime = new FormControl('');
   closeTime = new FormControl('');
@@ -83,7 +84,12 @@ export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, Contr
     );
 
     this.startTimeOptions = [ ...this.getTimes(0, 24) ];
-    this.endTimeOptions = [ ...this.getTimes(1, 24) ];
+    this.endTimeOptions = [
+      ...this.getTimes(1, 24),
+      ...this.insertLast ? [
+        '',
+      ] : [],
+    ];
   }
 
   ngOnDestroy() {
