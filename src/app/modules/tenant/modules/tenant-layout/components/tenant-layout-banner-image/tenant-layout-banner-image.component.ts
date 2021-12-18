@@ -10,16 +10,14 @@ import {
   Output,
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FreeBannerImageCastLinkTypes, FreeBannerImageTenantLinkTypes } from 'src/app/services/tenant/api/responses';
-import { filter, first, map } from 'rxjs/operators';
 import {
   OperationTenantCast,
   OperationTenantForeignLink,
   OperationTenantFreeGallery,
 } from 'src/app/services/operation/api/responses';
-import { OperationMasterService } from 'src/app/services/operation/api/operation-master.service';
 
 @Component({
   selector: 'app-tenant-layout-banner-image',
@@ -35,15 +33,12 @@ import { OperationMasterService } from 'src/app/services/operation/api/operation
   ],
 })
 export class TenantLayoutBannerImageComponent implements OnInit, OnDestroy, ControlValueAccessor {
-
+  @Input() castLinkTypes: FreeBannerImageCastLinkTypes | null = null;
   @Output() delete = new EventEmitter<void>();
-
   s = new Subscription();
   file: File | null = null;
   fileUrl: SafeResourceUrl | null = null;
   disabled = false;
-  tenantLinkTypes$ = new BehaviorSubject<FreeBannerImageTenantLinkTypes | null>(null);
-
   linkForm = new FormControl('');
   fg = new FormGroup({
     file_path_id: new FormControl(''),
@@ -53,34 +48,26 @@ export class TenantLayoutBannerImageComponent implements OnInit, OnDestroy, Cont
         control.parent?.get('cast_id')?.value !== '' ? Validators.required : null,
     ]),
     tenant_link_type_id: new FormControl(''),
-    tenant_free_gallery_id: new FormControl('', [], [
-      control => this.tenantLinkTypes$.pipe(
-        first(),
-        map(types => {
-          const selectedId = control.parent?.get('tenant_link_type_id')?.value;
-          const selected = types?.find(t => t.id === selectedId);
+    tenant_free_gallery_id: new FormControl('', [
+      control => {
+        const types = this.tenantLinkTypes;
+        const selectedId = control.parent?.get('tenant_link_type_id')?.value;
+        const selected = types?.find(t => t.id === selectedId);
 
-          return selected?.type_id === 'gallery' ? Validators.required : null;
-        }),
-      ),
+        return selected?.type_id === 'gallery' ? Validators.required : null;
+      },
     ]),
-    foreign_link_id: new FormControl('', [], [
-      control => this.tenantLinkTypes$.pipe(
-        first(),
-        map(types => {
-          const selectedId = control.parent?.get('tenant_link_type_id')?.value;
-          const selected = types?.find(t => t.id === selectedId);
+    foreign_link_id: new FormControl('', [
+      control => {
+        const types = this.tenantLinkTypes;
+        const selectedId = control.parent?.get('tenant_link_type_id')?.value;
+        const selected = types?.find(t => t.id === selectedId);
 
-          return selected?.type_id === 'foreign_link' ? Validators.required : null;
-        }),
-      ),
+        return selected?.type_id === 'foreign_link' ? Validators.required : null;
+      },
     ]),
   });
-
-  tenantLinkTypesSelects$ = this.tenantLinkTypes$
-    .pipe(
-      map(res => res?.map(r => ({ value: r.id, label: r.display_name })) ?? null),
-    );
+  tenantLinkTypesSelects: { value: number; label: string; }[] = [];
   castsSelects: { value: number; label: string }[] = [];
   galleriesSelects: { value: number; label: string }[] = [];
   foreignLinkSelects: { value: number; label: string }[] = [];
@@ -99,18 +86,25 @@ export class TenantLayoutBannerImageComponent implements OnInit, OnDestroy, Cont
       label: 'キャスト',
     },
   ];
-
-  castLinkTypes$ = new BehaviorSubject<FreeBannerImageCastLinkTypes | null>(null);
   castLinkTypeEnabled: boolean = false;
   freeGalleryEnabled: boolean = false;
   foreignLinkEnabled: boolean = false;
   private _casts: OperationTenantCast[] = [];
+  private _tenantLinkTypes: FreeBannerImageTenantLinkTypes | null = null;
 
   constructor(
     private domSanitizer: DomSanitizer,
-    private operationMasterService: OperationMasterService,
     private changeDetectorRef: ChangeDetectorRef,
   ) {
+  }
+
+  get tenantLinkTypes() {
+    return this._tenantLinkTypes;
+  }
+
+  @Input() set tenantLinkTypes(val: FreeBannerImageTenantLinkTypes | null) {
+    this._tenantLinkTypes = val;
+    this.tenantLinkTypesSelects = val?.map(r => ({ value: r.id, label: r.display_name })) ?? [];
   }
 
   @Input() set foreignLinks(val: OperationTenantForeignLink[] | null | undefined) {
@@ -144,6 +138,8 @@ export class TenantLayoutBannerImageComponent implements OnInit, OnDestroy, Cont
             ...value,
             image: this.file,
           });
+
+          this.changeDetectorRef.markForCheck();
         }),
     );
     this.s.add(
@@ -158,14 +154,9 @@ export class TenantLayoutBannerImageComponent implements OnInit, OnDestroy, Cont
           });
 
           this.checkLinkTypeEnabled(this.fg.value);
-        }),
-    );
 
-    this.s.add(
-      this.operationMasterService.freeBannerImageTenantLinkTypes().subscribe(res => this.tenantLinkTypes$.next(res)),
-    );
-    this.s.add(
-      this.operationMasterService.freeBannerImageCastLinkTypes().subscribe(res => this.castLinkTypes$.next(res)),
+          this.changeDetectorRef.markForCheck();
+        }),
     );
   }
 
@@ -221,48 +212,23 @@ export class TenantLayoutBannerImageComponent implements OnInit, OnDestroy, Cont
   }
 
   private checkLinkTypeEnabled(value: any) {
-    this.s.add(
-      this.castLinkTypes$.pipe(filter(v => v !== null), first())
-        .pipe(
-          map((types) => {
-            const normalSelects = types?.map(t => ({ value: t.id, label: t.display_name })) ?? [];
-            const withoutPhotoDiary = types?.filter(t => t.type_id !== 'photo_diary').map(t => ({
-              value: t.id,
-              label: t.display_name,
-            })) ?? [];
+    const normalSelects = this.castLinkTypes?.map(t => ({ value: t.id, label: t.display_name })) ?? [];
+    const withoutPhotoDiary = this.castLinkTypes?.filter(t => t.type_id !== 'photo_diary').map(t => ({
+      value: t.id,
+      label: t.display_name,
+    })) ?? [];
+    const typeId = this.tenantLinkTypes?.find(t => t.id === value.tenant_link_type_id)?.type_id ?? '';
 
-            if (value.cast_id !== '') {
-              const cast = this.casts?.find(c => c.id === value.cast_id);
-              if (cast?.is_use_photo_diary ?? false) {
-                return normalSelects;
-              }
-              return withoutPhotoDiary;
-            }
 
-            return [];
-          }),
-        )
-        .subscribe(selects => {
-          this.castLinkTypesSelects = selects;
-          this.changeDetectorRef.markForCheck();
-        }),
-    );
-
-    this.s.add(
-      this.tenantLinkTypes$
-        .pipe(
-          filter((v): v is Exclude<typeof v, null> => v !== null),
-          first(),
-        )
-        .subscribe(linkTypes => {
-          const typeId = linkTypes?.find(t => t.id === value.tenant_link_type_id)?.type_id ?? '';
-
-          this.castLinkTypeEnabled = value.cast_id !== '' && value.cast_id !== null;
-          this.freeGalleryEnabled = typeId === 'gallery';
-          this.foreignLinkEnabled = typeId === 'foreign_link';
-
-          this.changeDetectorRef.markForCheck();
-        }),
-    );
+    if (value.cast_id !== '') {
+      const cast = this.casts?.find(c => c.id === value.cast_id);
+      if (cast?.is_use_photo_diary ?? false) {
+        this.castLinkTypesSelects = normalSelects;
+      }
+      this.castLinkTypesSelects = withoutPhotoDiary;
+    }
+    this.castLinkTypeEnabled = value.cast_id !== '' && value.cast_id !== null;
+    this.freeGalleryEnabled = typeId === 'gallery';
+    this.foreignLinkEnabled = typeId === 'foreign_link';
   }
 }

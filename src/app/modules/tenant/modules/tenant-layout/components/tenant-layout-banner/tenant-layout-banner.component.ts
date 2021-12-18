@@ -23,12 +23,21 @@ export class TenantLayoutBannerComponent implements OnInit, OnDestroy {
     images: this.formArray,
   });
 
-  viewSubject = new BehaviorSubject<any | null>(null);
+  viewSubject = new BehaviorSubject<{
+    details: any;
+    freeGalleries: any;
+    foreignLinks: any;
+    casts: any;
+    tenantLinkTypes: any;
+    castLinkTypes: any;
+  } | null>(null);
   view$ = multicast(this.viewSubject)(forkJoin({
     details: this.tenantLayoutService.listBanners(),
     freeGalleries: this.tenantFreeGalleryService.list(),
     foreignLinks: this.tenantMasterService.foreignLinks(),
     casts: this.tenantCastService.list(),
+    tenantLinkTypes: this.tenantMasterService.freeBannerImageTenantLinkTypes(),
+    castLinkTypes: this.tenantMasterService.freeBannerImageCastLinkTypes(),
   }));
 
   constructor(
@@ -78,14 +87,19 @@ export class TenantLayoutBannerComponent implements OnInit, OnDestroy {
               ...this.fg.value.images.map((v: any) => ({
                 ...v,
                 file_url: undefined,
-              })) ?? []
-            ]
+              })) ?? [],
+            ],
           },
         ),
       ).subscribe(res => {
         this.viewSubject.next({
+          castLinkTypes: undefined,
+          casts: undefined,
+          foreignLinks: undefined,
+          freeGalleries: undefined,
+          tenantLinkTypes: undefined,
           ...this.viewSubject.getValue(),
-          details: res,
+          details: res
         });
       }),
     );
