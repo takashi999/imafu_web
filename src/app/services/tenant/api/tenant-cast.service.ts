@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TenantCast } from 'src/app/services/tenant/api/responses';
+import { TenantCastRecommendRequest } from 'src/app/services/tenant/api/requests';
 
 @Injectable({
   providedIn: 'root',
@@ -34,5 +35,9 @@ export class TenantCastService {
 
   changeSort(body: any) {
     return this.httpClient.patch<TenantCast[]>(`@te/casts-sort`, body);
+  }
+
+  recommend(tenantCastId: number, body: TenantCastRecommendRequest) {
+    return this.httpClient.patch<TenantCast[]>(`@te/casts-recommend/${ tenantCastId }`, body);
   }
 }

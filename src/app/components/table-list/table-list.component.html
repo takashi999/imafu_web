@@ -1,18 +1,29 @@
 <div class="mat-elevation-z8">
   <mat-table [dataSource]="dataSource" mat-table>
-
     <ng-container *ngFor="let col of displayedColumnsExcludedDelete" [matColumnDef]="'' + col.key">
       <mat-header-cell *matHeaderCellDef mat-header-cell>{{ col.label }}</mat-header-cell>
       <mat-cell *matCellDef="let element"
                 mat-cell>
         <ng-container [ngSwitch]="col.type">
           <ng-container *ngSwitchCase="undefined">
-            {{ col.transform ? col.transform(getDataByKeyName(element, col.key)) : getDataByKeyName(element, col.key) }}
+            <ng-container *ngIf=" getColumnAsBase(col) as col">
+              {{ col.transform ? col.transform(getDataByKeyName(element, col.key)) : getDataByKeyName(element, col.key) }}
+            </ng-container>
           </ng-container>
           <ng-container *ngSwitchCase="'image'">
-            <img [src]="col.transform ? col.transform(getDataByKeyName(element, col.key)) : getDataByKeyName(element, col.key)"
-                 alt=""
-                 class="col-image">
+            <ng-container *ngIf="getColumnAsBase(col) as col">
+              <img
+                [src]="col.transform ? col.transform(getDataByKeyName(element, col.key)) : getDataByKeyName(element, col.key)"
+                alt=""
+                class="col-image">
+            </ng-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="'template'">
+            <ng-container *ngIf="getColumnAsTemplate(col) as col">
+              <ng-container
+                *ngTemplateOutlet="col.templateRef ?? null; context: {$implicit: element}"
+              ></ng-container>
+            </ng-container>
           </ng-container>
         </ng-container>
       </mat-cell>

@@ -155,6 +155,7 @@ export interface TenantCast {
   is_use_photo_diary: boolean;
   is_use_video_diary: boolean;
   is_use_fan_letter: boolean;
+  is_recommend: boolean;
   created_at: string;
   updated_at: string;
   sequence: number;

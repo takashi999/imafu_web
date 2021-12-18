@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  TemplateRef,
+} from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable, Subscription } from 'rxjs';
 import { OperationConfirmService } from 'src/app/services/operation/operation-confirm.service';
@@ -9,7 +18,13 @@ type TableListColumnBaseType<T, K extends keyof T | string = keyof T | string> =
   transform?: (v: any) => string;
   type?: 'image';
 }
-export type TableListColumnType<T> = (TableListColumnBaseType<T> | { key: 'delete' })
+type TableListColumnTemplateType<TE> = {
+  key: string;
+  label: string;
+  templateRef?: TemplateRef<TE>
+  type: 'template';
+};
+export type TableListColumnType<T, TE = any> = (TableListColumnBaseType<T> | TableListColumnTemplateType<TE> | { key: 'delete' })
 
 
 @Component({
@@ -18,10 +33,10 @@ export type TableListColumnType<T> = (TableListColumnBaseType<T> | { key: 'delet
   styleUrls: [ './table-list.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableListComponent<T> implements OnInit, OnDestroy {
+export class TableListComponent<T, TE> implements OnInit, OnDestroy {
 
   @Input() dataSource: readonly T[] | DataSource<T> | Observable<readonly T[]> = [];
-  @Input() displayedColumns: TableListColumnType<T>[] = [];
+  @Input() displayedColumns: TableListColumnType<T, TE>[] = [];
   @Output() delete: EventEmitter<T> = new EventEmitter<T>();
   @Output() clickRow: EventEmitter<T> = new EventEmitter<T>();
 
@@ -38,7 +53,7 @@ export class TableListComponent<T> implements OnInit, OnDestroy {
   }
 
   get displayedColumnsExcludedDelete() {
-    return this.displayedColumns.filter(c => c.key !== 'delete') as TableListColumnBaseType<T>[];
+    return this.displayedColumns.filter(c => c.key !== 'delete') as (TableListColumnBaseType<T> | TableListColumnTemplateType<TE>)[];
   }
 
   @Input() getNameFn: (val: T) => string = val => `${ val }`;
@@ -54,6 +69,13 @@ export class TableListComponent<T> implements OnInit, OnDestroy {
     return `${ key }`.split('.').reduce((ac, c) => {
       return ac[c];
     }, element);
+  }
+
+  getColumnAsBase(col: TableListColumnBaseType<T> | TableListColumnTemplateType<TE>) {
+    return col as TableListColumnBaseType<T>
+  }
+  getColumnAsTemplate(col: TableListColumnBaseType<T> | TableListColumnTemplateType<TE>) {
+    return col as TableListColumnTemplateType<TE>
   }
 
   onClickDelete(e: Event, data: T) {

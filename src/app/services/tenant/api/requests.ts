@@ -51,3 +51,7 @@ export interface TenantModifyTenantLayoutDesignRequest {
 export interface TenantModifyTenantLayoutMoveBannerRequest {
 
 }
+
+export interface TenantCastRecommendRequest {
+  recommend: boolean;
+}

@@ -5,3 +5,11 @@
   [displayedColumns]="columns"
   [getNameFn]="getNameFn"
 ></app-table-list>
+<ng-template let-cast #recommend>
+  <ng-container *ngIf="cast?.is_recommend ?? false; else: elseTemplate">
+    <button mat-icon-button mat-flat-button color="primary" (click)="onClickRecommend($event, cast)"><mat-icon>star</mat-icon></button>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <button mat-icon-button (click)="onClickRecommend($event, cast)"><mat-icon>star_outline</mat-icon></button>
+  </ng-template>
+</ng-template>
