@@ -39,11 +39,13 @@
         </p>
 
         <app-dashboard-time-range-form
+          [minuteStep]="30"
           [formControl]="openTimeCombined"
           label="営業"
         ></app-dashboard-time-range-form>
 
         <app-dashboard-time-range-form
+          [minuteStep]="30"
           [formControl]="receptionTimeCombined"
           label="受付"
         ></app-dashboard-time-range-form>
