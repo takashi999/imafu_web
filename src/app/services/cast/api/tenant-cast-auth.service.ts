@@ -49,4 +49,10 @@ export class TenantCastAuthService {
   me() {
     return this.httpClient.get('@ca/me');
   }
+
+  logout() {
+    return this.httpClient.patch('@ca/logout', {}, {
+      responseType: 'text',
+    });
+  }
 }

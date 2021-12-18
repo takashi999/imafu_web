@@ -50,4 +50,10 @@ export class TenantAuthService {
   me() {
     return this.httpClient.get<TenantUser>('@te/me');
   }
+
+  logout() {
+    return this.httpClient.patch('@te/logout', {}, {
+      responseType: 'text',
+    });
+  }
 }

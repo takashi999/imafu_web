@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import { MatDrawerMode } from '@angular/material/sidenav';
 import { fromEvent, Subscription } from 'rxjs';
 import { TokenService } from 'src/app/services/token.service';
+import { TenantAuthService } from 'src/app/services/tenant/api/tenant-auth.service';
 
 @Component({
   selector: 'app-tenant-dashboard-container',
@@ -18,6 +19,7 @@ export class TenantDashboardContainerComponent implements OnInit, OnDestroy, Aft
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private tokenService: TokenService,
+    private tenantAuthService: TenantAuthService,
   ) {
   }
 
@@ -40,8 +42,13 @@ export class TenantDashboardContainerComponent implements OnInit, OnDestroy, Aft
   }
 
   onClickLogOut() {
-    this.tokenService.resetToken('tenantToken');
-    location.reload();
+    this.sub.add(
+      this.tenantAuthService.logout()
+        .subscribe(() => {
+          this.tokenService.resetToken('tenantToken');
+          location.reload();
+        }),
+    );
   }
 
 }
