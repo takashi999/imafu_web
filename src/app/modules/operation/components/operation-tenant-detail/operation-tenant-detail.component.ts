@@ -218,7 +218,7 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
                 open_time: this.detail.open_time.substr(0, 5),
                 open_time_end: this.detail.open_time_end.substr(0, 5),
                 reception_time: this.detail.reception_time.substr(0, 5),
-                reception_time_end: this.detail.reception_time_end.substr(0, 5),
+                reception_time_end: this.detail.reception_time_end?.substr(0, 5) ?? '',
                 services: this.detail.services?.map(s => ({
                   name: s.name,
                   price: s.price,
@@ -247,7 +247,7 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
               this.useForm.setValue(typeof this.detail.form?.email === 'undefined' ? '0' : '1', { emitEvent: false });
 
               this.openTimeCombined.setValue([ this.detail.open_time.substr(0, 5), this.detail.open_time_end.substr(0, 5) ], { emitEvent: false });
-              this.receptionTimeCombined.setValue([ this.detail.reception_time.substr(0, 5), this.detail.reception_time_end.substr(0, 5) ], { emitEvent: false });
+              this.receptionTimeCombined.setValue([ this.detail.reception_time.substr(0, 5), this.detail.reception_time_end?.substr(0, 5) ?? '' ], { emitEvent: false });
 
               this.s.add(
                 this.operationCreditCardBrandService.list()

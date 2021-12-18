@@ -38,7 +38,7 @@ export interface OperationTenant {
   open_time: string;
   open_time_end: string;
   reception_time: string;
-  reception_time_end: string;
+  reception_time_end: string | null;
   close_date: string;
   lowest_cost: number;
   regular_services: string;

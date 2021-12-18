@@ -174,7 +174,7 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
       open_time: res.open_time.substr(0, 5),
       open_time_end: res.open_time_end.substr(0, 5),
       reception_time: res.reception_time.substr(0, 5),
-      reception_time_end: res.reception_time_end.substr(0, 5),
+      reception_time_end: res.reception_time_end?.substr(0, 5) ?? '',
       services: res.services?.map(s => ({
         name: s.name,
         price: s.price,
@@ -187,7 +187,7 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
 
     this.useForm.setValue(typeof res.form?.email === 'undefined' ? '0' : '1', { emitEvent: false });
     this.openTimeCombined.setValue([ res.open_time.substr(0, 5), res.open_time_end.substr(0, 5) ], { emitEvent: false });
-    this.receptionTimeCombined.setValue([ res.reception_time.substr(0, 5), res.reception_time_end.substr(0, 5) ], { emitEvent: false });
+    this.receptionTimeCombined.setValue([ res.reception_time.substr(0, 5), res.reception_time_end?.substr(0, 5) ?? '' ], { emitEvent: false });
 
     this.s.add(
       this.tenantCreditCardBrandService.list()
