@@ -4,12 +4,7 @@
     <form (ngSubmit)="onSub()" [formGroup]="fg">
       <mat-card-content>
 
-        <p>
-          <mat-form-field appearance="fill" hintLabel="30文字">
-            <mat-label>キャッチフレーズ</mat-label>
-            <input formControlName="catch" matInput max="30" name="catch" type="text">
-          </mat-form-field>
-        </p>
+        <app-dashboard-textarea formControlName="catch">キャッチフレーズ</app-dashboard-textarea>
         <ng-container formArrayName="tel">
           <p>
             <mat-form-field appearance="fill" hintLabel="15文字">

@@ -43,12 +43,7 @@
       <app-dashboard-input type="number" formControlName="refresh_place_rate_limit_per_date">配置更新数</app-dashboard-input>
       <app-dashboard-input type="number" formControlName="shop_news_rate_limit_per_date">ショップニュース数</app-dashboard-input>
       <app-dashboard-select [selects]="statusSelects" formControlName="is_suspend">ステータス</app-dashboard-select>
-      <p>
-        <mat-form-field appearance="fill" hintLabel="30文字">
-          <mat-label>キャッチフレーズ</mat-label>
-          <input formControlName="catch" matInput max="30" name="catch" type="text">
-        </mat-form-field>
-      </p>
+      <app-dashboard-textarea formControlName="catch">キャッチフレーズ</app-dashboard-textarea>
       <ng-container formArrayName="tel">
         <p>
           <mat-form-field appearance="fill" hintLabel="15文字">

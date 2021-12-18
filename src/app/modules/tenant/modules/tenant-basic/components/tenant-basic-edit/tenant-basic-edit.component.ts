@@ -8,7 +8,7 @@ import { TenantCreditCardBrandService } from 'src/app/services/tenant/api/tenant
 import {
   maxLength15Validator,
   maxLength180Validator,
-  maxLength200Validator,
+  maxLength200Validator, maxLength300Validator,
   maxLength30Validator,
   maxLength60Validator,
 } from 'src/app/validators/common-validators';
@@ -25,7 +25,7 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
   detail$ = new Subject<Tenant>();
 
   fg = new FormGroup({
-    catch: new FormControl('', [ maxLength30Validator ]),
+    catch: new FormControl('', [ maxLength300Validator ]),
     tel: new FormArray(Array(2).fill(0).map(() => new FormControl('', [
       maxLength15Validator,
     ])), [ Validators.required ]),

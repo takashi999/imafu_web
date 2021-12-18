@@ -12,7 +12,7 @@ import {
   maxLength100Validator,
   maxLength15Validator,
   maxLength180Validator,
-  maxLength200Validator,
+  maxLength200Validator, maxLength300Validator,
   maxLength30Validator,
   maxLength60Validator,
 } from 'src/app/validators/common-validators';
@@ -47,7 +47,7 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
     refresh_place_rate_limit_per_date: new FormControl('20', []),
     shop_news_rate_limit_per_date: new FormControl('10', []),
     is_suspend: new FormControl(false, []),
-    catch: new FormControl('', [ maxLength30Validator ]),
+    catch: new FormControl('', [ maxLength300Validator ]),
     tel: new FormArray(Array(2).fill(0).map(() => new FormControl('', [
       maxLength15Validator,
     ])), [ Validators.required ]),

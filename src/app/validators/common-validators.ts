@@ -13,6 +13,7 @@ export const maxLength64Validator = Validators.maxLength(64);
 export const maxLength100Validator = Validators.maxLength(100);
 export const maxLength180Validator = Validators.maxLength(180);
 export const maxLength200Validator = Validators.maxLength(200);
+export const maxLength300Validator = Validators.maxLength(300);
 export const maxLength500Validator = Validators.maxLength(500);
 export const maxLength1000Validator = Validators.maxLength(1000);
 export const maxLength100000Validator = Validators.maxLength(100000);
