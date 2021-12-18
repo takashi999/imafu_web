@@ -1,64 +1,66 @@
-<mat-label>バナー画像</mat-label>
-<div class="rows-container">
-  <div class="row-container">
-    <div class="row">
-      <div class="image-container">
-        <img *ngIf="fileUrl" [src]="fileUrl" alt="">
-      </div>
-      <div class="file-input-container">
-        <p>
-          <mat-label>画像を変更</mat-label>
-        </p>
-        <p>
-          <input #imageFileInput (change)="onChangeFile(imageFileInput.files ? imageFileInput.files[0] : null)"
-                 name="image"
-                 type="file"
-                 [disabled]="disabled"
-          >
-        </p>
-      </div>
-      <div class="select-container" [formGroup]="fg">
-        <p>
-          <app-dashboard-radio
-            [formControl]="linkForm"
-            [selects]="linkSelects"
-          >リンク先
-          </app-dashboard-radio>
-        </p>
-        <ng-container *ngIf="linkForm.value === 'cast'">
-          <app-dashboard-select
-            [selects]="castsSelects"
-            formControlName="cast_id"
-          ></app-dashboard-select>
+<div class="container">
+  <mat-label>バナー画像</mat-label>
+  <div class="rows-container">
+    <div class="row-container">
+      <div class="row">
+        <div class="image-container">
+          <img *ngIf="fileUrl" [src]="fileUrl" alt="">
+        </div>
+        <div class="file-input-container">
+          <p>
+            <mat-label>画像を変更</mat-label>
+          </p>
+          <p>
+            <input #imageFileInput (change)="onChangeFile(imageFileInput.files ? imageFileInput.files[0] : null)"
+                   name="image"
+                   type="file"
+                   [disabled]="disabled"
+            >
+          </p>
+        </div>
+        <div class="select-container" [formGroup]="fg">
+          <p>
+            <app-dashboard-radio
+              [formControl]="linkForm"
+              [selects]="linkSelects"
+            >リンク先
+            </app-dashboard-radio>
+          </p>
+          <ng-container *ngIf="linkForm.value === 'cast'">
+            <app-dashboard-select
+              [selects]="castsSelects"
+              formControlName="cast_id"
+            ></app-dashboard-select>
 
-          <app-dashboard-select
-            *ngIf="castLinkTypeEnabled"
-            [selects]="castLinkTypesSelects"
-            formControlName="cast_link_type_id"
-          ></app-dashboard-select>
-        </ng-container>
-        <ng-container *ngIf="linkForm.value === 'tenant'">
-          <app-dashboard-select
-            [selects]="tenantLinkTypesSelects$ | async"
-            formControlName="tenant_link_type_id"
-          ></app-dashboard-select>
+            <app-dashboard-select
+              *ngIf="castLinkTypeEnabled"
+              [selects]="castLinkTypesSelects"
+              formControlName="cast_link_type_id"
+            ></app-dashboard-select>
+          </ng-container>
+          <ng-container *ngIf="linkForm.value === 'tenant'">
+            <app-dashboard-select
+              [selects]="tenantLinkTypesSelects$ | async"
+              formControlName="tenant_link_type_id"
+            ></app-dashboard-select>
 
-          <app-dashboard-select
-            *ngIf="freeGalleryEnabled"
-            [selects]="galleriesSelects"
-            formControlName="tenant_free_gallery_id"
-          ></app-dashboard-select>
+            <app-dashboard-select
+              *ngIf="freeGalleryEnabled"
+              [selects]="galleriesSelects"
+              formControlName="tenant_free_gallery_id"
+            ></app-dashboard-select>
 
-          <app-dashboard-select
-            *ngIf="foreignLinkEnabled"
-            [selects]="foreignLinkSelects"
-            formControlName="foreign_link_id"
-          ></app-dashboard-select>
-        </ng-container>
+            <app-dashboard-select
+              *ngIf="foreignLinkEnabled"
+              [selects]="foreignLinkSelects"
+              formControlName="foreign_link_id"
+            ></app-dashboard-select>
+          </ng-container>
+        </div>
+        <button [disabled]="disabled" (click)="onDeleteFile()" mat-button mat-icon-button mat-flat-button color="warn" type="button">
+          <mat-icon>close</mat-icon>
+        </button>
       </div>
-      <button [disabled]="disabled" (click)="onDeleteFile()" mat-button mat-icon-button mat-flat-button color="warn" type="button">
-        <mat-icon>close</mat-icon>
-      </button>
     </div>
   </div>
 </div>
