@@ -58,3 +58,9 @@ export interface ModifyOperationTenantCastServiceTypeRequest {
 export interface OperationSiteConfigRequest {
   is_enabled_front_basic: boolean;
 }
+
+export interface CreateOperationSiteNewsRequest {
+  title: string;
+  publish_start_at: string;
+  publish_end_at: string | null;
+}

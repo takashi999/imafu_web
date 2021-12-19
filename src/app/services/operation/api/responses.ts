@@ -301,3 +301,37 @@ export interface OperationTenantFreeGalleryImage {
 export interface OperationSiteConfigResponse {
   is_enabled_front_basic: boolean;
 }
+
+export interface SiteNewsResponse {
+  id: number;
+  title: string;
+  publish_start_at: string;
+  publish_end_at: string | null;
+  created_by: number;
+  updated_by: number;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PaginatedResponse<T> {
+  data: T[]
+  current_page: number
+  last_page: number
+  first_page_url: string
+  prev_page_url: any
+  next_page_url: any
+  last_page_url: string
+  links: PaginatedResponseLink[]
+  per_page: number
+  path: string
+  from: any
+  to: any
+  total: number
+}
+
+export interface PaginatedResponseLink {
+  url?: string
+  label: string
+  active: boolean
+}

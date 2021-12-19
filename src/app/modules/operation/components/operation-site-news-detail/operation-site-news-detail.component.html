@@ -1,0 +1,13 @@
+<app-dashboard-header prevRouterLink="../">{{ titleText }}</app-dashboard-header>
+<mat-card *ngIf="view$ | async as view">
+  <form [formGroup]="fg" (ngSubmit)="onSubmit(view?.detail?.id ?? undefined)">
+    <mat-card-content>
+      <app-dashboard-input formControlName="title">タイトル</app-dashboard-input>
+      <app-dashboard-date-picker formControlName="publish_start_at">掲載開始日</app-dashboard-date-picker>
+      <app-dashboard-date-picker formControlName="publish_end_at">掲載終了日</app-dashboard-date-picker>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-flat-button color="primary">{{ buttonText }}</button>
+    </mat-card-actions>
+  </form>
+</mat-card>

@@ -1,0 +1,22 @@
+<app-dashboard-header rightRouterLink="./create">サイト内お知らせ一覧</app-dashboard-header>
+<ng-container *ngIf="viewSubject | async as view">
+  <ng-template #paginator>
+    <mat-paginator
+      (page)="onChangePage($event)"
+      [length]="view.list.total"
+      [pageSize]="view.list.per_page"
+      aria-label="Select page"
+      color="primary"
+    ></mat-paginator>
+  </ng-template>
+
+  <ng-container *ngTemplateOutlet="paginator"></ng-container>
+  <app-table-list
+    [displayedColumns]="displayedColumns"
+    [dataSource]="view.list.data"
+    (clickRow)="onClickRow($event)"
+    [getNameFn]="getNameFn"
+    (delete)="onDelete($event)"
+  ></app-table-list>
+  <ng-container *ngTemplateOutlet="paginator"></ng-container>
+</ng-container>

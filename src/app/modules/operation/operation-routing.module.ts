@@ -19,6 +19,8 @@ import { OperationTenantUserCreateComponent } from 'src/app/modules/operation/co
 import { OperationTenantCastServiceTypeListComponent } from 'src/app/modules/operation/components/operation-tenant-cast-service-type-list/operation-tenant-cast-service-type-list.component';
 import { OperationTenantCastServiceTypeDetailComponent } from 'src/app/modules/operation/components/operation-tenant-cast-service-type-detail/operation-tenant-cast-service-type-detail.component';
 import { OperationSiteConfigComponent } from 'src/app/modules/operation/components/operation-site-config/operation-site-config.component';
+import { OperationSiteNewsComponent } from 'src/app/modules/operation/components/operation-site-news/operation-site-news.component';
+import { OperationSiteNewsDetailComponent } from 'src/app/modules/operation/components/operation-site-news-detail/operation-site-news-detail.component';
 
 const routes: Routes = [
   {
@@ -96,6 +98,18 @@ const routes: Routes = [
           {
             path: 'cast-services/:tenant_cast_service_type_id',
             component: OperationTenantCastServiceTypeDetailComponent,
+          },
+          {
+            path: 'site-news',
+            component: OperationSiteNewsComponent,
+          },
+          {
+            path: 'site-news/create',
+            component: OperationSiteNewsDetailComponent,
+          },
+          {
+            path: 'site-news/:site_news_id',
+            component: OperationSiteNewsDetailComponent,
           },
           {
             path: 'site-config',

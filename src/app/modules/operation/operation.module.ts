@@ -38,6 +38,9 @@ import { OperationTenantBannerImageComponent } from './components/operation-tena
 import { OperationTenantCastServiceTypeListComponent } from './components/operation-tenant-cast-service-type-list/operation-tenant-cast-service-type-list.component';
 import { OperationTenantCastServiceTypeDetailComponent } from './components/operation-tenant-cast-service-type-detail/operation-tenant-cast-service-type-detail.component';
 import { OperationSiteConfigComponent } from './components/operation-site-config/operation-site-config.component';
+import { OperationSiteNewsComponent } from './components/operation-site-news/operation-site-news.component';
+import { OperationSiteNewsDetailComponent } from './components/operation-site-news-detail/operation-site-news-detail.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -61,28 +64,31 @@ import { OperationSiteConfigComponent } from './components/operation-site-config
     OperationTenantCastServiceTypeListComponent,
     OperationTenantCastServiceTypeDetailComponent,
     OperationSiteConfigComponent,
+    OperationSiteNewsComponent,
+    OperationSiteNewsDetailComponent,
   ],
-  imports: [
-    CommonModule,
-    OperationRoutingModule,
-    MatToolbarModule,
-    MatListModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatRippleModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatTableModule,
-    MatDialogModule,
-    MatSelectModule,
-    MatGridListModule,
-    MatRadioModule,
-    CommonComponentsModule,
-  ],
+    imports: [
+        CommonModule,
+        OperationRoutingModule,
+        MatToolbarModule,
+        MatListModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatRippleModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatTableModule,
+        MatDialogModule,
+        MatSelectModule,
+        MatGridListModule,
+        MatRadioModule,
+        CommonComponentsModule,
+        MatPaginatorModule,
+    ],
   exports: [
     OperationTenantBannerImageComponent,
   ],
