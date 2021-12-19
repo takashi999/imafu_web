@@ -5,7 +5,7 @@
       <mat-card-content>
         <app-dashboard-input formControlName="login_id" name="login_id">ID</app-dashboard-input>
         <app-dashboard-input [isPassword]="true" formControlName="password" name="password">パスワード</app-dashboard-input>
-        <p *ngIf="failed">ログインに失敗しました</p>
+        <p *ngIf="failed" class="failed">ログインに失敗しました</p>
       </mat-card-content>
       <mat-card-actions>
         <button class="sign-in-button" color="primary" mat-flat-button>ログイン</button>
