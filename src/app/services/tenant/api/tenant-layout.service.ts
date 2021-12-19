@@ -27,10 +27,6 @@ export class TenantLayoutService {
     return this.httpClient.patch<TenantLayout>(`@te/layout/modules`, body);
   }
 
-  modifySideContent(body: TenantModifyTenantLayoutSideContentRequest) {
-    return this.httpClient.patch<TenantLayout>(`@te/layout/side-content`, body);
-  }
-
   listBanners() {
     return this.httpClient.get(`@te/layout/banners`);
   }

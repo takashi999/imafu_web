@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { TenantLayoutRoutingModule } from './tenant-layout-routing.module';
 import { TenantLayoutTopComponent } from './components/tenant-layout-top/tenant-layout-top.component';
-import { TenantLayoutOtherComponent } from './components/tenant-layout-other/tenant-layout-other.component';
 import { TenantLayoutBannerComponent } from './components/tenant-layout-banner/tenant-layout-banner.component';
 import { TenantLayoutDesignComponent } from './components/tenant-layout-design/tenant-layout-design.component';
 import { TenantLayoutMoveBannerComponent } from './components/tenant-layout-move-banner/tenant-layout-move-banner.component';
@@ -22,11 +21,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 @NgModule({
   declarations: [
     TenantLayoutTopComponent,
-    TenantLayoutOtherComponent,
     TenantLayoutBannerComponent,
     TenantLayoutDesignComponent,
     TenantLayoutMoveBannerComponent,
-    TenantLayoutBannerImageComponent
+    TenantLayoutBannerImageComponent,
   ],
   imports: [
     CommonModule,
@@ -43,4 +41,5 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     FormsModule,
   ],
 })
-export class TenantLayoutModule { }
+export class TenantLayoutModule {
+}

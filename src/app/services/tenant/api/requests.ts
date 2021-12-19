@@ -29,11 +29,11 @@ export interface ModifyTenantCastScheduleSettingRequest {
 
 export interface TenantModifyTenantLayoutModulesRequest {
   relations: {
-    is_side: boolean;
     tenant_layout_module_type_id: number;
     is_enabled: boolean;
   }[];
   top_right_side_tenant_layout_contents_type_id: number;
+  side_tenant_layout_contents_ranking: number | null;
 }
 
 export interface TenantModifyTenantLayoutSideContentRequest {

@@ -261,8 +261,7 @@ export interface TenantRankingThumbnailFilePath {
 export interface TenantLayout {
   id: number;
   tenant_id: number;
-  top_right_side_tenant_layout_contents_type_id: number;
-  right_side_tenant_layout_contents_type_id: number;
+  side_tenant_layout_contents_type_id: number;
   pc_shop_bg_image_size: string;
   pc_shop_bg_image_attachment: string;
   pc_shop_bg_color: string;
@@ -274,8 +273,8 @@ export interface TenantLayout {
   side_content: TenantLayoutSideContent | null;
   bg_image_file_path: TenantLayoutBgImageFilePath | null;
   bg_image_file_url: string | null;
+  ranking: TenantLayoutRankingRelation | null;
 }
-
 
 export interface TenantLayoutModuleRelation {
   id: number;
@@ -307,6 +306,15 @@ export interface TenantLayoutSideContent {
 export interface TenantLayoutBgImageFilePath {
   id: number;
   deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TenantLayoutRankingRelation {
+  id: number;
+  is_top: boolean;
+  tenant_layout_id: number;
+  tenant_ranking_id: number;
   created_at: string;
   updated_at: string;
 }
