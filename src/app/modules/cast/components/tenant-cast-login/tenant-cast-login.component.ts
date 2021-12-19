@@ -1,15 +1,14 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { TenantAuthService } from 'src/app/services/tenant/api/tenant-auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TenantCastAuthService } from 'src/app/services/cast/api/tenant-cast-auth.service';
 
 @Component({
   selector: 'app-tenant-cast-login',
   templateUrl: './tenant-cast-login.component.html',
-  styleUrls: ['./tenant-cast-login.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: [ './tenant-cast-login.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TenantCastLoginComponent implements OnInit {
   fg = new FormGroup({
@@ -23,6 +22,7 @@ export class TenantCastLoginComponent implements OnInit {
     private tenantCastAuthService: TenantCastAuthService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {
   }
 
@@ -45,6 +45,7 @@ export class TenantCastLoginComponent implements OnInit {
           },
           error: () => {
             this.failed = true;
+            this.changeDetectorRef.markForCheck();
           },
         }),
     );

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { OperationAuthService } from 'src/app/services/operation/api/operation-auth.service';
 import { Subscription } from 'rxjs';
@@ -23,6 +23,7 @@ export class OperationLoginComponent implements OnInit {
     private operationAuthService: OperationAuthService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {
   }
 
@@ -45,6 +46,7 @@ export class OperationLoginComponent implements OnInit {
           },
           error: () => {
             this.failed = true;
+            this.changeDetectorRef.markForCheck();
           },
         }),
     );

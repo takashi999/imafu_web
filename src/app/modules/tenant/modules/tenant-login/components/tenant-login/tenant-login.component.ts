@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -23,6 +23,7 @@ export class TenantLoginComponent implements OnInit {
     private tenantAuthService: TenantAuthService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {
   }
 
@@ -45,6 +46,7 @@ export class TenantLoginComponent implements OnInit {
           },
           error: () => {
             this.failed = true;
+            this.changeDetectorRef.markForCheck();
           },
         }),
     );
