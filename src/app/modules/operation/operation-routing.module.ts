@@ -18,6 +18,7 @@ import { OperationTenantUserDetailComponent } from 'src/app/modules/operation/co
 import { OperationTenantUserCreateComponent } from 'src/app/modules/operation/components/operation-tenant-user-create/operation-tenant-user-create.component';
 import { OperationTenantCastServiceTypeListComponent } from 'src/app/modules/operation/components/operation-tenant-cast-service-type-list/operation-tenant-cast-service-type-list.component';
 import { OperationTenantCastServiceTypeDetailComponent } from 'src/app/modules/operation/components/operation-tenant-cast-service-type-detail/operation-tenant-cast-service-type-detail.component';
+import { OperationSiteConfigComponent } from 'src/app/modules/operation/components/operation-site-config/operation-site-config.component';
 
 const routes: Routes = [
   {
@@ -95,6 +96,10 @@ const routes: Routes = [
           {
             path: 'cast-services/:tenant_cast_service_type_id',
             component: OperationTenantCastServiceTypeDetailComponent,
+          },
+          {
+            path: 'site-config',
+            component: OperationSiteConfigComponent,
           },
         ],
       },

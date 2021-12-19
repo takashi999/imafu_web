@@ -1,0 +1,13 @@
+<app-dashboard-header>サイト管理設定</app-dashboard-header>
+<mat-card>
+  <form (ngSubmit)="onSubmit()" [formGroup]="fg">
+    <mat-card-content>
+      <p>
+        <mat-checkbox formControlName="is_enabled_front_basic">サイトにbasic認証をかける</mat-checkbox>
+      </p>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button [disabled]="fg.invalid" color="primary" mat-flat-button>更新</button>
+    </mat-card-actions>
+  </form>
+</mat-card>

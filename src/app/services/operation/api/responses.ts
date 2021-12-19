@@ -129,23 +129,23 @@ export interface OperationTenant {
     tenant_id: number;
     updated_at: string;
     tenant_banner_image_cast_link: {
-      id:number;
+      id: number;
       tenant_banner_image_id: number;
       tenant_cast_id: number;
       tenant_free_banner_cast_link_type_id: number;
     } | null;
     tenant_banner_image_tenant_link: {
-      id:number;
+      id: number;
       tenant_banner_image_id: number;
       tenant_free_banner_image_tenant_link_type_id: number;
     } | null;
     tenant_banner_image_free_gallery_link: {
-      id:number;
+      id: number;
       tenant_banner_image_tenant_link_id: number;
       tenant_free_gallery_id: number;
     } | null;
     tenant_banner_image_foreign_link: {
-      id:number;
+      id: number;
       tenant_banner_image_tenant_link_id: number;
       tenant_foreign_link_id: number;
     } | null;
@@ -296,4 +296,8 @@ export interface OperationTenantFreeGalleryImage {
     created_at: string
     updated_at: string
   };
+}
+
+export interface OperationSiteConfigResponse {
+  is_enabled_front_basic: boolean;
 }

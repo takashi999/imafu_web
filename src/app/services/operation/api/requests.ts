@@ -54,3 +54,7 @@ export interface ModifyOperationTenantCastServiceTypeRequest {
   service_type_id: string;
   display_name: string;
 }
+
+export interface OperationSiteConfigRequest {
+  is_enabled_front_basic: boolean;
+}

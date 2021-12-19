@@ -37,6 +37,7 @@ import { OperationTenantUserCreateComponent } from './components/operation-tenan
 import { OperationTenantBannerImageComponent } from './components/operation-tenant-banner-image/operation-tenant-banner-image.component';
 import { OperationTenantCastServiceTypeListComponent } from './components/operation-tenant-cast-service-type-list/operation-tenant-cast-service-type-list.component';
 import { OperationTenantCastServiceTypeDetailComponent } from './components/operation-tenant-cast-service-type-detail/operation-tenant-cast-service-type-detail.component';
+import { OperationSiteConfigComponent } from './components/operation-site-config/operation-site-config.component';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { OperationTenantCastServiceTypeDetailComponent } from './components/oper
     OperationTenantBannerImageComponent,
     OperationTenantCastServiceTypeListComponent,
     OperationTenantCastServiceTypeDetailComponent,
+    OperationSiteConfigComponent,
   ],
   imports: [
     CommonModule,
@@ -81,9 +83,9 @@ import { OperationTenantCastServiceTypeDetailComponent } from './components/oper
     MatRadioModule,
     CommonComponentsModule,
   ],
-    exports: [
-        OperationTenantBannerImageComponent,
-    ],
+  exports: [
+    OperationTenantBannerImageComponent,
+  ],
 })
 export class OperationModule {
 }
