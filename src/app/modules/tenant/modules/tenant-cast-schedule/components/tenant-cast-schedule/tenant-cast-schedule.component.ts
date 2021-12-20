@@ -28,6 +28,7 @@ import {
   setDay,
   startOfMonth,
   startOfToday,
+  startOfYesterday,
   subDays,
   subMonths,
 } from 'date-fns';
@@ -159,12 +160,14 @@ export class TenantCastScheduleComponent implements OnInit, OnDestroy {
 
     this.s.add(
       this.activatedRoute.queryParamMap.subscribe(paramMap => {
-        const yesterday = subDays(startOfToday(), 1);
-        const startDate = paramMap.has('start_date') ? parseISO(paramMap.get('start_date') ?? '') : yesterday;
+        const now = new Date();
+        const changeHour = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 6, 0, 0, 0);
+        const defaultDay = isAfter(now, changeHour) ? startOfToday() : startOfYesterday();
+        const startDate = paramMap.has('start_date') ? parseISO(paramMap.get('start_date') ?? '') : defaultDay;
         const isMonthMode = paramMap.get('month') === '1';
         const firstDisabledNextStartDate = this.getFirstDisabledNextStartDate(isMonthMode);
 
-        if (differenceInCalendarDays(yesterday, startDate) > 0) {
+        if (differenceInCalendarDays(defaultDay, startDate) > 0) {
           this.router.navigate([ '.' ], {
             relativeTo: this.activatedRoute,
             queryParamsHandling: 'merge',
