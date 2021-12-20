@@ -51,6 +51,13 @@ export class TenantTransportationComponent implements OnInit, OnDestroy {
       this.detail$
         .subscribe(res => {
           this.fg.reset();
+          this.areaControlArray.clear();
+          res?.areas.forEach(() => {
+            this.areaControlArray.push(new FormGroup({
+              area: new FormControl('', [ maxLength64Validator ]),
+              price: new FormControl('', [ maxLength64Validator ]),
+            }), { emitEvent: false });
+          });
           this.fg.patchValue(res, { emitEvent: false });
         }),
     );

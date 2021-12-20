@@ -51,6 +51,13 @@ export class TenantOptionComponent implements OnInit, OnDestroy {
       this.detail$
         .subscribe(res => {
           this.fg.reset();
+          this.priceControlArray.clear();
+          res?.prices.forEach(() => {
+            this.priceControlArray.push(new FormGroup({
+              title: new FormControl('', [ maxLength64Validator ]),
+              price: new FormControl('', [ maxLength64Validator ]),
+            }), { emitEvent: false });
+          });
           this.fg.patchValue(res, { emitEvent: false });
         }),
     );
