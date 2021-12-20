@@ -1,6 +1,7 @@
 <ng-container *ngIf="detail">
   <app-dashboard-header prevRouterLink="../">店舗編集: {{ detail.name }}</app-dashboard-header>
   <mat-card>
+    <mat-card-actions align="end"><button type="button" mat-flat-button color="primary" (click)="onClickLoginAsOperator(detail)">この店舗のユーザーとしてログインする</button></mat-card-actions>
     <form (ngSubmit)="onSub()" [formGroup]="fg">
       <mat-card-content>
         <app-dashboard-select

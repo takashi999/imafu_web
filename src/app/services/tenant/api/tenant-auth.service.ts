@@ -10,7 +10,7 @@ import { TenantUser } from 'src/app/services/tenant/api/responses';
 })
 export class TenantAuthService {
 
-  private loginNotifier$ = new Subject();
+  public loginNotifier$ = new Subject();
 
   constructor(
     private httpClient: HttpClient,

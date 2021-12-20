@@ -307,6 +307,15 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
     this.s.unsubscribe();
   }
 
+  onClickLoginAsOperator(data: OperationTenant) {
+    this.s.add(
+      this.operationTenantService.loginAsOperator(data.id)
+        .subscribe(() => {
+          this.router.navigate([ '/', 'tenant' ]);
+        }),
+    );
+  }
+
   onSub() {
     if (this.id != null) {
       this.s.add(

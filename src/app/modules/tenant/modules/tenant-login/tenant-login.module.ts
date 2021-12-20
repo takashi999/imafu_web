@@ -8,21 +8,23 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { CommonComponentsModule } from 'src/app/components/common-components.module';
 
 
 @NgModule({
   declarations: [
     TenantLoginComponent,
   ],
-  imports: [
-    CommonModule,
-    TenantLoginRoutingModule,
-    ReactiveFormsModule,
-    MatCardModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-  ],
+    imports: [
+        CommonModule,
+        TenantLoginRoutingModule,
+        ReactiveFormsModule,
+        MatCardModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        CommonComponentsModule,
+    ],
 })
 export class TenantLoginModule {
 }
