@@ -3,12 +3,7 @@
   <mat-card>
     <form (ngSubmit)="onSub(detail.id)" [formGroup]="fg">
       <mat-card-content>
-        <p>
-          <mat-form-field appearance="fill" hintLabel="40文字">
-            <mat-label>タイトル</mat-label>
-            <input formControlName="title" matInput max="40" name="title" type="text">
-          </mat-form-field>
-        </p>
+        <app-dashboard-input formControlName="title" name="title" type="text">タイトル</app-dashboard-input>
 
         <mat-grid-list [cols]="7" [rowHeight]="80" formArrayName="courses">
           <ng-container *ngFor="let item of courseFormArray.controls; let index = index" [formGroupName]="index">

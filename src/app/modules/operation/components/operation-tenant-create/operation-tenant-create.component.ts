@@ -8,7 +8,8 @@ import {
   maxLength100Validator,
   maxLength15Validator,
   maxLength180Validator,
-  maxLength200Validator, maxLength300Validator,
+  maxLength200Validator,
+  maxLength300Validator,
   maxLength30Validator,
   maxLength60Validator,
 } from 'src/app/validators/common-validators';
@@ -50,7 +51,7 @@ export class OperationTenantCreateComponent implements OnInit, OnDestroy {
     form_email: new FormControl('', [ Validators.email ]),
     region: new FormControl('', [ maxLength30Validator ]),
     open_time: new FormControl('', [ Validators.required ]),
-    open_time_end: new FormControl('', [ Validators.required ]),
+    open_time_end: new FormControl('', []),
     reception_time: new FormControl('', [ Validators.required ]),
     reception_time_end: new FormControl('', []),
     close_date: new FormControl('', [ maxLength60Validator ]),

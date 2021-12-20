@@ -12,7 +12,8 @@ import {
   maxLength100Validator,
   maxLength15Validator,
   maxLength180Validator,
-  maxLength200Validator, maxLength300Validator,
+  maxLength200Validator,
+  maxLength300Validator,
   maxLength30Validator,
   maxLength60Validator,
 } from 'src/app/validators/common-validators';
@@ -56,7 +57,7 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
     form_email: new FormControl('', [ Validators.email ]),
     region: new FormControl('', [ maxLength30Validator ]),
     open_time: new FormControl('', [ Validators.required ]),
-    open_time_end: new FormControl('', [ Validators.required ]),
+    open_time_end: new FormControl('', []),
     reception_time: new FormControl('', [ Validators.required ]),
     reception_time_end: new FormControl('', []),
     close_date: new FormControl('', [ maxLength60Validator ]),
@@ -216,7 +217,7 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
                 line_url: this.detail.line?.line_url,
                 form_email: this.detail.form?.email,
                 open_time: this.detail.open_time.substr(0, 5),
-                open_time_end: this.detail.open_time_end.substr(0, 5),
+                open_time_end: this.detail.open_time_end?.substr(0, 5) ?? '',
                 reception_time: this.detail.reception_time.substr(0, 5),
                 reception_time_end: this.detail.reception_time_end?.substr(0, 5) ?? '',
                 services: this.detail.services?.map(s => ({
@@ -246,7 +247,7 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
 
               this.useForm.setValue(typeof this.detail.form?.email === 'undefined' ? '0' : '1', { emitEvent: false });
 
-              this.openTimeCombined.setValue([ this.detail.open_time.substr(0, 5), this.detail.open_time_end.substr(0, 5) ], { emitEvent: false });
+              this.openTimeCombined.setValue([ this.detail.open_time.substr(0, 5), this.detail.open_time_end?.substr(0, 5) ?? '' ], { emitEvent: false });
               this.receptionTimeCombined.setValue([ this.detail.reception_time.substr(0, 5), this.detail.reception_time_end?.substr(0, 5) ?? '' ], { emitEvent: false });
 
               this.s.add(

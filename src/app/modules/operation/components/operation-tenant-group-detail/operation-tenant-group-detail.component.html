@@ -3,12 +3,7 @@
   <mat-card>
     <form (ngSubmit)="onSub(detail.id)" [formGroup]="fg">
       <mat-card-content>
-        <p>
-          <mat-form-field appearance="fill" hintLabel="1 - 100文字">
-            <mat-label>店舗グループ名</mat-label>
-            <input formControlName="name" matInput max="100" min="1" name="name" type="text">
-          </mat-form-field>
-        </p>
+        <app-dashboard-input formControlName="name" name="name" type="text">店舗グループ名</app-dashboard-input>
       </mat-card-content>
       <mat-card-actions align="end">
         <button [disabled]="fg.invalid" color="primary" mat-raised-button>更新</button>

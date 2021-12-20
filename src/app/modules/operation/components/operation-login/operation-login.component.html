@@ -3,12 +3,7 @@
     <mat-card>
       <mat-card-title>ログイン</mat-card-title>
       <mat-card-content>
-        <p>
-          <mat-form-field appearance="fill">
-            <mat-label>ID</mat-label>
-            <input formControlName="login_id" matInput name="login_id" type="text">
-          </mat-form-field>
-        </p>
+        <app-dashboard-input formControlName="login_id" name="login_id" type="text">ID</app-dashboard-input>
         <p>
           <mat-form-field appearance="fill">
             <mat-label>パスワード</mat-label>

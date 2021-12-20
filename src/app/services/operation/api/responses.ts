@@ -36,7 +36,7 @@ export interface OperationTenant {
   catch: string;
   region: string;
   open_time: string;
-  open_time_end: string;
+  open_time_end: string | null;
   reception_time: string;
   reception_time_end: string | null;
   close_date: string;

@@ -8,7 +8,8 @@ import { TenantCreditCardBrandService } from 'src/app/services/tenant/api/tenant
 import {
   maxLength15Validator,
   maxLength180Validator,
-  maxLength200Validator, maxLength300Validator,
+  maxLength200Validator,
+  maxLength300Validator,
   maxLength30Validator,
   maxLength60Validator,
 } from 'src/app/validators/common-validators';
@@ -34,7 +35,7 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
     form_email: new FormControl('', [ Validators.email ]),
     region: new FormControl('', [ maxLength30Validator ]),
     open_time: new FormControl('', [ Validators.required ]),
-    open_time_end: new FormControl('', [ Validators.required ]),
+    open_time_end: new FormControl('', []),
     reception_time: new FormControl('', [ Validators.required ]),
     reception_time_end: new FormControl('', []),
     close_date: new FormControl('', [ maxLength60Validator ]),
@@ -172,7 +173,7 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
       line_url: res.line?.line_url,
       form_email: res.form?.email,
       open_time: res.open_time.substr(0, 5),
-      open_time_end: res.open_time_end.substr(0, 5),
+      open_time_end: res.open_time_end?.substr(0, 5) ?? '',
       reception_time: res.reception_time.substr(0, 5),
       reception_time_end: res.reception_time_end?.substr(0, 5) ?? '',
       services: res.services?.map(s => ({
@@ -186,7 +187,7 @@ export class TenantBasicEditComponent implements OnInit, OnDestroy {
     }, { emitEvent: false });
 
     this.useForm.setValue(typeof res.form?.email === 'undefined' ? '0' : '1', { emitEvent: false });
-    this.openTimeCombined.setValue([ res.open_time.substr(0, 5), res.open_time_end.substr(0, 5) ], { emitEvent: false });
+    this.openTimeCombined.setValue([ res.open_time.substr(0, 5), res.open_time_end?.substr(0, 5) ?? '' ], { emitEvent: false });
     this.receptionTimeCombined.setValue([ res.reception_time.substr(0, 5), res.reception_time_end?.substr(0, 5) ?? '' ], { emitEvent: false });
 
     this.s.add(

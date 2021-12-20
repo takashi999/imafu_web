@@ -6,40 +6,16 @@
 
         <app-dashboard-textarea formControlName="catch">キャッチフレーズ</app-dashboard-textarea>
         <ng-container formArrayName="tel">
-          <p>
-            <mat-form-field appearance="fill" hintLabel="15文字">
-              <mat-label>電話番号1</mat-label>
-              <input formControlName="0" matInput max="15" name="tel1" type="tel">
-            </mat-form-field>
-          </p>
-          <p>
-            <mat-form-field appearance="fill" hintLabel="15文字">
-              <mat-label>電話番号2</mat-label>
-              <input formControlName="1" matInput max="15" name="tel2" type="tel">
-            </mat-form-field>
-          </p>
+          <app-dashboard-input formControlName="0" name="tel1" type="tel">電話番号1</app-dashboard-input>
+          <app-dashboard-input formControlName="1" name="tel2" type="tel">電話番号2</app-dashboard-input>
         </ng-container>
-        <p>
-          <mat-form-field appearance="fill" hintLabel="">
-            <mat-label>LINE ID</mat-label>
-            <input formControlName="line_id" matInput name="line_id" type="text">
-          </mat-form-field>
-        </p>
-        <p>
-          <mat-form-field appearance="fill" hintLabel="">
-            <mat-label>LINE URL</mat-label>
-            <input formControlName="line_url" matInput name="line_url" type="text">
-          </mat-form-field>
-        </p>
-        <p>
-          <mat-form-field appearance="fill" hintLabel="30文字">
-            <mat-label>住所・地域（東部・中部・西部・全域）</mat-label>
-            <input formControlName="region" matInput name="region" type="text">
-          </mat-form-field>
-        </p>
+        <app-dashboard-input formControlName="line_id" name="line_id" type="text">LINE ID</app-dashboard-input>
+        <app-dashboard-input formControlName="line_url" name="line_url" type="text">LINE URL</app-dashboard-input>
+        <app-dashboard-input formControlName="region" name="region" type="text">住所・地域（東部・中部・西部・全域）</app-dashboard-input>
 
         <app-dashboard-time-range-form
           [minuteStep]="30"
+          [insertLast]="true"
           [formControl]="openTimeCombined"
           label="営業"
         ></app-dashboard-time-range-form>
@@ -51,21 +27,9 @@
           label="受付"
         ></app-dashboard-time-range-form>
 
-        <p>
-          <mat-form-field appearance="fill" hintLabel="60文字">
-            <mat-label>定休日</mat-label>
-            <input formControlName="close_date" matInput max="60" name="close_date" type="text">
-          </mat-form-field>
-        </p>
+        <app-dashboard-input formControlName="close_date" name="close_date" type="text">定休日</app-dashboard-input>
 
-        <p>
-          <mat-form-field appearance="fill">
-            <mat-label>最低価格帯</mat-label>
-            <mat-select formControlName="lowest_cost">
-              <mat-option *ngFor="let item of costSelections" [value]="item.value">{{ item.label }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </p>
+        <app-dashboard-select [selects]="costSelections" formControlName="lowest_cost">最低価格帯</app-dashboard-select>
 
         <app-dashboard-radio
           [formControl]="useForm"
@@ -74,25 +38,10 @@
         </app-dashboard-radio>
 
         <ng-container *ngIf="useForm.value === '1'">
-          <p>
-            <mat-form-field appearance="fill">
-              <mat-label>書き込み通知先メールアドレス</mat-label>
-              <input formControlName="form_email" matInput max="256" name="form_email" type="email">
-            </mat-form-field>
-          </p>
+          <app-dashboard-input formControlName="form_email" name="form_email" type="email">書き込み通知先メールアドレス</app-dashboard-input>
         </ng-container>
-        <p>
-          <mat-form-field appearance="fill" hintLabel="180文字">
-            <mat-label>基本サービス</mat-label>
-            <input formControlName="regular_services" matInput max="180" name="regular_services" type="text">
-          </mat-form-field>
-        </p>
-        <p>
-          <mat-form-field appearance="fill">
-            <mat-label>基本サービス価格</mat-label>
-            <input formControlName="regular_service_price" matInput min="0" name="regular_service_price" type="number">
-          </mat-form-field>
-        </p>
+        <app-dashboard-input formControlName="regular_services" name="regular_services" type="text">基本サービス</app-dashboard-input>
+        <app-dashboard-input formControlName="regular_service_price" name="regular_service_price" type="number">基本サービス価格</app-dashboard-input>
 
         <mat-grid-list [cols]="5" [rowHeight]="80" formArrayName="services">
           <ng-container *ngFor="let item of serviceControls; let index = index" [formGroupName]="index">
@@ -132,13 +81,7 @@
           >{{ item.name }}</mat-checkbox>
         </p>
 
-        <p>
-          <mat-form-field appearance="fill" hintLabel="200文字">
-            <mat-label>備考欄</mat-label>
-            <textarea [cdkTextareaAutosize]="true" formControlName="note" matInput name="note" rows="3"
-                      type="text"></textarea>
-          </mat-form-field>
-        </p>
+        <app-dashboard-textarea formControlName="note" name="note">備考欄</app-dashboard-textarea>
 
 
         <p>

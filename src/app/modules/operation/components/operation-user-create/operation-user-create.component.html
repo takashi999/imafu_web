@@ -2,12 +2,7 @@
 <mat-card>
   <form (ngSubmit)="onSub()" [formGroup]="fg">
     <mat-card-content>
-      <p>
-        <mat-form-field appearance="fill" hintLabel="1 - 16文字">
-          <mat-label>ログインID</mat-label>
-          <input formControlName="login_id" matInput max="16" min="1" name="login_id" type="text">
-        </mat-form-field>
-      </p>
+      <app-dashboard-input formControlName="login_id" name="login_id" type="text">ログインID</app-dashboard-input>
       <p>
         <mat-form-field appearance="fill" hintLabel="8 - 100文字">
           <mat-label>パスワード</mat-label>
