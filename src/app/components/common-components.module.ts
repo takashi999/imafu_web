@@ -28,6 +28,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DashboardImageComponent } from './dashboard-image/dashboard-image.component';
 import { DashboardImageMultipleComponent } from './dashboard-image-multiple/dashboard-image-multiple.component';
 import { DashboardSearchComponent } from './dashboard-search/dashboard-search.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -47,29 +48,30 @@ import { DashboardSearchComponent } from './dashboard-search/dashboard-search.co
     DashboardImageMultipleComponent,
     DashboardSearchComponent,
   ],
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatTableModule,
-    MatTableModule,
-    MatTableModule,
-    MatTableModule,
-    MatTableModule,
-    MatTableModule,
-    MatTableModule,
-    MatRippleModule,
-    MatButtonModule,
-    RouterModule,
-    MatCheckboxModule,
-    MatGridListModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    CKEditorModule,
-    MatRadioModule,
-    MatDatepickerModule,
-  ],
+    imports: [
+        CommonModule,
+        MatIconModule,
+        MatTableModule,
+        MatTableModule,
+        MatTableModule,
+        MatTableModule,
+        MatTableModule,
+        MatTableModule,
+        MatTableModule,
+        MatRippleModule,
+        MatButtonModule,
+        RouterModule,
+        MatCheckboxModule,
+        MatGridListModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        CKEditorModule,
+        MatRadioModule,
+        MatDatepickerModule,
+        MatTooltipModule,
+    ],
   exports: [
     AppComponent,
     TableListComponent,

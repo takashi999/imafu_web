@@ -6,8 +6,11 @@
                 mat-cell>
         <ng-container [ngSwitch]="col.type">
           <ng-container *ngSwitchCase="undefined">
-            <ng-container *ngIf=" getColumnAsBase(col) as col">
-              {{ col.transform ? col.transform(getDataByKeyName(element, col.key)) : getDataByKeyName(element, col.key) }}
+            <ng-container *ngIf="getColumnAsBase(col) as col">
+              <ng-container
+                *ngIf="col.transform ? col.transform(getDataByKeyName(element, col.key)) : getDataByKeyName(element, col.key) as text">
+                <div class="ellipsis" [matTooltip]="text">{{ text }}</div>
+              </ng-container>
             </ng-container>
           </ng-container>
           <ng-container *ngSwitchCase="'image'">
@@ -15,7 +18,18 @@
               <img
                 [src]="col.transform ? col.transform(getDataByKeyName(element, col.key)) : getDataByKeyName(element, col.key)"
                 alt=""
-                class="col-image">
+                class="col-image"
+                #smallImage
+                (mouseenter)="onShowPreviewModal(imageTemplate, smallImage)"
+                (mouseleave)="onHidePreviewModal()"
+              >
+              <ng-template #imageTemplate>
+                <img
+                  [src]="col.transform ? col.transform(getDataByKeyName(element, col.key)) : getDataByKeyName(element, col.key)"
+                  alt=""
+                  class="col-image-stretch"
+                >
+              </ng-template>
             </ng-container>
           </ng-container>
           <ng-container *ngSwitchCase="'template'">

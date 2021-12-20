@@ -53,12 +53,14 @@ export class OperationSiteNewsComponent implements OnInit, OnDestroy, AfterViewI
       transform: v => format(parseISO(v), 'yyyy/MM/dd'),
     },
     {
-      key: 'updated_by',
-      label: '更新者',
+      key: 'publish_start_at',
+      label: '掲載開始日',
+      transform: v => format(parseISO(v), 'yyyy/MM/dd'),
     },
     {
-      key: 'created_by',
-      label: '作成者',
+      key: 'publish_end_at',
+      label: '掲載終了日',
+      transform: v => v ? format(parseISO(v), 'yyyy/MM/dd') : "無期限",
     },
     {
       key: 'delete',

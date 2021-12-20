@@ -7,10 +7,13 @@ import {
   OnInit,
   Output,
   TemplateRef,
+  ViewContainerRef,
 } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable, Subscription } from 'rxjs';
 import { OperationConfirmService } from 'src/app/services/operation/operation-confirm.service';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
 
 type TableListColumnBaseType<T, K extends keyof T | string = keyof T | string> = {
   key: K;
@@ -42,9 +45,12 @@ export class TableListComponent<T, TE> implements OnInit, OnDestroy {
 
   s = new Subscription();
   rippleDisable = false;
+  imagePreviewOverlayRef: OverlayRef | null = null;
 
   constructor(
     private operationConfirmService: OperationConfirmService,
+    private overlay: Overlay,
+    private viewContainerRef: ViewContainerRef,
   ) {
   }
 
@@ -72,10 +78,11 @@ export class TableListComponent<T, TE> implements OnInit, OnDestroy {
   }
 
   getColumnAsBase(col: TableListColumnBaseType<T> | TableListColumnTemplateType<TE>) {
-    return col as TableListColumnBaseType<T>
+    return col as TableListColumnBaseType<T>;
   }
+
   getColumnAsTemplate(col: TableListColumnBaseType<T> | TableListColumnTemplateType<TE>) {
-    return col as TableListColumnTemplateType<TE>
+    return col as TableListColumnTemplateType<TE>;
   }
 
   onClickDelete(e: Event, data: T) {
@@ -102,5 +109,34 @@ export class TableListComponent<T, TE> implements OnInit, OnDestroy {
 
   onClickRow(data: T) {
     this.clickRow.emit(data);
+  }
+
+  onShowPreviewModal(template: TemplateRef<any>, elm: Element) {
+    const portal = new TemplatePortal(template, this.viewContainerRef);
+
+    this.imagePreviewOverlayRef = this.overlay.create({
+      hasBackdrop: false,
+      width: 400,
+      height: 400,
+      scrollStrategy: this.overlay.scrollStrategies.reposition({
+        scrollThrottle: 300,
+        autoClose: true,
+      }),
+      positionStrategy: this.overlay.position()
+        .flexibleConnectedTo(elm)
+        .withPositions([ {
+          originX: 'center',
+          originY: 'center',
+          overlayX: 'center',
+          overlayY: 'center',
+        } ]),
+    });
+    const viewRef = this.imagePreviewOverlayRef.attach(portal);
+  }
+
+  onHidePreviewModal() {
+    if (this.imagePreviewOverlayRef?.hasAttached()) {
+      this.imagePreviewOverlayRef?.detach();
+    }
   }
 }

@@ -12,6 +12,13 @@
   </mat-card>
 
   <h2>所属店舗</h2>
-
-
+  <mat-action-list>
+    <mat-divider></mat-divider>
+    <ng-container *ngFor="let item of detail.tenants">
+      <mat-list-item [routerLink]="['/operation/tenants/', item.id]">
+        {{ item.name }}
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </ng-container>
+  </mat-action-list>
 </ng-container>

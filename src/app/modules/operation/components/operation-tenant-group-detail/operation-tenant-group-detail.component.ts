@@ -15,7 +15,7 @@ import { maxLength100Validator } from 'src/app/validators/common-validators';
 })
 export class OperationTenantGroupDetailComponent implements OnInit, OnDestroy {
 
-  detail$ = new Subject<OperationTenantGroup>();
+  detail$: Subject<OperationTenantGroup> = new Subject<OperationTenantGroup>();
 
   s = new Subscription();
   fg = new FormGroup({

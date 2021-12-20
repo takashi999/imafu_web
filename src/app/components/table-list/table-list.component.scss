@@ -3,3 +3,14 @@
   width: 40px;
   object-fit: contain;
 }
+.col-image-stretch{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
