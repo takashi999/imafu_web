@@ -63,7 +63,7 @@ export class TenantCastCreateComponent implements OnInit, OnDestroy, AfterViewIn
     similar_famous: new FormControl('', [ maxLength20Validator ]),
     similar_famous_kana: new FormControl('', [ maxLength20Validator ]),
     sm_barometer: new FormControl(''),
-    message: new FormControl(''),
+    message: new FormControl('', [ maxLength1000Validator ]),
     is_use_photo_diary: new FormControl('0'),
     login_id: new FormControl('', [ maxLength10Validator ]),
     password: new FormControl('', [ ...passwordValidators ]),

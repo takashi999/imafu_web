@@ -57,7 +57,7 @@
                             </button>
                           </a>
                         </p>
-                        <p><img [src]="cast.images[0]?.file_url" alt="" class="cast-icon"></p>
+                        <p><img [src]="cast.first_image_url" alt="" class="cast-icon"></p>
                         <p><a [routerLink]="'/tenant/cast/' + cast.id">{{ cast.display_name }}</a></p>
                       </div>
                     </th>

@@ -197,6 +197,7 @@ export interface TenantCast {
   user: {
     login_id: string;
   } | null;
+  first_image_url: string;
 }
 
 export interface TenantCastScheduleSettingResponse {

@@ -210,6 +210,7 @@ export interface OperationTenantCast {
   services: OperationTenantCastService[];
   types: OperationTenantCastType[];
   style: OperationTenantCastStyle | null;
+  first_image_url: string;
 }
 
 export interface OperationTenantCastImage {
