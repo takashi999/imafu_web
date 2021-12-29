@@ -3,6 +3,9 @@
 </p>
 <div *ngIf="fileUrl" class="image-container">
   <img [src]="fileUrl" alt="">
+  <button (click)="onChangeFile(null)" color="warn" mat-flat-button mat-icon-button type="button">
+    <mat-icon>close</mat-icon>
+  </button>
 </div>
 <p>
   <input #imageFileInput (change)="onChangeFile(imageFileInput.files)" name="image" type="file">

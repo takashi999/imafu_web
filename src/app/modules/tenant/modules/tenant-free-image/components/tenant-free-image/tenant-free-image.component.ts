@@ -23,6 +23,9 @@ export class TenantFreeImageComponent implements OnInit, OnDestroy {
       key: 'title',
       label: '名前',
     },
+    {
+      key: 'delete',
+    },
   ];
 
   constructor(
@@ -32,7 +35,7 @@ export class TenantFreeImageComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  getNameFn = (v: any) => v.display_name;
+  getNameFn = (v: any) => v.title;
 
   ngOnInit(): void {
     this.s.add(
@@ -49,5 +52,11 @@ export class TenantFreeImageComponent implements OnInit, OnDestroy {
     this.router.navigate([ data.id ], {
       relativeTo: this.activatedRoute,
     });
+  }
+
+  onDelete(data: any) {
+    this.s.add(this.tenantFreeImageService.delete(data.id).subscribe(res =>
+      this.list$.next(res),
+    ));
   }
 }

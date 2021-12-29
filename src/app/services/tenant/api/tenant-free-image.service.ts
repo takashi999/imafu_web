@@ -28,6 +28,6 @@ export class TenantFreeImageService {
   }
 
   delete(tenantFreeImageId: number) {
-    return this.httpClient.delete(`@te/free-images/${ tenantFreeImageId }`);
+    return this.httpClient.delete<any[]>(`@te/free-images/${ tenantFreeImageId }`);
   }
 }

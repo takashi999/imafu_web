@@ -9,7 +9,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 })
 export class DashboardImageComponent implements OnInit, OnDestroy {
 
-  @Output() changeFile: EventEmitter<File> = new EventEmitter();
+  @Output() changeFile: EventEmitter<File | null> = new EventEmitter();
   rawFileUrl: string | null = null;
   fileUrl: SafeResourceUrl | null = null;
 
@@ -32,8 +32,9 @@ export class DashboardImageComponent implements OnInit, OnDestroy {
   onChangeFile(files: FileList | null) {
     const file = files?.item(0) ?? null;
 
+    this.changeFile.emit(file);
+
     if (file !== null) {
-      this.changeFile.emit(file);
       this.setFileUrlByFile(file);
     } else {
       this.setFileUrl(null);

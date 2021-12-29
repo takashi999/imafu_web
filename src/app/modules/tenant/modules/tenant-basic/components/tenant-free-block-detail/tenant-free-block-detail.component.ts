@@ -38,6 +38,7 @@ export class TenantFreeBlockDetailComponent implements OnInit, OnDestroy, AfterV
     editable_text_type_id: new FormControl('', []),
     content: new FormControl('', [ maxLength100000Validator ]),
     note: new FormControl('', [ maxLength500Validator ]),
+    keep_image: new FormControl(true),
   });
   id$ = this.activatedRoute.paramMap.pipe(map(m => parseInt(m.get('freeBlockId') ?? '', 10)));
   detail$ = new Subject<any>();
@@ -116,7 +117,7 @@ export class TenantFreeBlockDetailComponent implements OnInit, OnDestroy, AfterV
           ];
         }
 
-        if (res.image.file_url) {
+        if (res.image?.file_url) {
           this.defaultFileUrl = res.image.file_url;
         }
       }),
@@ -165,8 +166,13 @@ export class TenantFreeBlockDetailComponent implements OnInit, OnDestroy, AfterV
     );
   }
 
-  onChangeFile(file: File) {
+  onChangeFile(file: File | null) {
     this.file = file;
+    if (this.file === null) {
+      this.fg.patchValue({
+        keep_image: false,
+      });
+    }
   }
 
 }

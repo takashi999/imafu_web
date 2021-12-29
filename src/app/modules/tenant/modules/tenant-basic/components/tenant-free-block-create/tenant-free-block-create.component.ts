@@ -38,6 +38,7 @@ export class TenantFreeBlockCreateComponent implements OnInit, OnDestroy, AfterV
     editable_text_type_id: new FormControl('', []),
     content: new FormControl('', [ maxLength100000Validator ]),
     note: new FormControl('', [ maxLength500Validator ]),
+    keep_image: new FormControl(true),
   });
 
   publishSelects = [
@@ -123,7 +124,7 @@ export class TenantFreeBlockCreateComponent implements OnInit, OnDestroy, AfterV
     );
   }
 
-  onChangeFile(file: File) {
+  onChangeFile(file: File | null) {
     this.file = file;
   }
 
