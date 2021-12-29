@@ -76,6 +76,7 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
     image: new FormControl(null),
     square_image: new FormControl(null),
     official_site_url: new FormControl(''),
+    payment_url: new FormControl(''),
   });
   openTimeCombined = new FormControl([ '', '' ]);
   receptionTimeCombined = new FormControl([ '', '' ]);
