@@ -71,6 +71,9 @@ export class TenantCastComponent implements OnInit, OnDestroy, AfterViewInit {
         label: '公開',
         transform: (v: string | null) => v !== null ? '公開' : '非公開',
       },
+      {
+        key: 'delete',
+      },
     ];
   }
 
@@ -98,6 +101,14 @@ export class TenantCastComponent implements OnInit, OnDestroy, AfterViewInit {
             });
           }
         }),
+    );
+  }
+
+  onDelete(data: TenantCast) {
+    this.s.add(
+      this.tenantCastService.delete(data.id).subscribe(res => {
+        this.list$.next(res);
+      }),
     );
   }
 }

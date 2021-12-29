@@ -5,7 +5,7 @@
       <div *ngFor="let item of list$ | async" class="cast">
         <h3>{{ item.cast.display_name }}</h3>
         <div class="image">
-          <img [src]="item.cast.images[0]?.file_url" alt="">
+          <img [src]="item.cast.first_image_url" alt="">
         </div>
         <p class="available-time">{{ getAvailableTime(item) }}</p>
         <ng-container *ngIf="item.stand_by_status !== null">
