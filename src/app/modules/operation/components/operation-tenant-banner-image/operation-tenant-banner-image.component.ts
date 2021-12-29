@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  forwardRef,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { filter, first, map } from 'rxjs/operators';
@@ -6,7 +14,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { FreeBannerImageCastLinkTypes, FreeBannerImageTenantLinkTypes } from 'src/app/services/tenant/api/responses';
 import { OperationMasterService } from 'src/app/services/operation/api/operation-master.service';
 import {
-  OperationTenant,
+  OperationTenantBannerImageBase,
   OperationTenantCast,
   OperationTenantForeignLink,
   OperationTenantFreeGallery,
@@ -69,12 +77,12 @@ export class OperationTenantBannerImageComponent implements OnInit, OnDestroy, C
 
   tenantLinkTypesSelects$ = this.tenantLinkTypes$
     .pipe(
-      map(res => res?.map(r => ({ value: r.id, label: r.display_name })) ?? null),
+      map(res => res?.map(r => ({ value: r.id.toString(10), label: r.display_name })) ?? null),
     );
-  castsSelects: { value: number; label: string }[] = [];
-  galleriesSelects: { value: number; label: string }[] = [];
-  foreignLinkSelects: { value: number; label: string }[] = [];
-  castLinkTypesSelects: { value: any; label: string; }[] = [];
+  castsSelects: { value: string; label: string }[] = [];
+  galleriesSelects: { value: string; label: string }[] = [];
+  foreignLinkSelects: { value: string; label: string }[] = [];
+  castLinkTypesSelects: { value: string; label: string; }[] = [];
   linkSelects: { value: any; label: string; }[] = [
     {
       value: '',
@@ -99,15 +107,16 @@ export class OperationTenantBannerImageComponent implements OnInit, OnDestroy, C
   constructor(
     private domSanitizer: DomSanitizer,
     private operationMasterService: OperationMasterService,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {
   }
 
   @Input() set foreignLinks(val: OperationTenantForeignLink[] | null | undefined) {
-    this.foreignLinkSelects = val?.map(r => ({ value: r.id, label: r.link_address })) ?? [];
+    this.foreignLinkSelects = val?.map(r => ({ value: r.id.toString(10), label: r.link_address })) ?? [];
   }
 
   @Input() set galleries(val: OperationTenantFreeGallery[] | null | undefined) {
-    this.galleriesSelects = val?.map(r => ({ value: r.id, label: r.title })) ?? [];
+    this.galleriesSelects = val?.map(r => ({ value: r.id.toString(10), label: r.title })) ?? [];
   }
 
   get casts() {
@@ -115,7 +124,9 @@ export class OperationTenantBannerImageComponent implements OnInit, OnDestroy, C
   }
 
   @Input() set casts(val: OperationTenantCast[] | null | undefined) {
-    this.castsSelects = val?.map(r => ({ value: r.id, label: r.display_name })) ?? [];
+    this._casts = val ?? [];
+    this.castsSelects = val?.map(r => ({ value: r.id.toString(10), label: r.display_name })) ?? [];
+    this.checkLinkTypeEnabled(this.fg.value);
   }
 
   onChange = (v: any) => {
@@ -168,17 +179,28 @@ export class OperationTenantBannerImageComponent implements OnInit, OnDestroy, C
     this.disabled = isDisabled;
   }
 
-  writeValue(obj: undefined | null | OperationTenant['banner_images'][number]): void {
+  writeValue(obj: undefined | null | OperationTenantBannerImageBase & {
+    keep_image: boolean;
+    image: null;
+    cast_id?: string;
+    cast_link_type_id?: string;
+    tenant_link_type_id?: string;
+    tenant_free_gallery_id?: string;
+    foreign_link_id?: string;
+  }): void {
     this.fileUrl = obj?.file_url ?? null;
     this.id = obj?.id ?? null;
     this.keepImage = typeof obj?.file_url !== undefined;
 
+    console.log(obj);
+
     this.fg.patchValue(obj ?? {});
-    this.linkForm.setValue(typeof obj?.tenant_banner_image_tenant_link?.id !== 'undefined' ?
+    this.linkForm.setValue(typeof obj?.tenant_link_type_id !== 'undefined' ?
       'tenant' :
-      typeof obj?.tenant_banner_image_cast_link?.tenant_cast_id !== 'undefined' ?
+      typeof obj?.cast_id !== 'undefined' ?
         'cast' :
         '', { emitEvent: false });
+    this.checkLinkTypeEnabled(this.fg.value);
   }
 
   onChangeFile(file: File | null) {
@@ -216,14 +238,14 @@ export class OperationTenantBannerImageComponent implements OnInit, OnDestroy, C
       this.castLinkTypes$.pipe(filter(v => v !== null), first())
         .pipe(
           map((types) => {
-            const normalSelects = types?.map(t => ({ value: t.id, label: t.display_name })) ?? [];
+            const normalSelects = types?.map(t => ({ value: t.id.toString(10), label: t.display_name })) ?? [];
             const withoutPhotoDiary = types?.filter(t => t.type_id !== 'photo_diary').map(t => ({
-              value: t.id,
+              value: t.id.toString(10),
               label: t.display_name,
             })) ?? [];
 
             if (value.cast_id !== '') {
-              const cast = this.casts?.find(c => c.id === value.cast_id);
+              const cast = this.casts?.find(c => c.id === parseInt(value.cast_id, 10));
               if (cast?.is_use_photo_diary ?? false) {
                 return normalSelects;
               }
@@ -233,7 +255,10 @@ export class OperationTenantBannerImageComponent implements OnInit, OnDestroy, C
             return [];
           }),
         )
-        .subscribe(selects => this.castLinkTypesSelects = selects),
+        .subscribe(selects => {
+          this.castLinkTypesSelects = selects;
+          this.changeDetectorRef.markForCheck();
+        }),
     );
 
     this.s.add(
@@ -243,11 +268,13 @@ export class OperationTenantBannerImageComponent implements OnInit, OnDestroy, C
           first(),
         )
         .subscribe(linkTypes => {
-          const typeId = linkTypes?.find(t => t.id === value.tenant_link_type_id)?.type_id ?? '';
+          const typeId = linkTypes?.find(t => t.id === parseInt(value.tenant_link_type_id, 10))?.type_id ?? '';
 
           this.castLinkTypeEnabled = value.cast_id !== '' && value.cast_id !== null;
           this.freeGalleryEnabled = typeId === 'gallery';
           this.foreignLinkEnabled = typeId === 'foreign_link';
+
+          this.changeDetectorRef.markForCheck();
         }),
     );
   }

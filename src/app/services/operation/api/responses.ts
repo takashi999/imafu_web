@@ -114,42 +114,88 @@ export interface OperationTenant {
   shop_news_rate_limit_per_date: number;
   is_suspend: number;
   tenant_support_regions: { id: number; display_name: string }[];
-  banner_images: {
+  banner_images: OperationTenantBannerImage[];
+  square_banner_images: OperationTenantSquareBannerImage[];
+}
+
+export interface OperationTenantBannerImageBase {
+  created_at: string;
+  file_path: {
     created_at: string;
-    file_path: {
-      created_at: string;
-      deleted_at: string | null;
-      id: number;
-      updated_at: string;
-    };
-    file_path_id: number;
-    file_url: string;
+    deleted_at: string | null;
     id: number;
-    sequence: number;
-    tenant_id: number;
     updated_at: string;
-    tenant_banner_image_cast_link: {
-      id: number;
-      tenant_banner_image_id: number;
-      tenant_cast_id: number;
-      tenant_free_banner_cast_link_type_id: number;
-    } | null;
-    tenant_banner_image_tenant_link: {
-      id: number;
-      tenant_banner_image_id: number;
-      tenant_free_banner_image_tenant_link_type_id: number;
-    } | null;
-    tenant_banner_image_free_gallery_link: {
-      id: number;
-      tenant_banner_image_tenant_link_id: number;
-      tenant_free_gallery_id: number;
-    } | null;
-    tenant_banner_image_foreign_link: {
-      id: number;
-      tenant_banner_image_tenant_link_id: number;
-      tenant_foreign_link_id: number;
-    } | null;
-  }[];
+  };
+  file_path_id: number;
+  file_url: string;
+  id: number;
+  sequence: number;
+  tenant_id: number;
+  updated_at: string;
+}
+
+export interface OperationTenantBannerImage extends OperationTenantBannerImageBase {
+  tenant_banner_image_cast_link: OperationTenantBannerImageCastLink | null;
+  tenant_banner_image_tenant_link: OperationTenantBannerImageTenantLink | null;
+  tenant_banner_image_free_gallery_link: OperationTenantBannerImageFreeGalleryLink | null;
+  tenant_banner_image_foreign_link: OperationTenantBannerImageForeignLink | null;
+}
+
+export interface OperationTenantBannerImageCastLink {
+  id: number;
+  tenant_banner_image_id: number;
+  tenant_cast_id: number;
+  tenant_free_banner_image_cast_link_type_id: number;
+}
+
+export interface OperationTenantBannerImageTenantLink {
+  id: number;
+  tenant_banner_image_id: number;
+  tenant_free_banner_image_tenant_link_type_id: number;
+}
+
+export interface OperationTenantBannerImageFreeGalleryLink {
+  id: number;
+  tenant_banner_image_tenant_link_id: number;
+  tenant_free_gallery_id: number;
+}
+
+export interface OperationTenantBannerImageForeignLink {
+  id: number;
+  tenant_banner_image_tenant_link_id: number;
+  tenant_foreign_link_id: number;
+}
+
+export interface OperationTenantSquareBannerImage extends OperationTenantBannerImageBase {
+  tenant_square_banner_image_cast_link: OperationTenantSquareBannerImageCastLink | null;
+  tenant_square_banner_image_tenant_link: OperationTenantSquareBannerImageTenantLink | null;
+  tenant_square_banner_image_free_gallery_link: OperationTenantSquareBannerImageFreeGalleryLink | null;
+  tenant_square_banner_image_foreign_link: OperationTenantSquareBannerImageForeignLink | null;
+}
+
+export interface OperationTenantSquareBannerImageCastLink {
+  id: number;
+  tenant_square_banner_image_id: number;
+  tenant_cast_id: number;
+  tenant_free_banner_image_cast_link_type_id: number;
+}
+
+export interface OperationTenantSquareBannerImageTenantLink {
+  id: number;
+  tenant_square_banner_image_id: number;
+  tenant_free_banner_image_tenant_link_type_id: number;
+}
+
+export interface OperationTenantSquareBannerImageFreeGalleryLink {
+  id: number;
+  tenant_square_banner_image_tenant_link_id: number;
+  tenant_free_gallery_id: number;
+}
+
+export interface OperationTenantSquareBannerImageForeignLink {
+  id: number;
+  tenant_square_banner_image_tenant_link_id: number;
+  tenant_foreign_link_id: number;
 }
 
 export interface OperationTenantGroup {
@@ -316,23 +362,23 @@ export interface SiteNewsResponse {
 }
 
 export interface PaginatedResponse<T> {
-  data: T[]
-  current_page: number
-  last_page: number
-  first_page_url: string
-  prev_page_url: any
-  next_page_url: any
-  last_page_url: string
-  links: PaginatedResponseLink[]
-  per_page: number
-  path: string
-  from: any
-  to: any
-  total: number
+  data: T[];
+  current_page: number;
+  last_page: number;
+  first_page_url: string;
+  prev_page_url: any;
+  next_page_url: any;
+  last_page_url: string;
+  links: PaginatedResponseLink[];
+  per_page: number;
+  path: string;
+  from: any;
+  to: any;
+  total: number;
 }
 
 export interface PaginatedResponseLink {
-  url?: string
-  label: string
-  active: boolean
+  url?: string;
+  label: string;
+  active: boolean;
 }

@@ -74,6 +74,7 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
     use_timetable: new FormControl('0', [ Validators.required ]),
     enable_edit_timetable_on_cast: new FormControl('1', [ Validators.required ]),
     image: new FormControl(null),
+    square_image: new FormControl(null),
     official_site_url: new FormControl(''),
   });
   openTimeCombined = new FormControl([ '', '' ]);
@@ -210,6 +211,7 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
             .subscribe(res => {
               this.detail = res;
               const image = this.detail.banner_images.find(i => i.sequence === 1);
+              const squareImage = this.detail.square_banner_images.find(i => i.sequence === 1);
               this.fg.patchValue({
                 ...this.detail,
                 tel: this.detail.tels?.map(t => t.tel),
@@ -237,11 +239,21 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
                   ...image,
                   keep_image: typeof image?.file_path !== 'undefined',
                   image: null,
-                  cast_id: image?.tenant_banner_image_cast_link?.tenant_cast_id,
-                  cast_link_type_id: image?.tenant_banner_image_cast_link?.tenant_free_banner_cast_link_type_id,
-                  tenant_link_type_id: image?.tenant_banner_image_tenant_link?.tenant_free_banner_image_tenant_link_type_id,
-                  tenant_free_gallery_id: image?.tenant_banner_image_free_gallery_link?.tenant_free_gallery_id,
-                  foreign_link_id: image?.tenant_banner_image_foreign_link?.tenant_foreign_link_id,
+                  cast_id: image?.tenant_banner_image_cast_link?.tenant_cast_id?.toString(10),
+                  cast_link_type_id: image?.tenant_banner_image_cast_link?.tenant_free_banner_image_cast_link_type_id?.toString(10),
+                  tenant_link_type_id: image?.tenant_banner_image_tenant_link?.tenant_free_banner_image_tenant_link_type_id?.toString(10),
+                  tenant_free_gallery_id: image?.tenant_banner_image_free_gallery_link?.tenant_free_gallery_id?.toString(10),
+                  foreign_link_id: image?.tenant_banner_image_foreign_link?.tenant_foreign_link_id?.toString(10),
+                },
+                square_image: {
+                  ...squareImage,
+                  keep_image: typeof squareImage?.file_path !== 'undefined',
+                  image: null,
+                  cast_id: squareImage?.tenant_square_banner_image_cast_link?.tenant_cast_id?.toString(10),
+                  cast_link_type_id: squareImage?.tenant_square_banner_image_cast_link?.tenant_free_banner_image_cast_link_type_id?.toString(10),
+                  tenant_link_type_id: squareImage?.tenant_square_banner_image_tenant_link?.tenant_free_banner_image_tenant_link_type_id?.toString(10),
+                  tenant_free_gallery_id: squareImage?.tenant_square_banner_image_free_gallery_link?.tenant_free_gallery_id?.toString(10),
+                  foreign_link_id: squareImage?.tenant_square_banner_image_foreign_link?.tenant_foreign_link_id?.toString(10),
                 },
               }, { emitEvent: false });
 
