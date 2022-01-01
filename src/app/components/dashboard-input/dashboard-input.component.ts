@@ -18,7 +18,8 @@ import {
   maxLength16Validator,
   maxLength180Validator,
   maxLength200Validator,
-  maxLength20Validator, maxLength300Validator,
+  maxLength20Validator,
+  maxLength300Validator,
   maxLength30Validator,
   maxLength35Validator,
   maxLength40Validator,
@@ -45,7 +46,6 @@ export class DashboardInputComponent implements OnInit, OnDestroy, ControlValueA
   hidePassword = true;
 
   s = new Subscription();
-
   fc = new FormControl('');
 
   min: number | null = null;
@@ -58,6 +58,14 @@ export class DashboardInputComponent implements OnInit, OnDestroy, ControlValueA
     if (this.ngControl !== null) {
       this.ngControl.valueAccessor = this;
     }
+  }
+
+  @Input() set value(val: string | null) {
+    this.fc.setValue(val);
+  }
+
+  @Input() set disabled(val: boolean) {
+    this.setDisabledState(val);
   }
 
   get hintLabel(): string {

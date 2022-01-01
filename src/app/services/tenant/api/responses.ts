@@ -153,7 +153,11 @@ export interface TenantCast {
   sm_barometer: number;
   message: string;
   is_use_photo_diary: boolean;
+  photo_diary_key: string | null;
+  photo_diary_mail_address: string | null;
   is_use_video_diary: boolean;
+  video_diary_key: string | null;
+  video_diary_mail_address: string | null;
   is_use_fan_letter: boolean;
   is_recommend: boolean;
   created_at: string;

@@ -204,6 +204,10 @@
           name="is_use_photo_diary"
         >写メール日記
         </app-dashboard-select>
+        <ng-container *ngIf="detail.photo_diary_mail_address">
+          <mat-label>写メール日記投稿用メールアドレス</mat-label>
+          <p>{{ detail.photo_diary_mail_address }}</p>
+        </ng-container>
         <app-dashboard-input
           formControlName="login_id"
           name="login_id"
