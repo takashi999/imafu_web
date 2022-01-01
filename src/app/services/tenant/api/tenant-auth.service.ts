@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 import { TokenService } from 'src/app/services/token.service';
 import { Observable, Subject } from 'rxjs';
 import { TenantUser } from 'src/app/services/tenant/api/responses';
+import { SILENT_SNACK } from 'src/app/interceptors/api.interceptor';
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +39,7 @@ export class TenantAuthService {
   login(body: { login_id: string; password: string; }) {
     return this.httpClient.post('@te/login', body, {
       responseType: 'text',
+      context: new HttpContext().set(SILENT_SNACK, true),
     })
       .pipe(
         tap(x => {

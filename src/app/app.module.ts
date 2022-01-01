@@ -4,17 +4,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './components/app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { APIInterceptor, LoadingSpinnerComponent } from 'src/app/interceptors/api.interceptor';
+import { APIErrorComponent, APIInterceptor, LoadingSpinnerComponent } from 'src/app/interceptors/api.interceptor';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonComponentsModule } from 'src/app/components/common-components.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
     LoadingSpinnerComponent,
+    APIErrorComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -26,6 +28,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatDialogModule,
     MatNativeDateModule,
     MatSnackBarModule,
+    MatButtonModule,
   ],
   providers: [
     {

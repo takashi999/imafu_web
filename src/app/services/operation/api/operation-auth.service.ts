@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 import { TokenService } from 'src/app/services/token.service';
 import { Observable, Subject } from 'rxjs';
+import { SILENT_SNACK } from 'src/app/interceptors/api.interceptor';
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +38,7 @@ export class OperationAuthService {
   login(body: { login_id: string; password: string; }) {
     return this.httpClient.post('@op/login', body, {
       responseType: 'text',
+      context: new HttpContext().set(SILENT_SNACK, true),
     })
       .pipe(
         tap(x => {
