@@ -324,7 +324,8 @@ export class OperationTenantDetailComponent implements OnInit, OnDestroy {
     this.s.add(
       this.operationTenantService.loginAsOperator(data.id)
         .subscribe(() => {
-          this.router.navigate([ '/', 'tenant' ]);
+          const tree = this.router.createUrlTree([ '/', 'tenant' ]);
+          window.open(tree.toString(), '_blank');
         }),
     );
   }
