@@ -16,7 +16,7 @@ import {
   maxLength10Validator,
   maxLength15Validator,
   maxLength16Validator,
-  maxLength180Validator,
+  maxLength180Validator, maxLength20000Validator,
   maxLength200Validator,
   maxLength20Validator,
   maxLength300Validator,
@@ -111,6 +111,7 @@ export class DashboardInputComponent implements OnInit, OnDestroy, ControlValueA
       { validator: maxLength300Validator, num: 300 },
       { validator: maxLength500Validator, num: 500 },
       { validator: maxLength1000Validator, num: 1000 },
+      { validator: maxLength20000Validator, num: 20000 },
       { validator: maxLength100000Validator, num: 100000 },
     ].forEach(v => {
       if (this.ngControl?.control?.hasValidator(v.validator)) {

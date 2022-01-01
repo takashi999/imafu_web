@@ -1,0 +1,45 @@
+<ng-container *ngIf="view$ | async as view">
+  <app-dashboard-header prevRouterLink="../">写メ日記: {{ view.detail?.title }}</app-dashboard-header>
+  <mat-card>
+    <form [formGroup]="fg" (ngSubmit)="onSub(view.detail)">
+      <mat-card-content>
+        <app-dashboard-input
+          formControlName="title"
+          name="title"
+        >
+          タイトル
+        </app-dashboard-input>
+
+        <app-dashboard-select
+          [selects]="textTypeSelects"
+          formControlName="editable_text_type_id"
+          label="表示形式"
+          name="editable_text_type_id"
+        >
+          表示形式
+        </app-dashboard-select>
+
+        <app-dashboard-textarea
+          *ngIf="selectedTextType === 'plain'"
+          formControlName="content"
+          name="content"
+        >
+          本文
+        </app-dashboard-textarea>
+
+        <app-dashboard-editor
+          *ngIf="selectedTextType === 'html'"
+          formControlName="content"
+        >本文
+        </app-dashboard-editor>
+      </mat-card-content>
+
+      <div class="images">
+        <img *ngFor="let item of imageUrls" [src]="item" alt="">
+      </div>
+      <mat-card-actions align="end">
+        <button mat-flat-button color="primary">更新</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</ng-container>

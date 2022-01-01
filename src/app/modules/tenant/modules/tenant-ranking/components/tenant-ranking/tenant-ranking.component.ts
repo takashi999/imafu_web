@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { of, Subject, Subscription } from 'rxjs';
 import { TableListColumnType } from 'src/app/components/table-list/table-list.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TenantRankingService } from 'src/app/services/tenant/api/tenant-ranking.service';

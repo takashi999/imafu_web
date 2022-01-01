@@ -63,6 +63,10 @@ const routes: Routes = [
             path: 'layout',
             loadChildren: () => import('./modules/tenant-layout/tenant-layout.module').then(m => m.TenantLayoutModule),
           },
+          {
+            path: 'photo-diary',
+            loadChildren: () => import('./modules/tenant-photo-diary/tenant-photo-diary.module').then(m => m.TenantPhotoDiaryModule),
+          },
         ],
       },
       {

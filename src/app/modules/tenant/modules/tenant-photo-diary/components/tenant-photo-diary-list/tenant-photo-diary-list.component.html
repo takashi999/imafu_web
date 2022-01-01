@@ -1,0 +1,22 @@
+<app-dashboard-header>写メ日記管理</app-dashboard-header>
+<ng-container *ngIf="list$ | async as list">
+  <ng-template #paginator>
+    <mat-paginator
+      (page)="onChangePage($event)"
+      [length]="list.total"
+      [pageSize]="list.per_page"
+      aria-label="Select page"
+      color="primary"
+    ></mat-paginator>
+  </ng-template>
+
+  <ng-container *ngTemplateOutlet="paginator"></ng-container>
+  <app-table-list
+    [dataSource]="list.data"
+    [displayedColumns]="displayedColumns"
+    (clickRow)="onClickRow($event)"
+    (delete)="onDelete($event)"
+    [getNameFn]="getNameFn"
+  ></app-table-list>
+  <ng-container *ngTemplateOutlet="paginator"></ng-container>
+</ng-container>

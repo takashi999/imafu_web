@@ -323,3 +323,37 @@ export interface TenantLayoutRankingRelation {
   created_at: string;
   updated_at: string;
 }
+
+export interface TenantCastPhotoDiaryList {
+  current_page: number;
+  data: TenantCastPhotoDiary[];
+  first_page_url: string | null;
+  from: number;
+  last_page: number;
+  last_page_url: string | null;
+  next_page_url: string | null;
+  path: string;
+  per_page: number;
+  prev_page_url: string | null;
+  to: number;
+  total: number;
+}
+
+export interface TenantCastPhotoDiary {
+  id: number;
+  tenant_id: number;
+  tenant_cast_id: number;
+  title: string;
+  post_at: string;
+  editable_text_type_id: number;
+  content: string;
+  images?: {
+    id: number;
+    tenant_cast_photo_diary_id: number;
+    file_path_id: number;
+    file_url: string;
+  }[];
+  cast?: TenantCast;
+  created_at: string;
+  updated_at: string;
+}

@@ -55,3 +55,17 @@ export interface TenantModifyTenantLayoutMoveBannerRequest {
 export interface TenantCastRecommendRequest {
   recommend: boolean;
 }
+
+export interface ModifyTenantCastPhotoDiaryRequest {
+  title: string;
+  editable_text_type_id: number;
+  content: string | null;
+  images: (
+    {
+      id: number;
+    } |
+    {
+      image: File;
+    }
+    )[];
+}
