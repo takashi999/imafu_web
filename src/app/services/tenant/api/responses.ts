@@ -357,3 +357,88 @@ export interface TenantCastPhotoDiary {
   created_at: string;
   updated_at: string;
 }
+
+export interface TenantFreeBanner {
+  id: number;
+  tenant_id: number;
+  publish_at: string | null;
+  title: string;
+  tenant_free_banner_display_space_id: number;
+  is_following_scroll: number;
+  created_at: string;
+  updated_at: string;
+  sequence: number;
+  images: TenantFreeBannerImage[];
+}
+
+export interface TenantFreeBannerImage {
+  id: number;
+  tenant_free_banner_id: number;
+  comment: string;
+  file_path_id: number;
+  created_at: string;
+  updated_at: string;
+  file_url: string;
+  tenant_link: TenantFreeBannerLink | null;
+  cast_link: TenantFreeBannerCastLink | null;
+  tenant_free_banner_image_free_gallery_link: TenantFreeBannerFreeGalleryLink | null;
+  tenant_free_banner_image_foreign_link: TenantFreeBannerForeignLink | null;
+  file_path: {
+    id: number;
+    file_url: string;
+    deleted_at: string | null;
+    created_at: string;
+    updated_at: string;
+  };
+}
+
+export interface TenantFreeBannerLink {
+  id: number;
+  tenant_free_banner_image_id: number;
+  tenant_free_banner_image_tenant_link_type_id: number;
+  created_at: string;
+  updated_at: string;
+  free_gallery_link: TenantFreeBannerFreeGalleryLink | null;
+  foreign_link: TenantFreeBannerForeignLink | null;
+  tenant_free_banner_image_tenant_link_type: TenantFreeBannerImageTenantLinkType;
+}
+
+export interface TenantFreeBannerImageTenantLinkType {
+  id: number;
+  type_id: string;
+  display_name: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TenantFreeBannerCastLink {
+  id: number;
+  tenant_free_banner_image_id: number;
+  tenant_cast_id: number;
+  tenant_free_banner_image_cast_link_type: {
+    id: number;
+    type_id: string;
+    display_name: string;
+  };
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TenantFreeBannerFreeGalleryLink {
+  id: number;
+  tenant_free_banner_image_tenant_link_id: number;
+  tenant_free_gallery_id: number;
+  created_at: string;
+  updated_at: string;
+}
+
+
+export interface TenantFreeBannerForeignLink {
+  id: number;
+  tenant_free_banner_image_tenant_link_id: number;
+  tenant_foreign_link_id: number;
+  created_at: string;
+  updated_at: string;
+}
+
+

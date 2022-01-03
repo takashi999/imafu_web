@@ -192,8 +192,6 @@ export class OperationTenantBannerImageComponent implements OnInit, OnDestroy, C
     this.id = obj?.id ?? null;
     this.keepImage = typeof obj?.file_url !== undefined;
 
-    console.log(obj);
-
     this.fg.patchValue(obj ?? {});
     this.linkForm.setValue(typeof obj?.tenant_link_type_id !== 'undefined' ?
       'tenant' :
