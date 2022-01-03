@@ -7,7 +7,7 @@
     cdkDropList
     mat-table
   >
-    <ng-container *ngIf="sortChangeable" [matColumnDef]="'sort'">
+    <ng-container matColumnDef="sort">
       <mat-header-cell *matHeaderCellDef mat-header-cell></mat-header-cell>
       <mat-cell *matCellDef="let element" mat-cell>
         <button [cdkDragData]="element" cdkDrag cdkDragHandle cdkDragRootElement="mat-row" mat-icon-button>

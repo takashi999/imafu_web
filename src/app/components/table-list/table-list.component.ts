@@ -60,7 +60,7 @@ export class TableListComponent<T, TE> implements OnInit, OnDestroy {
 
   get displayedColumnKeys() {
     return [
-      ...this.changeSort ?
+      ...this.sortChangeable ?
         [ 'sort' ] :
         [],
       ...this.displayedColumns.map(c => c.key),
