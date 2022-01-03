@@ -1,5 +1,20 @@
 <div class="mat-elevation-z8">
-  <mat-table [dataSource]="dataSource" mat-table>
+  <mat-table
+    [dataSource]="dataSource"
+    mat-table
+    cdkDropList
+    (cdkDropListDropped)="onDrop($event)"
+    [cdkDropListDisabled]="!sortChangeable"
+    [class.sortable]="sortChangeable"
+  >
+    <ng-container *ngIf="sortChangeable" [matColumnDef]="'sort'">
+      <mat-header-cell *matHeaderCellDef mat-header-cell></mat-header-cell>
+      <mat-cell *matCellDef="let element" mat-cell>
+        <button mat-icon-button cdkDragHandle cdkDrag cdkDragRootElement="mat-row" [cdkDragData]="element">
+          <mat-icon>drag_handle</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
     <ng-container *ngFor="let col of displayedColumnsExcludedDelete" [matColumnDef]="'' + col.key">
       <mat-header-cell *matHeaderCellDef mat-header-cell>{{ col.label }}</mat-header-cell>
       <mat-cell *matCellDef="let element"

@@ -1,0 +1,11 @@
+app-table-list {
+  ::ng-deep {
+    .mat-column-publish_at {
+      flex: 0 0 45px;
+    }
+
+    .mat-column-recommend {
+      flex: 0 0 50px;
+    }
+  }
+}

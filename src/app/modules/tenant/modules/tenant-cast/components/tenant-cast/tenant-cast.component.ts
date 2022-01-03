@@ -14,6 +14,7 @@ import { TenantCastService } from 'src/app/services/tenant/api/tenant-cast.servi
 import { TenantCast } from 'src/app/services/tenant/api/responses';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-tenant-cast',
@@ -107,6 +108,20 @@ export class TenantCastComponent implements OnInit, OnDestroy, AfterViewInit {
   onDelete(data: TenantCast) {
     this.s.add(
       this.tenantCastService.delete(data.id).subscribe(res => {
+        this.list$.next(res);
+      }),
+    );
+  }
+
+  onSortChange(e: CdkDragDrop<TenantCast, TenantCast, TenantCast>, list: TenantCast[] | null) {
+    const sortList = [ ...list ?? [] ];
+    sortList.splice(e.previousIndex, 1);
+    sortList.splice(e.currentIndex, 0, e.item.data);
+
+    this.list$.next(sortList);
+
+    this.s.add(
+      this.tenantCastService.changeSort({ casts: sortList.map(c => c.id) }).subscribe(res => {
         this.list$.next(res);
       }),
     );

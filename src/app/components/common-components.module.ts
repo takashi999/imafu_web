@@ -29,6 +29,7 @@ import { DashboardImageComponent } from './dashboard-image/dashboard-image.compo
 import { DashboardImageMultipleComponent } from './dashboard-image-multiple/dashboard-image-multiple.component';
 import { DashboardSearchComponent } from './dashboard-search/dashboard-search.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -71,6 +72,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatRadioModule,
         MatDatepickerModule,
         MatTooltipModule,
+        DragDropModule,
     ],
   exports: [
     AppComponent,

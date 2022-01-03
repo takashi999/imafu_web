@@ -14,6 +14,7 @@ import { Observable, Subscription } from 'rxjs';
 import { OperationConfirmService } from 'src/app/services/operation/operation-confirm.service';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 type TableListColumnBaseType<T, K extends keyof T | string = keyof T | string> = {
   key: K;
@@ -40,8 +41,11 @@ export class TableListComponent<T, TE> implements OnInit, OnDestroy {
 
   @Input() dataSource: readonly T[] | DataSource<T> | Observable<readonly T[]> = [];
   @Input() displayedColumns: TableListColumnType<T, TE>[] = [];
+  @Input() sortChangeable = false;
+
   @Output() delete: EventEmitter<T> = new EventEmitter<T>();
   @Output() clickRow: EventEmitter<T> = new EventEmitter<T>();
+  @Output() changeSort = new EventEmitter<CdkDragDrop<T, T, T>>();
 
   s = new Subscription();
   rippleDisable = false;
@@ -55,7 +59,12 @@ export class TableListComponent<T, TE> implements OnInit, OnDestroy {
   }
 
   get displayedColumnKeys() {
-    return this.displayedColumns.map(c => c.key);
+    return [
+      ...this.changeSort ?
+        [ 'sort' ] :
+        [],
+      ...this.displayedColumns.map(c => c.key),
+    ];
   }
 
   get displayedColumnsExcludedDelete() {
@@ -137,6 +146,12 @@ export class TableListComponent<T, TE> implements OnInit, OnDestroy {
   onHidePreviewModal() {
     if (this.imagePreviewOverlayRef?.hasAttached()) {
       this.imagePreviewOverlayRef?.detach();
+    }
+  }
+
+  onDrop(e: CdkDragDrop<T, T, T>) {
+    if (e.previousIndex !== e.currentIndex) {
+      this.changeSort.emit(e);
     }
   }
 }
