@@ -61,7 +61,7 @@ import {
   OperationSiteNewsDetailComponent,
 } from './components/operation-site-news-detail/operation-site-news-detail.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { CdkScrollableModule, ScrollingModule } from '@angular/cdk/scrolling';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
 @NgModule({
