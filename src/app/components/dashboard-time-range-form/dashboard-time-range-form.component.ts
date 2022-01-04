@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  forwardRef,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { merge, Subscription } from 'rxjs';
 
@@ -22,10 +30,10 @@ export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, Contr
   @Input() minuteStep = 60;
   @Input() insertLast = false;
 
-  startTimeHour = new FormControl('');
-  startTimeMinute = new FormControl('');
-  endTimeHour = new FormControl('');
-  endTimeMinute = new FormControl('');
+  startTimeHour = new FormControl('06');
+  startTimeMinute = new FormControl('00');
+  endTimeHour = new FormControl('20');
+  endTimeMinute = new FormControl('00');
   open24h = new FormControl(false);
 
   s = new Subscription();
@@ -37,7 +45,9 @@ export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, Contr
   startMinuteOptions: string[] = [];
   endMinuteOptions: string[] = [];
 
-  constructor() {
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+  ) {
   }
 
   * getTimes(startHour: number, maxHour: number): Generator<TimeOption> {
@@ -102,6 +112,8 @@ export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, Contr
           } else {
             this.setFromOpenAndEnd();
           }
+
+          this.selectsAdjust();
         }),
     );
 
@@ -113,25 +125,7 @@ export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, Contr
         this.endTimeMinute.valueChanges,
       )
         .subscribe(() => {
-          const isSelectedLast = this.endTimeHour.value === '';
-
-          this.selectsInitialize();
-
-          if (this.insertLast) {
-            this.endTimeMinute[isSelectedLast ? 'disable' : 'enable']({ emitEvent: false });
-          }
-
-          this.startMinuteOptions = this.startTimeOptions.find((v): v is Exclude<typeof v, string> => typeof v !== 'string' && v.hour === this.startTimeHour.value)?.minutes.map(m => m.minute) ?? [];
-          this.endMinuteOptions = this.endTimeOptions.find((v): v is Exclude<typeof v, string> => typeof v !== 'string' && v.hour === this.endTimeHour.value)?.minutes.map(m => m.minute) ?? [];
-
-          if (this.startMinuteOptions.every(o => o !== this.startTimeMinute.value)) {
-            this.startTimeMinute.setValue(this.startMinuteOptions[0] ?? '', { emitEvent: false });
-          }
-          if (this.endMinuteOptions.every(o => o !== this.endTimeMinute.value)) {
-            this.endTimeMinute.setValue(this.endMinuteOptions[0] ?? '', { emitEvent: false });
-          }
-
-          this.setFromOpenAndEnd();
+          this.selectsAdjust();
         }),
     );
   }
@@ -160,15 +154,11 @@ export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, Contr
       this.startTimeMinute.setValue(startMinute, { emitEvent: false });
       this.endTimeHour.setValue(endHour ?? '', { emitEvent: false });
       this.endTimeMinute.setValue(endMinute ?? '', { emitEvent: false });
-
-      if (endHour === '' && this.insertLast) {
-        this.endTimeMinute.disable({ emitEvent: false });
-      }
     } else {
       this.allTimeControlsAction(control => control.disable({ emitEvent: false }), true);
     }
 
-    this.allTimeControlsAction(control => control.updateValueAndValidity());
+    this.selectsAdjust();
   }
 
   setDisabledState(isDisabled: boolean) {
@@ -215,5 +205,27 @@ export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, Contr
     if (!exclude24HControl) {
       action(this.open24h);
     }
+  }
+
+  private selectsAdjust() {
+    const isSelectedLast = this.endTimeHour.value === '' && this.insertLast;
+
+    this.selectsInitialize();
+
+    if (isSelectedLast && this.endTimeMinute.enabled) {
+      this.endTimeMinute.disable({ emitEvent: false });
+    }
+
+    this.startMinuteOptions = this.startTimeOptions.find((v): v is Exclude<typeof v, string> => typeof v !== 'string' && v.hour === this.startTimeHour.value)?.minutes.map(m => m.minute) ?? [];
+    this.endMinuteOptions = this.endTimeOptions.find((v): v is Exclude<typeof v, string> => typeof v !== 'string' && v.hour === this.endTimeHour.value)?.minutes.map(m => m.minute) ?? [];
+
+    if (this.startMinuteOptions.every(o => o !== this.startTimeMinute.value)) {
+      this.startTimeMinute.setValue(this.startMinuteOptions[0] ?? '', { emitEvent: false });
+    }
+    if (this.endMinuteOptions.every(o => o !== this.endTimeMinute.value)) {
+      this.endTimeMinute.setValue(this.endMinuteOptions[0] ?? '', { emitEvent: false });
+    }
+
+    this.setFromOpenAndEnd();
   }
 }
