@@ -33,7 +33,9 @@ import {
   subMonths,
 } from 'date-fns';
 import { MatDialog } from '@angular/material/dialog';
-import { TenantCastScheduleDialogComponent } from 'src/app/modules/tenant/modules/tenant-cast-schedule/components/tenant-cast-schedule-dialog/tenant-cast-schedule-dialog.component';
+import {
+  TenantCastScheduleDialogComponent,
+} from 'src/app/modules/tenant/modules/tenant-cast-schedule/components/tenant-cast-schedule-dialog/tenant-cast-schedule-dialog.component';
 
 type DateScheduleDetail = {
   dateISO: string;
@@ -391,6 +393,8 @@ export class TenantCastScheduleComponent implements OnInit, OnDestroy {
         setting,
         data,
       },
+      width: '600px',
+      maxWidth: '90%',
     });
     this.s.add(
       ref.afterClosed()

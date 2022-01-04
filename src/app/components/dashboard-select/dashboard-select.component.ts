@@ -8,7 +8,7 @@ import {
   Optional,
   Self,
 } from '@angular/core';
-import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NgControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -27,6 +27,8 @@ export class DashboardSelectComponent implements OnInit, OnDestroy, ControlValue
 
   s = new Subscription();
   fc = new FormControl('');
+
+  required = false;
 
   constructor(
     @Optional() @Self() public ngControl: NgControl,
@@ -53,6 +55,8 @@ export class DashboardSelectComponent implements OnInit, OnDestroy, ControlValue
         this.onChange(res);
       }),
     );
+
+    this.required = this.ngControl?.control?.hasValidator(Validators.required) ?? false;
   }
 
   ngOnDestroy() {

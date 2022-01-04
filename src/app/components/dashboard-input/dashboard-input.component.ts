@@ -8,7 +8,7 @@ import {
   Optional,
   Self,
 } from '@angular/core';
-import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NgControl, Validators } from '@angular/forms';
 import {
   maxLength100000Validator,
   maxLength1000Validator,
@@ -16,7 +16,8 @@ import {
   maxLength10Validator,
   maxLength15Validator,
   maxLength16Validator,
-  maxLength180Validator, maxLength20000Validator,
+  maxLength180Validator,
+  maxLength20000Validator,
   maxLength200Validator,
   maxLength20Validator,
   maxLength300Validator,
@@ -50,6 +51,8 @@ export class DashboardInputComponent implements OnInit, OnDestroy, ControlValueA
 
   min: number | null = null;
   max: number | null = null;
+
+  required = false;
 
   constructor(
     @Optional() @Self() public ngControl: NgControl,
@@ -87,6 +90,7 @@ export class DashboardInputComponent implements OnInit, OnDestroy, ControlValueA
   };
 
   ngOnInit(): void {
+    // Min
     [
       { validator: minLength8Validator, num: 8 },
     ].forEach(v => {
@@ -95,6 +99,7 @@ export class DashboardInputComponent implements OnInit, OnDestroy, ControlValueA
       }
     });
 
+    // Max
     [
       { validator: maxLength10Validator, num: 10 },
       { validator: maxLength15Validator, num: 15 },
@@ -118,6 +123,9 @@ export class DashboardInputComponent implements OnInit, OnDestroy, ControlValueA
         this.max = v.num;
       }
     });
+
+    // Required
+    this.required = this.ngControl.control?.hasValidator(Validators.required) ?? false;
 
     this.s.add(
       this.fc.valueChanges.subscribe(res => {

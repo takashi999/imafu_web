@@ -14,16 +14,16 @@
         <app-dashboard-input formControlName="region" name="region" type="text">住所・地域（東部・中部・西部・全域）</app-dashboard-input>
 
         <app-dashboard-time-range-form
-          [minuteStep]="30"
-          [insertLast]="true"
           [formControl]="openTimeCombined"
+          [insertLast]="true"
+          [minuteStep]="15"
           label="営業"
         ></app-dashboard-time-range-form>
 
         <app-dashboard-time-range-form
-          [minuteStep]="30"
-          [insertLast]="true"
           [formControl]="receptionTimeCombined"
+          [insertLast]="true"
+          [minuteStep]="15"
           label="受付"
         ></app-dashboard-time-range-form>
 
@@ -38,10 +38,14 @@
         </app-dashboard-radio>
 
         <ng-container *ngIf="useForm.value === '1'">
-          <app-dashboard-input formControlName="form_email" name="form_email" type="email">書き込み通知先メールアドレス</app-dashboard-input>
+          <app-dashboard-input formControlName="form_email" name="form_email" type="email">書き込み通知先メールアドレス
+          </app-dashboard-input>
         </ng-container>
-        <app-dashboard-input formControlName="regular_services" name="regular_services" type="text">基本サービス</app-dashboard-input>
-        <app-dashboard-input formControlName="regular_service_price" name="regular_service_price" type="number">基本サービス価格</app-dashboard-input>
+        <app-dashboard-input formControlName="regular_services" name="regular_services" type="text">基本サービス
+        </app-dashboard-input>
+        <app-dashboard-input formControlName="regular_service_price" name="regular_service_price" type="number">
+          基本サービス価格
+        </app-dashboard-input>
 
         <mat-grid-list [cols]="5" [rowHeight]="80" formArrayName="services">
           <ng-container *ngFor="let item of serviceControls; let index = index" [formGroupName]="index">

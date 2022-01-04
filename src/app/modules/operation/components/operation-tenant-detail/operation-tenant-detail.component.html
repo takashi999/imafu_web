@@ -1,12 +1,16 @@
 <ng-container *ngIf="detail">
   <app-dashboard-header prevRouterLink="../">店舗編集: {{ detail.name }}</app-dashboard-header>
   <mat-card>
-    <mat-card-actions align="end"><button type="button" mat-flat-button color="primary" (click)="onClickLoginAsOperator(detail)">この店舗のユーザーとしてログインする</button></mat-card-actions>
+    <mat-card-actions align="end">
+      <button (click)="onClickLoginAsOperator(detail)" color="primary" mat-flat-button type="button">
+        この店舗のユーザーとしてログインする
+      </button>
+    </mat-card-actions>
     <form (ngSubmit)="onSub()" [formGroup]="fg">
       <mat-card-content>
         <app-dashboard-select
-          formControlName="group"
           [selects]="groupSelects$ | async"
+          formControlName="group"
           name="group"
         >グループ
         </app-dashboard-select>
@@ -15,19 +19,19 @@
         <app-dashboard-input formControlName="name" name="name" type="text">店舗名</app-dashboard-input>
 
         <app-dashboard-select
-          formControlName="tenant_sector_id"
           [selects]="sectorSelects$ | async"
+          formControlName="tenant_sector_id"
           name="tenant_sector_id"
         >業種
         </app-dashboard-select>
         <app-dashboard-checkbox
-          formControlName="support_regions"
           [selects]="regionSelects$ | async"
+          formControlName="support_regions"
         >派遣可能エリア
         </app-dashboard-checkbox>
         <app-dashboard-select
-          formControlName="tenant_plan_id"
           [selects]="planSelects$ | async"
+          formControlName="tenant_plan_id"
         >プラン
         </app-dashboard-select>
         <ng-container *ngIf="isSelectedLimitedPlan">
@@ -36,12 +40,12 @@
           <app-dashboard-date-picker formControlName="end_plan_limit_date" name="end_plan_limit_date">お試し終了日
           </app-dashboard-date-picker>
         </ng-container>
-        <app-dashboard-input type="number" formControlName="plan_price">料金</app-dashboard-input>
+        <app-dashboard-input formControlName="plan_price" type="number">料金</app-dashboard-input>
         <app-dashboard-date-picker formControlName="begin_publish_date">公開日</app-dashboard-date-picker>
         <app-dashboard-date-picker formControlName="end_publish_date">公開停止日</app-dashboard-date-picker>
-        <app-dashboard-input type="number" formControlName="refresh_place_rate_limit_per_date">配置更新数
+        <app-dashboard-input formControlName="refresh_place_rate_limit_per_date" type="number">配置更新数
         </app-dashboard-input>
-        <app-dashboard-input type="number" formControlName="shop_news_rate_limit_per_date">ショップニュース数
+        <app-dashboard-input formControlName="shop_news_rate_limit_per_date" type="number">ショップニュース数
         </app-dashboard-input>
         <app-dashboard-select [selects]="statusSelects" formControlName="is_suspend">ステータス</app-dashboard-select>
 
@@ -55,16 +59,16 @@
         <app-dashboard-input formControlName="region" name="region" type="text">住所・地域（東部・中部・西部・全域）</app-dashboard-input>
 
         <app-dashboard-time-range-form
-          [minuteStep]="30"
-          [insertLast]="true"
           [formControl]="openTimeCombined"
+          [insertLast]="true"
+          [minuteStep]="15"
           label="営業"
         ></app-dashboard-time-range-form>
 
         <app-dashboard-time-range-form
-          [minuteStep]="30"
-          [insertLast]="true"
           [formControl]="receptionTimeCombined"
+          [insertLast]="true"
+          [minuteStep]="15"
           label="受付"
         ></app-dashboard-time-range-form>
 
@@ -83,10 +87,14 @@
         </p>
 
         <ng-container *ngIf="useForm.value === '1'">
-          <app-dashboard-input formControlName="form_email" name="form_email" type="email">書き込み通知先メールアドレス</app-dashboard-input>
+          <app-dashboard-input formControlName="form_email" name="form_email" type="email">書き込み通知先メールアドレス
+          </app-dashboard-input>
         </ng-container>
-        <app-dashboard-input formControlName="regular_services" name="regular_services" type="text">基本サービス</app-dashboard-input>
-        <app-dashboard-input formControlName="regular_service_price" name="regular_service_price" type="number">基本サービス価格</app-dashboard-input>
+        <app-dashboard-input formControlName="regular_services" name="regular_services" type="text">基本サービス
+        </app-dashboard-input>
+        <app-dashboard-input formControlName="regular_service_price" name="regular_service_price" type="number">
+          基本サービス価格
+        </app-dashboard-input>
 
         <mat-grid-list [cols]="5" [rowHeight]="80" formArrayName="services">
           <ng-container *ngFor="let item of serviceControls; let index = index" [formGroupName]="index">
@@ -147,17 +155,19 @@
           </mat-radio-group>
         </p>
         <app-operation-tenant-banner-image
+          [casts]="detail.casts"
+          [foreignLinks]="detail.foreign_links"
+          [galleries]="detail.free_galleries"
           formControlName="image"
-          [galleries]="detail.free_galleries"
-          [foreignLinks]="detail.foreign_links"
-          [casts]="detail.casts"
-        >店舗TOPバナー</app-operation-tenant-banner-image>
+        >店舗TOPバナー
+        </app-operation-tenant-banner-image>
         <app-operation-tenant-banner-image
-          formControlName="square_image"
-          [galleries]="detail.free_galleries"
-          [foreignLinks]="detail.foreign_links"
           [casts]="detail.casts"
-        >店舗800x800バナー</app-operation-tenant-banner-image>
+          [foreignLinks]="detail.foreign_links"
+          [galleries]="detail.free_galleries"
+          formControlName="square_image"
+        >店舗800x800バナー
+        </app-operation-tenant-banner-image>
         <app-dashboard-input formControlName="official_site_url">オフィシャルサイトURL</app-dashboard-input>
         <app-dashboard-input formControlName="payment_url">決済用URL</app-dashboard-input>
       </mat-card-content>

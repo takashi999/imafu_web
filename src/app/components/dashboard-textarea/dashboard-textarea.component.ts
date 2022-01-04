@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, Optional, Self } from '@angular/core';
-import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NgControl, Validators } from '@angular/forms';
 import {
   maxLength100000Validator,
   maxLength1000Validator,
@@ -7,9 +7,11 @@ import {
   maxLength10Validator,
   maxLength15Validator,
   maxLength16Validator,
-  maxLength180Validator, maxLength20000Validator,
+  maxLength180Validator,
+  maxLength20000Validator,
   maxLength200Validator,
-  maxLength20Validator, maxLength300Validator,
+  maxLength20Validator,
+  maxLength300Validator,
   maxLength30Validator,
   maxLength35Validator,
   maxLength40Validator,
@@ -39,6 +41,8 @@ export class DashboardTextareaComponent implements OnInit, OnDestroy, ControlVal
   min: number | null = null;
   max: number | null = null;
 
+  required = false;
+
   constructor(
     @Optional() @Self() public ngControl: NgControl,
   ) {
@@ -66,6 +70,7 @@ export class DashboardTextareaComponent implements OnInit, OnDestroy, ControlVal
   };
 
   ngOnInit(): void {
+    // Min
     [
       { validator: minLength8Validator, num: 8 },
     ].forEach(v => {
@@ -74,6 +79,7 @@ export class DashboardTextareaComponent implements OnInit, OnDestroy, ControlVal
       }
     });
 
+    // Max
     [
       { validator: maxLength10Validator, num: 10 },
       { validator: maxLength15Validator, num: 15 },
@@ -97,6 +103,9 @@ export class DashboardTextareaComponent implements OnInit, OnDestroy, ControlVal
         this.max = v.num;
       }
     });
+
+    // Required
+    this.required = this.ngControl.control?.hasValidator(Validators.required) ?? false;
 
     this.s.add(
       this.fc.valueChanges.subscribe(res => {

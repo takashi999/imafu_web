@@ -1,6 +1,7 @@
 import { Validators } from '@angular/forms';
 
 export const minLength8Validator = Validators.minLength(8);
+
 export const maxLength10Validator = Validators.maxLength(10);
 export const maxLength15Validator = Validators.maxLength(15);
 export const maxLength16Validator = Validators.maxLength(16);

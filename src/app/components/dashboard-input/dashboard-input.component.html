@@ -4,11 +4,12 @@
       <ng-content></ng-content>
     </mat-label>
     <input
-      [autocomplete]="isPassword ? 'new-password' : 'on'"
-      [formControl]="fc"
       [attr.maxLength]="max !== null ? max : null"
       [attr.minLength]="min !== null ? min : null"
+      [autocomplete]="isPassword ? 'new-password' : 'on'"
+      [formControl]="fc"
       [name]="name"
+      [required]="required"
       [type]="isPassword && hidePassword ? 'password' : type"
       matInput
     >
