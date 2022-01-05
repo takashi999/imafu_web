@@ -1,8 +1,10 @@
 <app-dashboard-header rightRouterLink="./create">フリーブロック</app-dashboard-header>
-<app-table-list
+<app-dashboard-table-tab
   (clickRow)="onClickRow($event)"
+  (delete)="onDelete($event)"
   [dataSource]="list$"
   [displayedColumns]="columns"
   [getNameFn]="getNameFn"
-  (delete)="onDelete($event)"
-></app-table-list>
+  [tabKeyDisplayNameMaster]="freeBlockSpaces$ | async"
+  [tabKey]="'tenant_free_block_display_space_id'"
+></app-dashboard-table-tab>

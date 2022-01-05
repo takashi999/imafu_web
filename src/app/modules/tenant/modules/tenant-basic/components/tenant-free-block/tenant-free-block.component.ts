@@ -3,6 +3,7 @@ import { Subject, Subscription } from 'rxjs';
 import { TableListColumnType } from 'src/app/components/table-list/table-list.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TenantFreeBlockService } from 'src/app/services/tenant/api/tenant-free-block.service';
+import { TenantMasterService } from 'src/app/services/tenant/api/tenant-master.service';
 
 @Component({
   selector: 'app-tenant-free-block',
@@ -13,6 +14,7 @@ import { TenantFreeBlockService } from 'src/app/services/tenant/api/tenant-free-
 export class TenantFreeBlockComponent implements OnInit, OnDestroy {
 
   list$: Subject<any[]> = new Subject();
+  freeBlockSpaces$ = this.tenantMasterService.freeBlockDisplaySpaces();
   s = new Subscription();
   columns: TableListColumnType<any>[] = [
     {
@@ -35,6 +37,7 @@ export class TenantFreeBlockComponent implements OnInit, OnDestroy {
 
   constructor(
     private tenantFreeBlockService: TenantFreeBlockService,
+    private tenantMasterService: TenantMasterService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
   ) {

@@ -1,7 +1,9 @@
 <app-dashboard-header rightRouterLink="./create">フリーバナー</app-dashboard-header>
-<app-table-list
+<app-dashboard-table-tab
   (clickRow)="onClickRow($event)"
   [dataSource]="list$"
   [displayedColumns]="columns"
   [getNameFn]="getNameFn"
-></app-table-list>
+  [tabKeyDisplayNameMaster]="freeBannerSpaces$ | async"
+  [tabKey]="'tenant_free_banner_display_space_id'"
+></app-dashboard-table-tab>

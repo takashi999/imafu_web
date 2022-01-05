@@ -31,8 +31,14 @@ import { DashboardSearchComponent } from './dashboard-search/dashboard-search.co
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { DashboardMessageComponent } from './dashboard-message/dashboard-message.component';
-import { DashboardEditableTextTypeSelectComponent } from './dashboard-editable-text-type-select/dashboard-editable-text-type-select.component';
-import { DashboardMultipleTypeTextareaComponent } from './dashboard-multiple-type-textarea/dashboard-multiple-type-textarea.component';
+import {
+  DashboardEditableTextTypeSelectComponent,
+} from './dashboard-editable-text-type-select/dashboard-editable-text-type-select.component';
+import {
+  DashboardMultipleTypeTextareaComponent,
+} from './dashboard-multiple-type-textarea/dashboard-multiple-type-textarea.component';
+import { DashboardTableTabComponent } from './dashboard-table-tab/dashboard-table-tab.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @NgModule({
@@ -54,6 +60,7 @@ import { DashboardMultipleTypeTextareaComponent } from './dashboard-multiple-typ
     DashboardMessageComponent,
     DashboardEditableTextTypeSelectComponent,
     DashboardMultipleTypeTextareaComponent,
+    DashboardTableTabComponent,
   ],
   imports: [
     CommonModule,
@@ -79,6 +86,7 @@ import { DashboardMultipleTypeTextareaComponent } from './dashboard-multiple-typ
     MatDatepickerModule,
     MatTooltipModule,
     DragDropModule,
+    MatTabsModule,
   ],
   exports: [
     AppComponent,
@@ -98,6 +106,7 @@ import { DashboardMultipleTypeTextareaComponent } from './dashboard-multiple-typ
     DashboardMessageComponent,
     DashboardEditableTextTypeSelectComponent,
     DashboardMultipleTypeTextareaComponent,
+    DashboardTableTabComponent,
   ],
 })
 export class CommonComponentsModule {
