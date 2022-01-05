@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, Optional, Self, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, Optional, Self, ViewChild } from '@angular/core';
 import { CKEditorComponent } from 'ckeditor4-angular';
-import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NgControl, ValidatorFn } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardEditorComponent implements OnInit, OnDestroy, ControlValueAccessor {
+  @Input() hasValidatorFn?: (validator: ValidatorFn) => boolean;
   @ViewChild('editor') editorComponent?: CKEditorComponent;
 
   config = {

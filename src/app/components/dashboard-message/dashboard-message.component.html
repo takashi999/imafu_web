@@ -1,0 +1,8 @@
+<div class="container">
+  <p class="head" *ngIf="head">{{ head }}</p>
+  <p class="sub-head" *ngIf="subHead">{{ subHead }}</p>
+  <p class="content">
+    <ng-content></ng-content>
+  </p>
+  <p class="annotation" *ngIf="annotation">{{ annotation }}</p>
+</div>

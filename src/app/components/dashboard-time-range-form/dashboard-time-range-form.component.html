@@ -3,38 +3,40 @@
 </p>
 <mat-grid-list [cols]="13" [gutterSize]="'10px'" [rowHeight]="80">
   <mat-grid-tile [colspan]="3">
-    <mat-form-field appearance="fill" hintLabel="">
-      <mat-label>{{ label }}開始時間（時）</mat-label>
-      <mat-select [formControl]="startTimeHour">
-        <mat-option *ngFor="let time of startHourOptions" [value]="time">{{ time }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <app-dashboard-select
+      [formControl]="startTimeHour"
+      [selects]="startHourOptions"
+      [hasValidatorFn]="ngControl.control?.hasValidator?.bind(ngControl.control)"
+    >
+      開始時間（時）
+    </app-dashboard-select>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="3">
-    <mat-form-field appearance="fill" hintLabel="">
-      <mat-label>{{ label }}開始時間（分）</mat-label>
-      <mat-select [formControl]="startTimeMinute">
-        <mat-option *ngFor="let time of startMinuteOptions" [value]="time">{{ time }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <app-dashboard-select
+      [formControl]="startTimeMinute"
+      [selects]="startMinuteOptions"
+      [hasValidatorFn]="ngControl.control?.hasValidator?.bind(ngControl.control)"
+    >
+      開始時間（分）
+    </app-dashboard-select>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1"></mat-grid-tile>
   <mat-grid-tile [colspan]="3">
-    <mat-form-field appearance="fill" hintLabel="">
-      <mat-label>{{ label }}終了時間（時）</mat-label>
-      <mat-select [formControl]="endTimeHour">
-        <mat-option *ngFor="let time of endHourOptions" [value]="time">{{ time === '' ? 'ラスト' : time }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <app-dashboard-select
+      [formControl]="endTimeHour"
+      [selects]="endHourOptions"
+      [hasValidatorFn]="ngControl.control?.hasValidator?.bind(ngControl.control)"
+    >
+      終了時間（時）
+    </app-dashboard-select>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="3">
-    <mat-form-field appearance="fill" hintLabel="">
-      <mat-label>{{ label }}終了時間（分）</mat-label>
-      <mat-select [formControl]="endTimeMinute">
-        <mat-option *ngFor="let time of endMinuteOptions" [value]="time">{{ time }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <app-dashboard-select
+      [formControl]="endTimeMinute"
+      [selects]="endMinuteOptions"
+      [hasValidatorFn]="ngControl.control?.hasValidator?.bind(ngControl.control)"
+    >
+      終了時間（分）
+    </app-dashboard-select>
   </mat-grid-tile>
 </mat-grid-list>

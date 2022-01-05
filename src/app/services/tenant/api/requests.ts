@@ -69,3 +69,11 @@ export interface ModifyTenantCastPhotoDiaryRequest {
     }
     )[];
 }
+
+export interface ModifyTenantEventNews {
+  is_use: boolean;
+  publish_start_at: string;
+  publish_end_at: string;
+  editable_text_type_id: number;
+  content: string;
+}

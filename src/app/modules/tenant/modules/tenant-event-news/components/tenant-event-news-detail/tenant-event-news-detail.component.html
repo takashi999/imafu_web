@@ -1,0 +1,45 @@
+<app-dashboard-header>イベントニュース</app-dashboard-header>
+
+<mat-card>
+  <ng-container *ngIf="detail$ | async as detail">
+    <form [formGroup]="fg" (ngSubmit)="onSub()">
+      <mat-card-content>
+        <app-dashboard-message
+          head="更新日時"
+          annotation="※総合でのイベント一覧ページでは更新を行ってから、1時間は上位に表示されません。"
+        >
+          <ng-container *ngIf="detail?.updated_at as update; else notUpdated">
+            {{ update | date:"yyyy/MM/dd EEEE HH:mm" }}
+          </ng-container>
+          <ng-template #notUpdated>
+            未作成
+          </ng-template>
+        </app-dashboard-message>
+        <app-dashboard-radio [selects]="isUseSelects" formControlName="is_use">使用</app-dashboard-radio>
+        <div class="dates">
+          <mat-label>イベント期間</mat-label>
+          <div class="date">
+            <app-dashboard-date-picker formControlName="publish_start_at">掲載開始日</app-dashboard-date-picker>
+          </div>
+          <div class="to">〜</div>
+          <div class="date">
+            <app-dashboard-date-picker formControlName="publish_end_at">掲載終了日</app-dashboard-date-picker>
+          </div>
+        </div>
+        <app-dashboard-editable-text-type-select
+          formControlName="editable_text_type_id"
+          name="editable_text_type_id"
+          #ref
+        ></app-dashboard-editable-text-type-select>
+        <app-dashboard-multiple-type-textarea
+          formControlName="content"
+          name="content"
+          [ref]="ref"
+        ></app-dashboard-multiple-type-textarea>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-flat-button color="primary" [disabled]="fg.invalid">更新</button>
+      </mat-card-actions>
+    </form>
+  </ng-container>
+</mat-card>

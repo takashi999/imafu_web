@@ -1,0 +1,9 @@
+<app-dashboard-select
+  [selects]="textTypeSelects"
+  [formControl]="fc"
+  label="表示形式"
+  [name]="name"
+  [hasValidatorFn]="ngControl.control?.hasValidator?.bind(ngControl.control)"
+>
+  表示形式
+</app-dashboard-select>

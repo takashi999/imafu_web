@@ -10,28 +10,16 @@
           タイトル
         </app-dashboard-input>
 
-        <app-dashboard-select
-          [selects]="textTypeSelects"
+        <app-dashboard-editable-text-type-select
           formControlName="editable_text_type_id"
-          label="表示形式"
           name="editable_text_type_id"
-        >
-          表示形式
-        </app-dashboard-select>
-
-        <app-dashboard-textarea
-          *ngIf="selectedTextType === 'plain'"
+          #ref
+        ></app-dashboard-editable-text-type-select>
+        <app-dashboard-multiple-type-textarea
           formControlName="content"
           name="content"
-        >
-          本文
-        </app-dashboard-textarea>
-
-        <app-dashboard-editor
-          *ngIf="selectedTextType === 'html'"
-          formControlName="content"
-        >本文
-        </app-dashboard-editor>
+          [ref]="ref"
+        ></app-dashboard-multiple-type-textarea>
       </mat-card-content>
 
       <div class="images">

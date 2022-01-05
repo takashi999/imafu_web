@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { of, Subject, Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { TableListColumnType } from 'src/app/components/table-list/table-list.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TenantFreeBannerService } from 'src/app/services/tenant/api/tenant-free-banner.service';
+import { TenantFreeBanner } from 'src/app/services/tenant/api/responses';
+import { TenantMasterService } from 'src/app/services/tenant/api/tenant-master.service';
 
 @Component({
   selector: 'app-tenant-free-banner',
@@ -12,9 +14,10 @@ import { TenantFreeBannerService } from 'src/app/services/tenant/api/tenant-free
 })
 export class TenantFreeBannerComponent implements OnInit, OnDestroy {
 
-  list$: Subject<any[]> = new Subject();
+  list$: Subject<TenantFreeBanner[]> = new Subject();
+  freeBannerSpaces$ = this.tenantMasterService.freeBannerDisplaySpaces();
   s = new Subscription();
-  columns: TableListColumnType<any>[] = [
+  columns: TableListColumnType<TenantFreeBanner>[] = [
     {
       key: 'id',
       label: 'ID',
@@ -32,6 +35,7 @@ export class TenantFreeBannerComponent implements OnInit, OnDestroy {
 
   constructor(
     private tenantFreeBannerService: TenantFreeBannerService,
+    private tenantMasterService: TenantMasterService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
   ) {

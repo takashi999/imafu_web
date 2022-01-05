@@ -32,3 +32,10 @@
 .mat-column-sort, .mat-column-delete {
   flex: 0 0 40px;
 }
+
+.not-found {
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
