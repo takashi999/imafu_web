@@ -9,27 +9,16 @@
         タイトル
       </app-dashboard-input>
 
-      <app-dashboard-select
-        [selects]="types$ | async"
+      <app-dashboard-editable-text-type-select
         formControlName="editable_text_type_id"
-        label="表示形式"
         name="editable_text_type_id"
-      >
-        表示形式
-      </app-dashboard-select>
-
-      <app-dashboard-textarea
-        *ngIf="currentType === 'plain'"
+        #ref
+      ></app-dashboard-editable-text-type-select>
+      <app-dashboard-multiple-type-textarea
         formControlName="content"
         name="content"
-      >
-        内容
-      </app-dashboard-textarea>
-      <app-dashboard-editor
-        *ngIf="currentType === 'html'"
-        formControlName="content"
-      >内容
-      </app-dashboard-editor>
+        [ref]="ref"
+      ></app-dashboard-multiple-type-textarea>
 
     </mat-card-content>
     <mat-card-actions align="end">

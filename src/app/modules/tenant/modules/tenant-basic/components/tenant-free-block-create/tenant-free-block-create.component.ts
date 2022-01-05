@@ -63,9 +63,6 @@ export class TenantFreeBlockCreateComponent implements OnInit, OnDestroy, AfterV
     map(res => res.map(r => ({ value: r.id, label: r.display_name }))),
   );
 
-  textTypeSelects: { value: any; label: string }[] | null = null;
-  selectedTextType: string | null = null;
-
   file: File | null = null;
 
   constructor(
@@ -82,23 +79,6 @@ export class TenantFreeBlockCreateComponent implements OnInit, OnDestroy, AfterV
   }
 
   ngOnInit(): void {
-    this.s.add(
-      this.tenantMasterService.editableTextTypes()
-        .subscribe(res => {
-          this.textTypeSelects = res.map(r => ({
-            value: r.id,
-            label: { plain: 'プレーンテキスト', html: 'HTML' }[r.type] + '形式',
-          }));
-
-          this.selectedTextType = res.find(r => r.id === this.fg.get('editable_text_type_id')?.value)?.type ?? 'plain';
-          this.s.add(
-            this.fg.get('editable_text_type_id')?.valueChanges
-              .subscribe((id) => {
-                this.selectedTextType = res.find(r => r.id === id)?.type ?? 'plain';
-              }),
-          );
-        }),
-    );
   }
 
   ngAfterViewInit() {

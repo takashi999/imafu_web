@@ -16,19 +16,6 @@ import { EditableTextTypes } from 'src/app/services/tenant/api/responses';
 })
 export class TenantFreeSpaceCreateComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  typeStr: { [type: string]: string } = {
-    plain: 'プレーンテキスト',
-    html: 'HTML',
-  };
-  typesRaw$ = new Subject<EditableTextTypes>();
-  types$ = this.typesRaw$.pipe(
-    map(res => {
-      return res.map(r => ({
-        value: r.id.toString(10),
-        label: this.typeStr[r.type] + '形式',
-      }));
-    }),
-  );
   s = new Subscription();
   fg = new FormGroup({
     title: new FormControl('', [ Validators.required, maxLength40Validator ]),
@@ -36,30 +23,14 @@ export class TenantFreeSpaceCreateComponent implements OnInit, OnDestroy, AfterV
     content: new FormControl('', [ maxLength100000Validator ]),
   });
 
-  currentType = 'plain';
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private tenantFreeSpaceService: TenantFreeSpaceService,
-    private tenantMasterService: TenantMasterService,
   ) {
   }
 
   ngOnInit(): void {
-    this.s.add(
-      this.tenantMasterService.editableTextTypes()
-        .subscribe(res => {
-          this.typesRaw$.next(res);
-
-          this.s.add(
-            this.fg.get('editable_text_type_id')?.valueChanges
-              .subscribe(idStr => {
-                this.currentType = res.find(r => r.id === parseInt(idStr, 10))?.type ?? 'plain';
-              }),
-          );
-        }),
-    );
   }
 
   ngAfterViewInit() {
