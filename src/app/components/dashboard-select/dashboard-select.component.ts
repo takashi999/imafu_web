@@ -8,7 +8,7 @@ import {
   Optional,
   Self,
 } from '@angular/core';
-import { ControlValueAccessor, FormControl, NgControl, Validators } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NgControl, ValidatorFn, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -19,6 +19,7 @@ import { Subscription } from 'rxjs';
 })
 export class DashboardSelectComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
+  @Input() hasValidatorFn?: (validator: ValidatorFn) => boolean;
   @Input() name = '';
   @Input() selects: {
     value: any;
@@ -56,7 +57,9 @@ export class DashboardSelectComponent implements OnInit, OnDestroy, ControlValue
       }),
     );
 
-    this.required = this.ngControl?.control?.hasValidator(Validators.required) ?? false;
+    this.required = this.hasValidatorFn?.(Validators.required) ??
+      this.ngControl?.control?.hasValidator(Validators.required) ??
+      false;
   }
 
   ngOnDestroy() {

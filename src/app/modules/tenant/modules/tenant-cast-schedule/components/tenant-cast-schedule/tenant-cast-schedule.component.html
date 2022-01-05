@@ -38,7 +38,7 @@
                   <thead>
                   <tr>
                     <th>日付</th>
-                    <th *ngFor="let date of dates[0]" [ngClass]="'day-' + date.dayNum">{{ date.dateString }}</th>
+                    <th *ngFor="let date of dates[0]" [ngClass]="'day-' + date.dayNum">{{ date.date | date:"MM/dd EEE" }}</th>
                   </tr>
                   </thead>
                   <tbody>

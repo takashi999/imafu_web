@@ -39,7 +39,6 @@ import {
 
 type DateScheduleDetail = {
   dateISO: string;
-  dateString: string;
   year: number;
   month: number;
   date: number;
@@ -357,7 +356,6 @@ export class TenantCastScheduleComponent implements OnInit, OnDestroy {
       }
       dates[week]?.push({
         dateISO: format(date, 'yyyy-MM-dd'),
-        dateString: format(date, 'MM/dd[EEE]'),
         year: date.getFullYear(),
         month: date.getMonth(),
         date: date.getDate(),

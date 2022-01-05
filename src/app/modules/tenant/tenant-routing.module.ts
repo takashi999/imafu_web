@@ -56,6 +56,10 @@ const routes: Routes = [
             loadChildren: () => import('./modules/tenant-free-image/tenant-free-image.module').then(m => m.TenantFreeImageModule),
           },
           {
+            path: 'event-news',
+            loadChildren: () => import('./modules/tenant-event-news/tenant-event-news.module').then(m => m.TenantEventNewsModule),
+          },
+          {
             path: 'ranking',
             loadChildren: () => import('./modules/tenant-ranking/tenant-ranking.module').then(m => m.TenantRankingModule),
           },

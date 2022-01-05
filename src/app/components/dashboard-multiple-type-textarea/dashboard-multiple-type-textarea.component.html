@@ -1,0 +1,15 @@
+<app-dashboard-textarea
+  *ngIf="selectedTextType === 'plain'"
+  [formControl]="fc"
+  [name]="name"
+  [hasValidatorFn]="ngControl.control?.hasValidator?.bind(ngControl.control)"
+>
+  本文
+</app-dashboard-textarea>
+
+<app-dashboard-editor
+  *ngIf="selectedTextType === 'html'"
+  [formControl]="fc"
+  [hasValidatorFn]="ngControl.control?.hasValidator?.bind(ngControl.control)"
+>本文
+</app-dashboard-editor>

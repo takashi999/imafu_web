@@ -20,6 +20,7 @@ type TableListColumnBaseType<T, K extends keyof T | string = keyof T | string> =
   key: K;
   label: string;
   transform?: (v: any) => string;
+  dateFormat?: string;
   type?: 'image';
 }
 type TableListColumnTemplateType<TE> = {
@@ -69,6 +70,10 @@ export class TableListComponent<T, TE> implements OnInit, OnDestroy {
 
   get displayedColumnsExcludedDelete() {
     return this.displayedColumns.filter(c => c.key !== 'delete') as (TableListColumnBaseType<T> | TableListColumnTemplateType<TE>)[];
+  }
+
+  getTextResult(col: TableListColumnType<T, TE>, element: T) {
+    return "transform" in col && typeof col.transform !== 'undefined' ? col.transform(this.getDataByKeyName(element, col.key)) : this.getDataByKeyName(element, col.key);
   }
 
   @Input() getNameFn: (val: T) => string = val => `${ val }`;

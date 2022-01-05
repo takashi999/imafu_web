@@ -21,7 +21,7 @@ export class TenantPhotoDiaryListComponent implements OnInit, OnDestroy {
     {
       key: 'post_at',
       label: '投稿日',
-      transform: (v: string) => format(parseISO(v), 'yyyy/MM/dd EEE hh:mm'),
+      dateFormat: 'yyyy/MM/dd EEE hh:mm',
     },
     {
       key: 'cast.display_name',

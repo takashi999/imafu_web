@@ -17,30 +17,32 @@
     </ng-container>
     <ng-container *ngFor="let col of displayedColumnsExcludedDelete" [matColumnDef]="'' + col.key">
       <mat-header-cell *matHeaderCellDef mat-header-cell>{{ col.label }}</mat-header-cell>
-      <mat-cell *matCellDef="let element"
-                mat-cell>
+      <mat-cell *matCellDef="let element" mat-cell>
         <ng-container [ngSwitch]="col.type">
           <ng-container *ngSwitchCase="undefined">
-            <ng-container *ngIf="getColumnAsBase(col) as col">
-              <ng-container
-                *ngIf="col.transform ? col.transform(getDataByKeyName(element, col.key)) : getDataByKeyName(element, col.key) as text">
-                <div [matTooltip]="text" class="ellipsis">{{ text }}</div>
+            <ng-container *ngIf="getTextResult(col, element) as res">
+              <ng-container *ngIf="getColumnAsBase(col).dateFormat as df; else: dateNone">
+                <div *ngIf="res | date:df as res" [matTooltip]="res"
+                     class="ellipsis">{{ res }}</div>
               </ng-container>
+              <ng-template #dateNone>
+                <div [matTooltip]="res" class="ellipsis">{{ res }}</div>
+              </ng-template>
             </ng-container>
           </ng-container>
           <ng-container *ngSwitchCase="'image'">
-            <ng-container *ngIf="getColumnAsBase(col) as col">
+            <ng-container *ngIf="getTextResult(col, element) as res">
               <img
                 #smallImage
                 (mouseenter)="onShowPreviewModal(imageTemplate, smallImage)"
                 (mouseleave)="onHidePreviewModal()"
-                [src]="col.transform ? col.transform(getDataByKeyName(element, col.key)) : getDataByKeyName(element, col.key)"
+                [src]="res"
                 alt=""
                 class="col-image"
               >
               <ng-template #imageTemplate>
                 <img
-                  [src]="col.transform ? col.transform(getDataByKeyName(element, col.key)) : getDataByKeyName(element, col.key)"
+                  [src]="res"
                   alt=""
                   class="col-image-stretch"
                 >

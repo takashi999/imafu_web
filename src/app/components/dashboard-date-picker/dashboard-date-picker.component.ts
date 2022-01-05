@@ -1,5 +1,14 @@
-import { ChangeDetectionStrategy, Component, forwardRef, Injectable, Input, OnDestroy, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Injectable,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Self,
+} from '@angular/core';
+import { ControlValueAccessor, FormControl, NgControl, Validators } from '@angular/forms';
 import { DateAdapter, NativeDateAdapter } from '@angular/material/core';
 import { Subscription } from 'rxjs';
 import { format } from 'date-fns';
@@ -24,11 +33,6 @@ class CustomizedDateAdaptor extends NativeDateAdapter {
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: forwardRef(() => DashboardDatePickerComponent),
-    },
-    {
       provide: DateAdapter,
       useClass: CustomizedDateAdaptor,
     },
@@ -41,9 +45,15 @@ export class DashboardDatePickerComponent implements OnInit, OnDestroy, ControlV
   fc = new FormControl('');
   s = new Subscription();
 
+  required = false;
+
   constructor(
+    @Optional() @Self() public ngControl: NgControl,
     private dateAdapter: DateAdapter<NativeDateAdapter>,
   ) {
+    if (this.ngControl !== null) {
+      this.ngControl.valueAccessor = this;
+    }
   }
 
   onChange = (v: any) => {
@@ -58,6 +68,8 @@ export class DashboardDatePickerComponent implements OnInit, OnDestroy, ControlV
         this.onChange(format(value, 'yyyy-MM-dd'));
       }),
     );
+
+    this.required = this.ngControl.control?.hasValidator(Validators.required) ?? false;
   }
 
   ngOnDestroy(): void {
