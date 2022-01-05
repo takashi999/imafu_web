@@ -1,8 +1,10 @@
 <app-dashboard-header rightRouterLink="./create">フリー画像</app-dashboard-header>
-<app-table-list
+<app-dashboard-table-tab
   (clickRow)="onClickRow($event)"
   (delete)="onDelete($event)"
   [dataSource]="list$"
   [displayedColumns]="columns"
   [getNameFn]="getNameFn"
-></app-table-list>
+  [tabKey]="'tenant_free_image_type_id'"
+  [tabKeyDisplayNameMaster]="freeImageTypes$ | async"
+></app-dashboard-table-tab>

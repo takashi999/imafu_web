@@ -3,6 +3,7 @@ import { Subject, Subscription } from 'rxjs';
 import { TableListColumnType } from 'src/app/components/table-list/table-list.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TenantFreeImageService } from 'src/app/services/tenant/api/tenant-free-image.service';
+import { TenantMasterService } from 'src/app/services/tenant/api/tenant-master.service';
 
 @Component({
   selector: 'app-tenant-free-image',
@@ -13,6 +14,7 @@ import { TenantFreeImageService } from 'src/app/services/tenant/api/tenant-free-
 export class TenantFreeImageComponent implements OnInit, OnDestroy {
 
   list$: Subject<any[]> = new Subject();
+  freeImageTypes$ = this.tenantMasterService.freeImageTypes();
   s = new Subscription();
   columns: TableListColumnType<any>[] = [
     {
@@ -30,6 +32,7 @@ export class TenantFreeImageComponent implements OnInit, OnDestroy {
 
   constructor(
     private tenantFreeImageService: TenantFreeImageService,
+    private tenantMasterService: TenantMasterService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
   ) {
