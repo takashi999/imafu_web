@@ -12,6 +12,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
+import localeJa from '@angular/common/locales/ja';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(localeJa);
 
 @NgModule({
   declarations: [
