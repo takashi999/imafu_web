@@ -9,7 +9,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonComponentsModule } from 'src/app/components/common-components.module';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -35,6 +35,10 @@ import { MatButtonModule } from '@angular/material/button';
       provide: HTTP_INTERCEPTORS,
       multi: true,
       useClass: APIInterceptor,
+    },
+    {
+      provide: MAT_DATE_LOCALE,
+      useValue: 'ja',
     },
   ],
   bootstrap: [ AppComponent ],
