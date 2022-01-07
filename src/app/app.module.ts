@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -35,6 +35,10 @@ import { MatButtonModule } from '@angular/material/button';
       provide: HTTP_INTERCEPTORS,
       multi: true,
       useClass: APIInterceptor,
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: 'ja',
     },
     {
       provide: MAT_DATE_LOCALE,
