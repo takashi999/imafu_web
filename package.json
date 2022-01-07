@@ -4,9 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "build:stage": "ng build -c stage",
-    "watch": "ng build --watch --configuration development",
+    "build": "ng build --localize",
+    "build:stage": "ng build -c stage --localize",
+    "watch": "ng build --watch --configuration development --localize",
     "test": "ng test"
   },
   "private": true,

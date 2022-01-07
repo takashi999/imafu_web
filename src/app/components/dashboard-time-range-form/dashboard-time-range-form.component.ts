@@ -11,8 +11,6 @@ import {
 import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
 import { merge, Subscription } from 'rxjs';
 
-type  TimeOption = { hour: string; minutes: { minute: string; res: string; }[]; } | string;
-
 @Component({
   selector: 'app-dashboard-time-range-form',
   templateUrl: './dashboard-time-range-form.component.html',
@@ -24,21 +22,15 @@ export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, Contr
   @Input() label: string = '';
   @Input() enable24h = true;
   @Input() insertLast = false;
+  @Input() minuteStep = 60;
 
-  startTimeHour = new FormControl('06');
-  startTimeMinute = new FormControl('00');
-  endTimeHour = new FormControl('20');
-  endTimeMinute = new FormControl('00');
   open24h = new FormControl(false);
+
+  startTimeControl = new FormControl('06:00');
+  endTimeControl = new FormControl('20:00');
 
   s = new Subscription();
 
-  startTimeOptions: TimeOption[] = [];
-  endTimeOptions: TimeOption[] = [];
-  startHourOptions: { value: string; label: string; }[] = [];
-  endHourOptions: { value: string; label: string; }[] = [];
-  startMinuteOptions: { value: string; label: string; }[] = [];
-  endMinuteOptions: { value: string; label: string; }[] = [];
 
   constructor(
     @Optional() @Self() public ngControl: NgControl,
@@ -47,70 +39,6 @@ export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, Contr
     if (this.ngControl !== null) {
       this.ngControl.valueAccessor = this;
     }
-  }
-
-  @Input() set minuteStep(val: number) {
-    // 時の選択調整
-    this.startTimeOptions = [ ...this.getTimes(val, 0, 24) ];
-    this.endTimeOptions = [
-      ...this.getTimes(val, 0, 24),
-      ...this.insertLast ? [
-        '',
-      ] : [],
-    ];
-    this.startHourOptions = this.startTimeOptions.map(v => DashboardTimeRangeFormComponent.valueToWithLabel(typeof v === 'string' ? '' : v.hour));
-    this.endHourOptions = this.endTimeOptions.map(v => DashboardTimeRangeFormComponent.valueToWithLabel(typeof v === 'string' ? '' : v.hour));
-  }
-
-  private static valueToWithLabel(value: string) {
-    return {
-      value,
-      label: value === '' ? 'ラスト' : value,
-    };
-  }
-
-  * getTimes(minuteStep: number, startHour: number, maxHour: number): Generator<TimeOption> {
-    let hour = startHour;
-    let minute = 0;
-    let minutesStack: number[] = [];
-
-    const padZero = (num: number) => `0${ num }`.substr(-2, 2);
-
-    while (hour < maxHour) {
-      minutesStack.push(minute);
-
-      minute += minuteStep;
-
-      if (minute >= 60) {
-        const hourString = padZero(hour);
-        const minuteRemainder = minute % 60;
-
-        yield  {
-          hour: hourString,
-          minutes: minutesStack.map(m => {
-            const minuteString = padZero(m);
-            return {
-              minute: minuteString,
-              res: `${ hourString }:${ minuteString }`,
-            };
-          }),
-        };
-
-        minutesStack = [];
-        hour += (minute - minuteRemainder) / 60;
-        minute = minuteRemainder;
-      }
-    }
-
-    const hourString = padZero(hour);
-
-    yield {
-      hour: hourString,
-      minutes: [ {
-        minute: '00',
-        res: `${ hourString }:00`,
-      } ],
-    };
   }
 
   onChange = (v: any) => {
@@ -131,29 +59,23 @@ export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, Contr
           } else {
             this.setFromOpenAndEnd();
           }
-
-          this.selectsAdjust();
         }),
     );
 
     this.s.add(
       merge(
-        this.startTimeHour.valueChanges,
-        this.endTimeHour.valueChanges,
+        this.startTimeControl.valueChanges,
+        this.endTimeControl.valueChanges,
       )
         .subscribe(() => {
-          this.selectsAdjust();
-        }),
-    );
-    this.s.add(
-      merge(
-        this.startTimeHour.valueChanges,
-        this.startTimeMinute.valueChanges,
-        this.endTimeHour.valueChanges,
-        this.endTimeMinute.valueChanges,
-      )
-        .subscribe(() => {
-          this.setFromOpenAndEnd();
+          const is24h = this.startTimeControl.value === '00:00' && this.endTimeControl.value === '24:00';
+          if (is24h && this.enable24h) {
+            this.open24h.setValue(true, { emitEvent: false });
+            this.allTimeControlsAction(control => control.disable({ emitEvent: false }), true);
+            this.set24Hour();
+          } else {
+            this.setFromOpenAndEnd();
+          }
         }),
     );
   }
@@ -173,20 +95,15 @@ export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, Contr
   writeValue(obj: string[]): void {
     const [ startTime, endTime ] = obj;
     const isOpen24h = startTime.substr(0, 5) === '00:00' && endTime.substr(0, 5) === '24:00';
+    const methodName: 'disable' | 'enable' = isOpen24h ? 'disable' : 'enable';
+
     this.open24h.setValue(isOpen24h, { emitEvent: false });
-    if (!isOpen24h) {
-      const [ startHour, startMinute ] = startTime.split(':');
-      const [ endHour, endMinute ] = endTime.split(':');
 
-      this.startTimeHour.setValue(startHour, { emitEvent: false });
-      this.startTimeMinute.setValue(startMinute, { emitEvent: false });
-      this.endTimeHour.setValue(endHour ?? '', { emitEvent: false });
-      this.endTimeMinute.setValue(endMinute ?? '', { emitEvent: false });
-    } else {
-      this.allTimeControlsAction(control => control.disable({ emitEvent: false }), true);
-    }
+    this.startTimeControl.setValue(obj[0], { emitEvent: false });
+    this.endTimeControl.setValue(obj[1], { emitEvent: false });
 
-    this.selectsAdjust();
+    this.allTimeControlsAction(control => control[methodName]({ emitEvent: false }), true);
+
     this.changeDetectorRef.markForCheck();
   }
 
@@ -204,40 +121,17 @@ export class DashboardTimeRangeFormComponent implements OnInit, OnDestroy, Contr
   }
 
   private getStartTime() {
-    const startTime = this.startTimeHour.value + ':' + this.startTimeMinute.value;
-    const endTime = (this.endTimeHour.value !== '' && this.endTimeMinute.value !== '') ?
-      this.endTimeHour.value + ':' + this.endTimeMinute.value :
-      '';
+    const startTime = this.startTimeControl.value;
+    const endTime = this.endTimeControl.value;
 
     return [ `${ startTime }`, `${ endTime }` ];
   }
 
   private allTimeControlsAction(action: (control: FormControl) => void, exclude24HControl = false) {
-    action(this.startTimeHour);
-    action(this.startTimeMinute);
-    action(this.endTimeHour);
-    action(this.endTimeMinute);
+    action(this.startTimeControl);
+    action(this.endTimeControl);
     if (!exclude24HControl) {
       action(this.open24h);
-    }
-  }
-
-  private selectsAdjust() {
-    // 分の選択調整
-    const isSelectedLast = this.endTimeHour.value === '' && this.insertLast;
-
-    this.startMinuteOptions = this.startTimeOptions.find((v): v is Exclude<typeof v, string> => typeof v !== 'string' && v.hour === this.startTimeHour.value)?.minutes.map(m => DashboardTimeRangeFormComponent.valueToWithLabel(m.minute)) ?? [];
-    this.endMinuteOptions = this.endTimeOptions.find((v): v is Exclude<typeof v, string> => typeof v !== 'string' && v.hour === this.endTimeHour.value)?.minutes.map(m => DashboardTimeRangeFormComponent.valueToWithLabel(m.minute)) ?? [];
-
-    if (isSelectedLast && this.endTimeMinute.enabled) {
-      this.endTimeMinute.disable({ emitEvent: false });
-    }
-
-    if (this.startMinuteOptions.every(o => o.value !== this.startTimeMinute.value)) {
-      this.startTimeMinute.setValue(this.startMinuteOptions[0]?.value ?? '', { emitEvent: false });
-    }
-    if (this.endMinuteOptions.every(o => o.value !== this.endTimeMinute.value)) {
-      this.endTimeMinute.setValue(this.endMinuteOptions[0]?.value ?? '', { emitEvent: false });
     }
   }
 }

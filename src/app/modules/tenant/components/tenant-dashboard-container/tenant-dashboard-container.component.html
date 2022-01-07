@@ -78,6 +78,15 @@
         <div mat-line>フリー画像</div>
       </mat-list-item>
       <mat-divider></mat-divider>
+      <h3 mat-subheader>ショップニュース</h3>
+      <mat-list-item routerLink="/tenant/shop-news">
+        <mat-icon mat-list-icon>newspaper</mat-icon>
+        <div mat-line>ショップニュース
+          <app-dashboard-tip *ngIf="tenantShopNewsRemainingService.remaining$ | async as remaining">
+            残{{ remaining }}</app-dashboard-tip>
+        </div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
       <h3 mat-subheader>イベントニュース</h3>
       <mat-list-item routerLink="/tenant/event-news">
         <mat-icon mat-list-icon>newspaper</mat-icon>

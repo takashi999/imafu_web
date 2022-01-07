@@ -39,6 +39,9 @@ import {
 } from './dashboard-multiple-type-textarea/dashboard-multiple-type-textarea.component';
 import { DashboardTableTabComponent } from './dashboard-table-tab/dashboard-table-tab.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { DashboardTimeSelectComponent } from './dashboard-time-select/dashboard-time-select.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { DashboardTipComponent } from './dashboard-tip/dashboard-tip.component';
 
 
 @NgModule({
@@ -61,6 +64,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     DashboardEditableTextTypeSelectComponent,
     DashboardMultipleTypeTextareaComponent,
     DashboardTableTabComponent,
+    DashboardTimeSelectComponent,
+    DashboardTipComponent,
   ],
   imports: [
     CommonModule,
@@ -87,6 +92,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatTooltipModule,
     DragDropModule,
     MatTabsModule,
+    MatChipsModule,
   ],
   exports: [
     AppComponent,
@@ -107,6 +113,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     DashboardEditableTextTypeSelectComponent,
     DashboardMultipleTypeTextareaComponent,
     DashboardTableTabComponent,
+    DashboardTimeSelectComponent,
+    DashboardTipComponent,
   ],
 })
 export class CommonComponentsModule {

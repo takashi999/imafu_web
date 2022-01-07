@@ -2,41 +2,26 @@
   <mat-checkbox *ngIf="enable24h" [formControl]="open24h">24時間{{ label }}</mat-checkbox>
 </p>
 <mat-grid-list [cols]="13" [gutterSize]="'10px'" [rowHeight]="80">
-  <mat-grid-tile [colspan]="3">
-    <app-dashboard-select
-      [formControl]="startTimeHour"
-      [selects]="startHourOptions"
-      [hasValidatorFn]="ngControl.control?.hasValidator?.bind(ngControl.control)"
-    >
-      開始時間（時）
-    </app-dashboard-select>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="3">
-    <app-dashboard-select
-      [formControl]="startTimeMinute"
-      [selects]="startMinuteOptions"
-      [hasValidatorFn]="ngControl.control?.hasValidator?.bind(ngControl.control)"
-    >
-      開始時間（分）
-    </app-dashboard-select>
+  <mat-grid-tile [colspan]="6">
+    <div class="content">
+      <app-dashboard-time-select
+        [formControl]="startTimeControl"
+        [hasValidatorFn]="ngControl.control?.hasValidator?.bind(ngControl.control)"
+        [minuteStep]="minuteStep"
+        label="開始"
+      ></app-dashboard-time-select>
+    </div>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1"></mat-grid-tile>
-  <mat-grid-tile [colspan]="3">
-    <app-dashboard-select
-      [formControl]="endTimeHour"
-      [selects]="endHourOptions"
-      [hasValidatorFn]="ngControl.control?.hasValidator?.bind(ngControl.control)"
-    >
-      終了時間（時）
-    </app-dashboard-select>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="3">
-    <app-dashboard-select
-      [formControl]="endTimeMinute"
-      [selects]="endMinuteOptions"
-      [hasValidatorFn]="ngControl.control?.hasValidator?.bind(ngControl.control)"
-    >
-      終了時間（分）
-    </app-dashboard-select>
+  <mat-grid-tile [colspan]="6">
+    <div class="content">
+      <app-dashboard-time-select
+        [formControl]="endTimeControl"
+        [hasValidatorFn]="ngControl.control?.hasValidator?.bind(ngControl.control)"
+        [minuteStep]="minuteStep"
+        [insertLast]="insertLast"
+        label="終了"
+      ></app-dashboard-time-select>
+    </div>
   </mat-grid-tile>
 </mat-grid-list>

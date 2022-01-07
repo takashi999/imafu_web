@@ -1,0 +1,24 @@
+<div class="container">
+  <mat-grid-list [cols]="2" [gutterSize]="'10px'" [rowHeight]="80">
+    <mat-grid-tile>
+      <app-dashboard-select
+        [formControl]="hourControl"
+        [selects]="hourOptions"
+        [hasValidatorFn]="hasValidatorFn"
+        [name]="name + '_hour'"
+      >
+        {{ label }}時間（時）
+      </app-dashboard-select>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <app-dashboard-select
+        [formControl]="minuteControl"
+        [selects]="minuteOptions"
+        [hasValidatorFn]="hasValidatorFn"
+        [name]="name + '_minute'"
+      >
+        {{ label }}時間（分）
+      </app-dashboard-select>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

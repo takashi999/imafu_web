@@ -1,0 +1,40 @@
+<ng-container *ngIf="view$ | async as view">
+  <app-dashboard-header prevRouterLink="../">
+    ショップニュース{{ view.detail ? "編集: " + view.detail.id : "作成" }}</app-dashboard-header>
+  <mat-card>
+    <form [formGroup]="fg" (ngSubmit)="onSub(view.detail?.id)">
+      <mat-card-content>
+        <mat-grid-list [cols]="2" [gutterSize]="'10px'" rowHeight="80">
+          <mat-grid-tile>
+            <app-dashboard-date-picker
+              [formControl]="publishAtDateControl"
+              name="publish_at_date"
+            >公開日
+            </app-dashboard-date-picker>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <app-dashboard-time-select
+              [formControl]="publishAtTimeControl"
+              name="publish_at_time"
+              label="公開"
+              [minuteStep]="view.detail ? 1 : 10"
+            ></app-dashboard-time-select>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <app-dashboard-editable-text-type-select
+          formControlName="editable_text_type_id"
+          name="editable_text_type_id"
+          #ref
+        ></app-dashboard-editable-text-type-select>
+        <app-dashboard-multiple-type-textarea
+          formControlName="content"
+          name="content"
+          [ref]="ref"
+        ></app-dashboard-multiple-type-textarea>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-flat-button color="primary" [disabled]="fg.invalid">{{ view.detail ? "更新" : "作成" }}</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</ng-container>

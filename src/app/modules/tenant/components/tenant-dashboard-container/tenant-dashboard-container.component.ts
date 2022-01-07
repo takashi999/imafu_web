@@ -3,6 +3,7 @@ import { MatDrawerMode } from '@angular/material/sidenav';
 import { fromEvent, Subscription } from 'rxjs';
 import { TokenService } from 'src/app/services/token.service';
 import { TenantAuthService } from 'src/app/services/tenant/api/tenant-auth.service';
+import { TenantShopNewsRemainingService } from 'src/app/services/tenant/tenant-shop-news-remaining.service';
 
 @Component({
   selector: 'app-tenant-dashboard-container',
@@ -20,6 +21,7 @@ export class TenantDashboardContainerComponent implements OnInit, OnDestroy, Aft
     private changeDetectorRef: ChangeDetectorRef,
     private tokenService: TokenService,
     private tenantAuthService: TenantAuthService,
+    public tenantShopNewsRemainingService: TenantShopNewsRemainingService,
   ) {
   }
 

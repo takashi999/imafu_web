@@ -1,0 +1,9 @@
+.tooltip {
+  flex: 0 0 auto;
+  display: inline-block;
+  vertical-align: middle;
+
+  .not-transparent {
+    opacity: 1;
+  }
+}

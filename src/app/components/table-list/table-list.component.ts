@@ -19,10 +19,10 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 type TableListColumnBaseType<T, K extends keyof T | string = keyof T | string> = {
   key: K;
   label: string;
-  transform?: (v: any) => string;
+  transform?: (v: any, row: T) => string;
   dateFormat?: string;
   type?: 'image';
-}
+};
 type TableListColumnTemplateType<TE> = {
   key: string;
   label: string;
@@ -73,7 +73,9 @@ export class TableListComponent<T, TE> implements OnInit, OnDestroy {
   }
 
   getTextResult(col: TableListColumnType<T, TE>, element: T) {
-    return "transform" in col && typeof col.transform !== 'undefined' ? col.transform(this.getDataByKeyName(element, col.key)) : this.getDataByKeyName(element, col.key);
+    return 'transform' in col && typeof col.transform !== 'undefined' ?
+      col.transform(this.getDataByKeyName(element, col.key), element) :
+      this.getDataByKeyName(element, col.key);
   }
 
   @Input() getNameFn: (val: T) => string = val => `${ val }`;

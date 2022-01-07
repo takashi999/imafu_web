@@ -1,0 +1,14 @@
+<app-dashboard-header
+  *ngIf="tenantShopNewsRemainingService.remaining$ | async as remaining"
+  [rightRouterLink]="['./create']"
+  [rightToolTip]="'残り' + remaining + '回'"
+>ショップシュース</app-dashboard-header>
+<app-table-list
+  *ngIf="list$ | async as list"
+  [dataSource]="list"
+  [displayedColumns]="displayedColumns"
+  [getNameFn]="getNameFn"
+
+  (clickRow)="onClickRow($event)"
+  (delete)="onDelete($event)"
+></app-table-list>

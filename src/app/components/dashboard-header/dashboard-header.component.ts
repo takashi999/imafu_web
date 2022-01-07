@@ -8,6 +8,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
 })
 export class DashboardHeaderComponent implements OnInit {
   @Input() rightRouterLink: any[] | string | null | undefined = null;
+  @Input() rightToolTip: string | null = null;
   @Input() prevRouterLink: any[] | string | null | undefined = null;
 
   constructor() {

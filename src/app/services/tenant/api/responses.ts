@@ -67,6 +67,7 @@ export interface Tenant {
     created_at: string;
     updated_at: string;
   } | null;
+  shop_news_remaining: number;
 }
 
 export type EditableTextTypes = {
@@ -441,7 +442,7 @@ export interface TenantFreeBannerForeignLink {
   updated_at: string;
 }
 
-export interface TenantEventNews  {
+export interface TenantEventNews {
   id: number;
   tenant_id?: number;
   is_use?: 1 | 0;
@@ -452,4 +453,17 @@ export interface TenantEventNews  {
   updated_by?: number;
   updated_at?: string;
   created_at?: string;
+}
+
+export interface TenantShopNews {
+  id: number;
+  tenant_id: number;
+  create_date: string;
+  publish_at: string;
+  editable_text_type_id: number;
+  content: string;
+  updated_by: number;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
 }

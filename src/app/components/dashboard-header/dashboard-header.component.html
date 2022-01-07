@@ -8,6 +8,9 @@
     <span><ng-content></ng-content></span>
   </h2>
   <div class="spacer"></div>
+  <div class="right-tooltip" *ngIf="rightToolTip">
+    <app-dashboard-tip>{{ rightToolTip }}</app-dashboard-tip>
+  </div>
   <div *ngIf="rightRouterLink" class="actions">
     <div class="button">
       <a [routerLink]="rightRouterLink">

@@ -77,3 +77,11 @@ export interface ModifyTenantEventNews {
   editable_text_type_id: number;
   content: string;
 }
+
+export interface CreateTenantShopNewsRequest {
+  publish_at: string;
+  editable_text_type_id: number;
+  content: string;
+}
+
+export type ModifyTenantShopNewsRequest = Omit<CreateTenantShopNewsRequest, 'publish_at'>;
